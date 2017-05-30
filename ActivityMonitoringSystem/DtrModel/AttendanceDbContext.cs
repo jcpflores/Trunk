@@ -7,7 +7,7 @@ using System.Data.Common;
 using System.Data.Entity;
 using DtrModel;
 
-namespace SQLiteExample
+namespace DtrModel
 {
     public class AttendanceDbContext : DbContext
     {

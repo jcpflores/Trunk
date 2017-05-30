@@ -8,7 +8,7 @@ using SQLite.CodeFirst;
 using DtrModel.Entities;
 
 
-namespace SQLiteExample
+namespace DtrModel
 {
     public class AttendanceDBInitializer : SqliteDropCreateDatabaseWhenModelChanges<AttendanceDbContext>
     {
