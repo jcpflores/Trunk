@@ -6,18 +6,15 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using SQLite.CodeFirst;
-
+using DtrModel.Interface;
 
 
 namespace DtrModel.Entities
 {
-   public class ClientContract
+   public class ClientContract : IEntity
     {
         [Autoincrement]
-        public int id { get; set; }
-
-        [MaxLength(100)]
-        public string ClientName { get; set; }
+        public int Id { get; set; }           
 
         [MaxLength(100)]
         public string ContractReference { get; set; }
@@ -42,11 +39,10 @@ namespace DtrModel.Entities
         public bool Sun { get; set; }
 
         public bool Active { get; set; }
-            
-        
-        //public Nullable <int> ProjectID { get; set; }
 
-        //[ForeignKey("ProjectID")]        
-        //public virtual Project Proj { get; set; }
+
+        [ForeignKey("Clients")]
+        public int ClientRefId { get; set; }
+        public virtual Client Clients { get; set; }
     }
 }

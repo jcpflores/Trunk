@@ -5,14 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using SQLite.CodeFirst;
 using System.ComponentModel.DataAnnotations;
+using DtrModel.Interface;
 
 
 namespace DtrModel.Entities
 {
-    public class TechnicalRole 
+    public class TechnicalRole : IEntity
     {
         [Key]
-        public int TechRoleID { get; set; }
+        public int Id { get; set; }
 
         [MaxLength(200)]
         public string TechRole { get; set; }

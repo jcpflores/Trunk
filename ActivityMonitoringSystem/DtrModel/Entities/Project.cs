@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SQLite.CodeFirst;
-
-using System.ComponentModel.DataAnnotations;
+using DtrModel.Interface;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DtrModel.Entities
 {
@@ -13,11 +13,15 @@ namespace DtrModel.Entities
     {
         
         [Autoincrement]
-        public int ProjectID { get; set;  }
+        public int Id { get; set;  }
 
         public string ProjectName { get; set;  }
-
         public bool Active { get; set; }
+
+        [ForeignKey("ClientContract")]
+        public int ClientContractRefId { get; set; }
+        public virtual ClientContract ClientContract { get; set; }
+        
 
     }
 }

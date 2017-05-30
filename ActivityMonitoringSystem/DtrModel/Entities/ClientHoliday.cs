@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using SQLite.CodeFirst;
 using System.ComponentModel.DataAnnotations;
+using DtrModel.Interface;
 
 namespace DtrModel.Entities
 {
-    class ClientHoliday
+    public class ClientHoliday : IEntity
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public DateTime HolidayDate { get; set; }
 
         [MaxLength(200)]

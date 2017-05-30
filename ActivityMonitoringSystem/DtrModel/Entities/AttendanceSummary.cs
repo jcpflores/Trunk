@@ -6,31 +6,28 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DtrModel.Entities;
+using DtrModel.Interface;
 
 
 //namespace SQLiteExample.Entity
 namespace DtrModel.Entities
 {
-    public class AttendanceSummary
+    public class AttendanceSummary : IEntity
     {
-        public int DTRID { get; set; }
-        public int TotalSL { get; set; }
+        public int Id { get; set; }
+        public int TotalSl { get; set; }
 
-        public int TotalEL { get; set; }
+        public int TotalEl { get; set; }
 
-        public int TotalVL { get; set; }
+        public int TotalVl { get; set; }
 
-        public int TotalHD { get; set; }
+        public int TotalHd { get; set; }
 
-        public int TotalMaterinity { get; set; }
+        public int TotalMaternity { get; set; }
 
         public int TotalPaternity { get; set; }
 
         public int TotalMinutesLate { get; set; }
 
-        public int DTRId { get; set; }
-
-        [ForeignKey("Id")]
-        public virtual DTR Dtr { get; set; }
     }
 }

@@ -8,71 +8,67 @@ using SQLite.CodeFirst;
 using System.ComponentModel.DataAnnotations.Schema;
 using DtrModel.Interface;
 using DtrModel.Entities;
-//using SQLiteExample.Entity;
+
 
 
 namespace DtrModel.Entities
 {
     public class Employee : IEntity
     {
-       [Autoincrement]
+        [Autoincrement]
         public int Id { get; set; }
 
         [MaxLength(50)]
         [Required]
-        public string name { get; set; }
+        public string Name { get; set; }
 
         [MaxLength(10)]
         public string Initial { get; set; }
 
         [Required]
-        public bool gender { get; set; }
+        public bool Gender { get; set; }
 
         [Required]
-        public int sickleave { get; set; }
+        public int SickLeave { get; set; }
 
         [Required]
-        public int vacationleave { get; set; }
+        public int VacationLeave { get; set; }
 
         [Required]
-        public int maternityleave { get; set; }
+        public int MaternityLeave { get; set; }
 
         [Required]
-        public int paternityleave { get; set; }
+        public int PaternityLeave { get; set; }
 
-        //public virtual ICollection<ProcessRole> Role { get; set; }
+        [ForeignKey("Clients")]
+        public int ClientRefId { get; set; }
+        public virtual Client Clients { get; set; }
 
-
-        public Nullable <int> ProjectID { get; set; }       
-        public Nullable <int> RoleID { get; set; }                
-        public Nullable <int> TechRoleID { get; set; }  
-        public Nullable <int> SkillID { get; set; }
-
-        public Nullable <int> WorkScheduleID { get; set; }
-
-        public Nullable <int> DTRID { get; set; }
-
-        public Nullable <int> WorkLocId { get; set; }
-
-        [ForeignKey("ProjectID")]           
-        public virtual Project Proj { get; set; }
-
-        [ForeignKey("RoleID")]
-        public virtual ProcessRole ProcessRole { get; set; }
-
-        [ForeignKey("TechRoleID")]
+        [ForeignKey("TechnicalRole")]
+        public int TechRoleRefId { get; set; }
         public virtual TechnicalRole TechnicalRole { get; set; }
 
-        [ForeignKey("SkillID")]
-        public virtual SkillLevel SkillLevel { get; set; }
 
-        [ForeignKey("Id")]
-        public virtual WorkSchedule WorkSchedule { get; set; }
-
-        [ForeignKey("DTRID")]
+        [ForeignKey("AttendanceSummary")]
+        public int AttendanceRefId { get; set; }
         public virtual AttendanceSummary AttendanceSummary { get; set; }
 
-        [ForeignKey("Id")]
+
+        [ForeignKey("ProcessRole")]
+        public int ProcessRoleRefId { get; set; }
+        public virtual ProcessRole ProcessRole { get; set; }
+
+
+        [ForeignKey("WorkSched")]
+        public int WorkSchedRefId { get; set; }
+        public virtual WorkSchedule WorkSched { get; set; }
+
+        [ForeignKey("WorkLoc")]
+        public int WorkLocRefId { get; set; }
         public virtual WorkLocation WorkLoc { get; set; }
+
+        [ForeignKey("Skills")]
+        public int SkillRefId { get; set; }
+        public virtual SkillLevel Skills { get; set; }
     }
 }
