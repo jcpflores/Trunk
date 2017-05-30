@@ -20,19 +20,19 @@ namespace DtrModel
         private static void ConfigureAttendanceEntity(DbModelBuilder modelBuilder)
         {
     
-            modelBuilder.Entity<Client>()
-                .HasMany(t => t.Contract);
+            //modelBuilder.Entity<Client>()
+            //    .HasMany(t => t.Contract);
 
             
-            modelBuilder.Entity<Employee>();                 
+            //modelBuilder.Entity<Employee>();                 
              
             modelBuilder.Entity<SkillLevel>();
 
-            modelBuilder.Entity<TechnicalRole>();
+            //modelBuilder.Entity<TechnicalRole>();
 
-            modelBuilder.Entity<Project>();
+            //modelBuilder.Entity<Project>();
 
-            modelBuilder.Entity<ProcessRole>();
+            //modelBuilder.Entity<ProcessRole>();
 
             
 
