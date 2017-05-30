@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using SQLite.CodeFirst;
-using SQLiteExample.Entity;
 
-namespace SQLiteExample.Entity
+
+namespace DtrModel.Entities
 {
     public class SkillLevel 
     {

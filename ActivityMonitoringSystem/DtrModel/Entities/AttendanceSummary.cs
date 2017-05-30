@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using DtrModel.Entities;
 
-namespace SQLiteExample.Entity
+
+//namespace SQLiteExample.Entity
+namespace DtrModel.Entities
 {
-    class AttendanceSummary
+    public class AttendanceSummary
     {
         public int DTRID { get; set; }
         public int TotalSL { get; set; }
@@ -23,6 +28,9 @@ namespace SQLiteExample.Entity
 
         public int TotalMinutesLate { get; set; }
 
+        public int DTRId { get; set; }
 
+        [ForeignKey("Id")]
+        public virtual DTR Dtr { get; set; }
     }
 }

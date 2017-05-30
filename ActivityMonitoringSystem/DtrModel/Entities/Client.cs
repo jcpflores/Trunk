@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SQLiteExample.Entity;
 using SQLite.CodeFirst;
+using DtrModel.Interface;
 
-namespace SQLiteExample.Entity
+namespace DtrModel.Entities
 {
    public  class Client : IEntity
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
         public virtual ICollection<ClientContract> Contract { get; set; }
-
         
         public bool Active { get; set; }
     }

@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SQLite.CodeFirst;
 using System.ComponentModel.DataAnnotations;
+using DtrModel.Entities;
+using SQLite.CodeFirst;
+using DtrModel.Interface;
 
 namespace DtrModel.Entities
 {
-    class ClientHoliday
+    public class WorkLocation : IEntity
     {
-        public int id { get; set; }
-        public DateTime HolidayDate { get; set; }
-
-        [MaxLength(200)]
+     public int Id { get; set; }   
+      
+        [MaxLength(100)]
         public string Description { get; set; }
-
-        public bool Active { get; set; }
     }
 }

@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using SQLite.CodeFirst;
 using System.ComponentModel.DataAnnotations.Schema;
-using SQLiteExample.Entity;
+using DtrModel.Interface;
+using DtrModel.Entities;
+//using SQLiteExample.Entity;
+
 
 namespace DtrModel.Entities
 {
     public class Employee : IEntity
     {
        [Autoincrement]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [MaxLength(50)]
         [Required]
@@ -37,13 +40,19 @@ namespace DtrModel.Entities
         [Required]
         public int paternityleave { get; set; }
 
-        public virtual ICollection<ProcessRole> Role { get; set; }
+        //public virtual ICollection<ProcessRole> Role { get; set; }
 
 
         public Nullable <int> ProjectID { get; set; }       
         public Nullable <int> RoleID { get; set; }                
         public Nullable <int> TechRoleID { get; set; }  
         public Nullable <int> SkillID { get; set; }
+
+        public Nullable <int> WorkScheduleID { get; set; }
+
+        public Nullable <int> DTRID { get; set; }
+
+        public Nullable <int> WorkLocId { get; set; }
 
         [ForeignKey("ProjectID")]           
         public virtual Project Proj { get; set; }
@@ -57,7 +66,13 @@ namespace DtrModel.Entities
         [ForeignKey("SkillID")]
         public virtual SkillLevel SkillLevel { get; set; }
 
+        [ForeignKey("Id")]
+        public virtual WorkSchedule WorkSchedule { get; set; }
 
+        [ForeignKey("DTRID")]
+        public virtual AttendanceSummary AttendanceSummary { get; set; }
 
+        [ForeignKey("Id")]
+        public virtual WorkLocation WorkLoc { get; set; }
     }
 }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using SQLite.CodeFirst;
-using SQLiteExample.Entity;
 
 
-namespace SQLiteExample.Entity
+
+namespace DtrModel.Entities
 {
    public class ClientContract
     {

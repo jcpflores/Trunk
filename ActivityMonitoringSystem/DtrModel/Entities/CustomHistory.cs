@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SQLite.CodeFirst;
 
-namespace SQLiteExample.Entity
+namespace DtrModel.Entities
 {
     public class CustomHistory : IHistory
     {

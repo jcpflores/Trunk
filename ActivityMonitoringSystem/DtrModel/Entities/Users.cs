@@ -8,13 +8,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DtrModel.Entities
 {
-    class ClientHoliday
+    public class Users
     {
         public int id { get; set; }
-        public DateTime HolidayDate { get; set; }
 
-        [MaxLength(200)]
-        public string Description { get; set; }
+        [MaxLength(25)]
+        public string Username { get; set; }
+
+        [MaxLength(25)]
+        public string Password { get; set; }
+
+        [MaxLength(100)]
+        public string Name { get; set; }
 
         public bool Active { get; set; }
     }

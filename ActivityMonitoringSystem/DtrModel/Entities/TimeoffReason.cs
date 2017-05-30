@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using SQLite.CodeFirst;
-using SQLiteExample.Entity;
+using DtrModel.Interface;
 
-namespace SQLiteExample.Entity
+namespace DtrModel.Entities
 {
     class TimeoffReason : IEntity
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [MaxLength(100)]
         public string Description { get; set; }
