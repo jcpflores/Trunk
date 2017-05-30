@@ -4,11 +4,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DtrModelUnitTesting
 {
     [TestClass]
-    public class UnitTest1
+    public class ConfigureAttendance
     {
         [TestMethod]
         public void TestMethod1()
         {
+
         }
     }
 }
