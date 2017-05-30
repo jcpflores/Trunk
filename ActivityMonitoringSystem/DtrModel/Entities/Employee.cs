@@ -8,7 +8,7 @@ using SQLite.CodeFirst;
 using System.ComponentModel.DataAnnotations.Schema;
 using SQLiteExample.Entity;
 
-namespace SQLiteExample.Entity
+namespace DtrModel.Entities
 {
     public class Employee : IEntity
     {
