@@ -82,6 +82,7 @@
     <Compile Include="Entities\WorkLocation.cs" />
     <Compile Include="Entities\WorkSchedule.cs" />
     <Compile Include="Interface\IEntity.cs" />
+    <Compile Include="Model.cs" />
     <Compile Include="ModelConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

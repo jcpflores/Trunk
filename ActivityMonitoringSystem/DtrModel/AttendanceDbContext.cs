@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Common;
 using System.Data.Entity;
-using DtrModel;
 
 namespace DtrModel
 {
