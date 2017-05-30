@@ -1,7 +1,9 @@
-﻿
+﻿using DtrModel.Entities;
+using System.Linq;
+
 namespace DtrModel
 {
-    class Model
+    public class Model
     {
         private static AttendanceDbContext _attendanceDb;
 
@@ -12,8 +14,18 @@ namespace DtrModel
                 if (_attendanceDb == null)
                 {
                     _attendanceDb = new AttendanceDbContext("AttendanceDb");
+
+                    Create(_attendanceDb);
                 }
                 return _attendanceDb;
+            }
+        }
+
+        private static void Create(AttendanceDbContext context)
+        {
+            if (context.Set<SkillLevel>().Count() != 0)
+            {
+                return;
             }
         }
     }
