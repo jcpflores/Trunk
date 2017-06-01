@@ -71,6 +71,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DtrInterfaces\DtrInterfaces.csproj">
+      <Project>{9949b0ea-1b41-4fce-8550-aba1020345b5}</Project>
+      <Name>DtrInterfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DtrModel\DtrModel.csproj">
       <Project>{3c453663-db05-4084-9907-a8047cc7d207}</Project>
       <Name>DtrModel</Name>
