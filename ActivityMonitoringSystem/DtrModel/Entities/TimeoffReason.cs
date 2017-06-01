@@ -22,7 +22,7 @@ namespace DtrModel.Entities
 
         [ForeignKey("DailyTimeRecord")]
         public int DailyTimeRecordRefId { get; set; }
-        public virtual DailyTimeRecord DailyTimeRecord { get; set; }
+        //public virtual DailyTimeRecord DailyTimeRecord { get; set; }
 
     }
 }
