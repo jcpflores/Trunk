@@ -1,0 +1,7 @@
+﻿
+namespace DtrInterfaces
+{
+    interface IController
+    {
+    }
+}
