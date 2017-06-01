@@ -1,9 +1,10 @@
 ﻿using DtrModel.Entities;
 using System.Linq;
+using DtrInterfaces;
 
 namespace DtrModel
 {
-    public class Model
+    public class Model : IModel
     {
         private static AttendanceDbContext _attendanceDb;
 
