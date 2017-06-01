@@ -1,4 +1,6 @@
-﻿using DtrDelegates;
+﻿using System.Collections.Generic;
+using DtrDelegates;
+using DtrCommon;
 
 namespace DtrInterfaces
 {
@@ -11,5 +13,7 @@ namespace DtrInterfaces
         event ParseFilesEventHandler ParseFilesEvent;
 
         void ShowFiles(string[] discoveredFiles);
+
+        void ShowProcessedResources(List<ProcessedResource> processed);
     }
 }

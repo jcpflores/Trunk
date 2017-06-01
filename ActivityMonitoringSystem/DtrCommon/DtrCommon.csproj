@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9949B0EA-1B41-4FCE-8550-ABA1020345B5}</ProjectGuid>
+    <ProjectGuid>{A7E39D50-64AB-47DF-8C71-AA98542DB897}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DtrInterfaces</RootNamespace>
-    <AssemblyName>DtrInterfaces</AssemblyName>
+    <RootNamespace>DtrCommon</RootNamespace>
+    <AssemblyName>DtrCommon</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,20 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IController.cs" />
-    <Compile Include="IModel.cs" />
-    <Compile Include="IView.cs" />
+    <Compile Include="ProcessedResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DtrCommon\DtrCommon.csproj">
-      <Project>{a7e39d50-64ab-47df-8c71-aa98542db897}</Project>
-      <Name>DtrCommon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DtrDelegates\DtrDelegates.csproj">
-      <Project>{a8fc8c26-3251-46ff-9547-330135c104c3}</Project>
-      <Name>DtrDelegates</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
