@@ -1,7 +1,7 @@
 ﻿
 namespace DtrInterfaces
 {
-    interface IController
+    public interface IController
     {
     }
 }

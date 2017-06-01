@@ -1,7 +1,7 @@
 ﻿
 namespace DtrInterfaces
 {
-    interface IView
+    public interface IView
     {
     }
 }

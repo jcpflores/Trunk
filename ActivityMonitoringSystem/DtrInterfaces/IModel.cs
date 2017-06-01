@@ -1,7 +1,7 @@
 ﻿
 namespace DtrInterfaces
 {
-    interface IModel
+    public interface IModel
     {
     }
 }
