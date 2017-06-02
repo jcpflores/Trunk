@@ -12,8 +12,16 @@ namespace DtrInterfaces
 
         event ParseFilesEventHandler ParseFilesEvent;
 
+        event GetDtrDetailsEventHandler GetDtrDetailsEvent;
+
+        event SaveDtrInfoEventHandler SaveDtrInfoEvent;
+
         void ShowFiles(string[] discoveredFiles);
 
         void ShowProcessedResources(List<ProcessedResource> processed);
+
+        void ShowDtrInfo(DtrInfo info);
+
+        void ShowMessage(string message);
     }
 }
