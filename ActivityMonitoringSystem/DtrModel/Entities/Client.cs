@@ -20,6 +20,7 @@ namespace DtrModel.Entities
         public string Contract { get; set; }
         public bool Active { get; set; }
 
+        public virtual ICollection<ClientContract> ClientContract { get; set; }
  
     }
 }

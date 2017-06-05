@@ -70,7 +70,7 @@
     <Compile Include="Entities\ClientContract.cs" />
     <Compile Include="Entities\ClientHoliday.cs" />
     <Compile Include="Entities\CustomHistory.cs" />
-    <Compile Include="Entities\DTR.cs" />
+    <Compile Include="Entities\DailyTimeRecord.cs" />
     <Compile Include="Entities\Employee.cs" />
     <Compile Include="Entities\Holiday.cs" />
     <Compile Include="Entities\ProcessRole.cs" />

@@ -41,8 +41,8 @@ namespace DtrModel.Entities
         public bool Active { get; set; }
 
 
-        [ForeignKey("Clients")]
+        [ForeignKey("ClientContracts")]
         public int ClientRefId { get; set; }
-        public virtual Client Clients { get; set; }
+        public virtual Client ClientContracts { get; set; }
     }
 }

@@ -16,5 +16,6 @@ namespace DtrModel.Entities
         public bool Active { get; set; }
 
         //public  ICollection<Employee> Employee { get; set; }
+        
     }
 }

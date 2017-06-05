@@ -10,7 +10,7 @@ using DtrModel.Interface;
 
 namespace DtrModel.Entities
 {
-    class TimeoffReason : IEntity
+ public  class TimeoffReason : IEntity
     {
         public int Id { get; set; }
 
@@ -22,7 +22,7 @@ namespace DtrModel.Entities
 
         [ForeignKey("DailyTimeRecord")]
         public int DailyTimeRecordRefId { get; set; }
-        //public virtual DailyTimeRecord DailyTimeRecord { get; set; }
+        public virtual DailyTimeRecord DailyTimeRecord { get; set; }
 
     }
 }
