@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using SQLite.CodeFirst;
 using System.ComponentModel.DataAnnotations;
 using DtrModel.Interface;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DtrModel.Entities
 {
@@ -20,5 +20,9 @@ namespace DtrModel.Entities
 
         public bool Active { get; set; }
 
+
+        [ForeignKey("Employee")]
+        public int EmployeeRefId { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

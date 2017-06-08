@@ -21,6 +21,10 @@ namespace DtrModel.Entities
         public bool Active { get; set; }
 
         public virtual ICollection<ClientContract> ClientContract { get; set; }
- 
+
+
+        [ForeignKey("Employee")]
+        public int EmployeeRefId { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

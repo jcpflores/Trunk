@@ -29,10 +29,17 @@ namespace DtrModel.Entities
         public string Notes { get; set; }
         public int Late { get; set; }
         public int Overtime { get; set; }
-        public string Email { get; set; }
+        public string ReferenceId { get; set; }
 
-        [ForeignKey("AttendanceSummary")]
-        public int AttendanceRefId { get; set; }
-        public virtual AttendanceSummary AttendanceSummary { get; set; }
+        //[ForeignKey("AttendanceSummary")]
+        //public int AttendanceRefId { get; set; }
+        //public virtual AttendanceSummary AttendanceSummary { get; set; }
+
+        //[ForeignKey("Client")]
+        //public int ClientRefId { get; set; }
+        //public virtual Client Client { get; set; }
+
+        //public virtual ICollection<ClientContract> ClientContract { get; set; }
+        public virtual ICollection<TimeoffReason> TimeOffReason { get; set;}
     }
 }

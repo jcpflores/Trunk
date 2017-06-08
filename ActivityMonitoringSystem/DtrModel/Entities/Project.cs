@@ -18,9 +18,14 @@ namespace DtrModel.Entities
         public string ProjectName { get; set;  }
         public bool Active { get; set; }
 
-        [ForeignKey("ClientContract")]
+        //[ForeignKey("ClientContract")]
+        //public int ClientContractRefId { get; set; }
+        //public virtual ClientContract ClientContract { get; set; }
+
+        [ForeignKey("Projects")]
         public int ClientContractRefId { get; set; }
-        public virtual ClientContract ClientContract { get; set; }
+
+        public virtual ClientContract Projects { get; set; }
         
 
     }

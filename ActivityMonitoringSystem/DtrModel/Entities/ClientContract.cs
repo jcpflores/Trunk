@@ -44,5 +44,8 @@ namespace DtrModel.Entities
         [ForeignKey("ClientContracts")]
         public int ClientRefId { get; set; }
         public virtual Client ClientContracts { get; set; }
+
+       
+        public virtual ICollection<Project> Project { get; set; }
     }
 }
