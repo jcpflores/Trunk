@@ -49,7 +49,7 @@ namespace DtrModelUnitTesting
 
         #region --------------------------------------------------Test_Create
 
-          [TestMethod]
+       //   [TestMethod]
         public void Test_CreateContract()
         {
             _context.Set<Client>().Add(
@@ -166,7 +166,7 @@ namespace DtrModelUnitTesting
         }
 
       //   [TestMethod]
-        public void TestAddHoliday()
+        public void Test_CreateHoliday()
         {
 
             DateTime ExpectedHoliday = DateTime.Now;
@@ -186,6 +186,19 @@ namespace DtrModelUnitTesting
 
             Assert.AreEqual(ExpectedHoliday.ToString(), _holiday.HolidayDate.ToString());
         }
+
+      //  [TestMethod]
+        public void Test_CreateAuditTrail()
+        {
+            _context.Set<AuditTrail>().Add(new AuditTrail
+            {
+                Username = "JCabugao",
+                DateTime = DateTime.Now,
+                Module = "Dtr Upload Form",
+                Actions = "Uploading Excel File"                
+            });
+        }
+
 
       // [TestMethod]
         public void Test_CreateWorkSched()
