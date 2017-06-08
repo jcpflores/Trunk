@@ -19,7 +19,7 @@ namespace DtrModel
 
         private static void ConfigureAttendanceEntity(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Employee>();
+            modelBuilder.Entity<Employee>();                           
             modelBuilder.Entity<Client>();
             modelBuilder.Entity<ProcessRole>();
             modelBuilder.Entity<SkillLevel>();
@@ -34,7 +34,7 @@ namespace DtrModel
             modelBuilder.Entity<Users>();
             modelBuilder.Entity<TimeoffReason>();
             modelBuilder.Entity<ClientHoliday>();
-
+            modelBuilder.Entity<AuditTrail>();
          
         }  
 
