@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DtrInterfaces;
 
 namespace DtrView
 {
-    class View
+    class View : IView
     {
+        public View()
+        { }
     }
 }
