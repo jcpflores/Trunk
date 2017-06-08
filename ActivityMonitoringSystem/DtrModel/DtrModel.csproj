@@ -66,6 +66,7 @@
     <Compile Include="AttendanceDbContext.cs" />
     <Compile Include="AttendanceDbInitializer.cs" />
     <Compile Include="Entities\AttendanceSummary.cs" />
+    <Compile Include="Entities\AuditTrail.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\ClientContract.cs" />
     <Compile Include="Entities\ClientHoliday.cs" />
