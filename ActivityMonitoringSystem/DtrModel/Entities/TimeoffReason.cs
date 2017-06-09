@@ -10,7 +10,7 @@ using DtrModel.Interface;
 
 namespace DtrModel.Entities
 {
-    class TimeoffReason : IEntity
+ public  class TimeoffReason : IEntity
     {
         public int Id { get; set; }
 

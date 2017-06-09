@@ -29,5 +29,10 @@ namespace DtrModel.Entities
 
         public int TotalMinutesLate { get; set; }
 
+        [ForeignKey("Employee")]
+        public int EmployeeRefId { get; set; }
+        public virtual Employee Employee { get; set; }
+
+
     }
 }

@@ -39,36 +39,14 @@ namespace DtrModel.Entities
 
         [Required]
         public int PaternityLeave { get; set; }
+      
 
-        [ForeignKey("Clients")]
-        public int ClientRefId { get; set; }
-        public virtual Client Clients { get; set; }
-
-        [ForeignKey("TechnicalRole")]
-        public int TechRoleRefId { get; set; }
-        public virtual TechnicalRole TechnicalRole { get; set; }
-
-
-        [ForeignKey("AttendanceSummary")]
-        public int AttendanceRefId { get; set; }
-        public virtual AttendanceSummary AttendanceSummary { get; set; }
-
-
-        [ForeignKey("ProcessRole")]
-        public int ProcessRoleRefId { get; set; }
-        public virtual ProcessRole ProcessRole { get; set; }
-
-
-        [ForeignKey("WorkSched")]
-        public int WorkSchedRefId { get; set; }
-        public virtual WorkSchedule WorkSched { get; set; }
-
-        [ForeignKey("WorkLoc")]
-        public int WorkLocRefId { get; set; }
-        public virtual WorkLocation WorkLoc { get; set; }
-
-        [ForeignKey("Skills")]
-        public int SkillRefId { get; set; }
-        public virtual SkillLevel Skills { get; set; }
+        public virtual ICollection<AttendanceSummary> AttendanceSummary { get; set; }
+        public virtual ICollection<SkillLevel> Skills { get; set; }
+        public virtual ICollection<Client> Client { get; set; }
+        public virtual ICollection<ProcessRole> ProcessRole { get; set; }
+        public virtual ICollection<TechnicalRole> TechnicalRole { get; set; }
+        public virtual ICollection<WorkLocation> WorkLocation { get; set; }
+        public virtual ICollection<WorkSchedule>  WorkSchedule { get; set; }
     }
 }

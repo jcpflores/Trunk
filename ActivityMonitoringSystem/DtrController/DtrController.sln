@@ -7,6 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DtrController", "DtrControl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DtrModel", "..\DtrModel\DtrModel.csproj", "{3C453663-DB05-4084-9907-A8047CC7D207}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DtrInterfaces", "..\DtrInterfaces\DtrInterfaces.csproj", "{9949B0EA-1B41-4FCE-8550-ABA1020345B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DtrFileReaderUnitTest", "DtrFileReaderUnitTest\DtrFileReaderUnitTest.csproj", "{82BE6B90-D09B-469E-8F42-FCA9113A6427}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DtrDelegates", "..\DtrDelegates\DtrDelegates.csproj", "{A8FC8C26-3251-46FF-9547-330135C104C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DtrCommon", "..\DtrCommon\DtrCommon.csproj", "{A7E39D50-64AB-47DF-8C71-AA98542DB897}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +29,22 @@ Global
 		{3C453663-DB05-4084-9907-A8047CC7D207}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C453663-DB05-4084-9907-A8047CC7D207}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C453663-DB05-4084-9907-A8047CC7D207}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9949B0EA-1B41-4FCE-8550-ABA1020345B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9949B0EA-1B41-4FCE-8550-ABA1020345B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9949B0EA-1B41-4FCE-8550-ABA1020345B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9949B0EA-1B41-4FCE-8550-ABA1020345B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82BE6B90-D09B-469E-8F42-FCA9113A6427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82BE6B90-D09B-469E-8F42-FCA9113A6427}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82BE6B90-D09B-469E-8F42-FCA9113A6427}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82BE6B90-D09B-469E-8F42-FCA9113A6427}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8FC8C26-3251-46FF-9547-330135C104C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8FC8C26-3251-46FF-9547-330135C104C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8FC8C26-3251-46FF-9547-330135C104C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8FC8C26-3251-46FF-9547-330135C104C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7E39D50-64AB-47DF-8C71-AA98542DB897}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7E39D50-64AB-47DF-8C71-AA98542DB897}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7E39D50-64AB-47DF-8C71-AA98542DB897}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7E39D50-64AB-47DF-8C71-AA98542DB897}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

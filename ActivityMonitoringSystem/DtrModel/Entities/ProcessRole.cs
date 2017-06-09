@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using DtrModel.Interface;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DtrModel.Entities
 {
@@ -15,6 +16,9 @@ namespace DtrModel.Entities
         [Required]
         public bool Active { get; set; }
 
-        //public  ICollection<Employee> Employee { get; set; }
+       
+        [ForeignKey("Employee")]
+        public int EmployeeRefId { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

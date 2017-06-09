@@ -66,11 +66,12 @@
     <Compile Include="AttendanceDbContext.cs" />
     <Compile Include="AttendanceDbInitializer.cs" />
     <Compile Include="Entities\AttendanceSummary.cs" />
+    <Compile Include="Entities\AuditTrail.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\ClientContract.cs" />
     <Compile Include="Entities\ClientHoliday.cs" />
     <Compile Include="Entities\CustomHistory.cs" />
-    <Compile Include="Entities\DTR.cs" />
+    <Compile Include="Entities\DailyTimeRecord.cs" />
     <Compile Include="Entities\Employee.cs" />
     <Compile Include="Entities\Holiday.cs" />
     <Compile Include="Entities\ProcessRole.cs" />
@@ -90,7 +91,12 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\DtrInterfaces\DtrInterfaces.csproj">
+      <Project>{9949b0ea-1b41-4fce-8550-aba1020345b5}</Project>
+      <Name>DtrInterfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

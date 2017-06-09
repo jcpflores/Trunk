@@ -19,25 +19,26 @@ namespace DtrModel
 
         private static void ConfigureAttendanceEntity(DbModelBuilder modelBuilder)
         {
-    
-            //modelBuilder.Entity<Client>()
-            //    .HasMany(t => t.Contract);
-
-            
-            //modelBuilder.Entity<Employee>();                 
-             
+            modelBuilder.Entity<Employee>();                           
+            modelBuilder.Entity<Client>();
+            modelBuilder.Entity<ProcessRole>();
             modelBuilder.Entity<SkillLevel>();
-
-            //modelBuilder.Entity<TechnicalRole>();
-
-            //modelBuilder.Entity<Project>();
-
-            //modelBuilder.Entity<ProcessRole>();
-
-            
-
-
+            modelBuilder.Entity<WorkLocation>();
+            modelBuilder.Entity<WorkSchedule>();
+            modelBuilder.Entity<TechnicalRole>();
+            modelBuilder.Entity<AttendanceSummary>();
+            modelBuilder.Entity<ClientContract>();
+            modelBuilder.Entity<Project>();
+            modelBuilder.Entity<DailyTimeRecord>();
+            modelBuilder.Entity<Holiday>();
+            modelBuilder.Entity<Users>();
+            modelBuilder.Entity<TimeoffReason>();
+            modelBuilder.Entity<ClientHoliday>();
+            modelBuilder.Entity<AuditTrail>();
+         
         }  
 
+       
+      
     }
 }
