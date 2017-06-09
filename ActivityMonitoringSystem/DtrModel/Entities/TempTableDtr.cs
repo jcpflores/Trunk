@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using SQLite.CodeFirst;
-using DtrModel.Interface;
 
 namespace DtrModel.Entities
 {
-    public class DailyTimeRecord : IEntity
+  public class TempTableDtr
     {
-        public int Id { get; set; }
-
         public string EmpId { get; set; }
 
         public string Contact { get; set; }
@@ -42,9 +37,6 @@ namespace DtrModel.Entities
 
         public int TimeOffReasonId { get; set; }
 
-        public DateTime DateProcess { get; set; }   
-
-        public virtual ICollection<TimeoffReason> TimeOffReason { get; set;}
+        public DateTime DateProcess { get; set; }
     }
 }
- 

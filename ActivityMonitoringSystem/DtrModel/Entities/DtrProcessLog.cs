@@ -10,7 +10,7 @@ namespace DtrModel.Entities
    public class DtrProcessLog : IEntity
     {
 
-        public int id { get; set; }
+        public int Id { get; set; }
         public int ResourceId { get; set; }
 
         public string Filename { get; set; }

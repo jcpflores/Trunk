@@ -79,6 +79,7 @@
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\SkillLevel.cs" />
     <Compile Include="Entities\TechnicalRole.cs" />
+    <Compile Include="Entities\TempTableDtr.cs" />
     <Compile Include="Entities\TimeoffReason.cs" />
     <Compile Include="Entities\Users.cs" />
     <Compile Include="Entities\WorkLocation.cs" />
