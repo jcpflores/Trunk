@@ -14,14 +14,18 @@ namespace DtrModel.Entities
     {
         public int Id { get; set; }
 
+        public string EmpdId { get; set; }
+
+        public string Contact { get; set; }
+
         public DateTime DateIn { get; set; }
         public DateTime DateOut { get; set; }
 
-        public DateTime TimeIn { get; set; }
+        public string TimeIn { get; set; }
 
-        public DateTime TimeOut { get; set; }
+        public string TimeOut { get; set; }
 
-        public DateTime TimeInSchedule { get; set; }
+        public string TimeInSchedule { get; set; }
 
         public string TimeOffSchedule { get; set; }
 
@@ -31,15 +35,16 @@ namespace DtrModel.Entities
         public int Overtime { get; set; }
         public string ReferenceId { get; set; }
 
-        //[ForeignKey("AttendanceSummary")]
-        //public int AttendanceRefId { get; set; }
-        //public virtual AttendanceSummary AttendanceSummary { get; set; }
+        public int ProjectId { get; set; }
+        public string WorkLocation { get; set; }
 
-        //[ForeignKey("Client")]
-        //public int ClientRefId { get; set; }
-        //public virtual Client Client { get; set; }
+        public int ClientIdOvertime { get; set; }
 
-        //public virtual ICollection<ClientContract> ClientContract { get; set; }
+        public int TimeOffReasonId { get; set; }
+
+        public DateTime DateProcess { get; set; }   
+
         public virtual ICollection<TimeoffReason> TimeOffReason { get; set;}
     }
 }
+ 
