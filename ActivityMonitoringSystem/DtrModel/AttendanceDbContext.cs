@@ -27,7 +27,9 @@ namespace DtrModel
         public DbSet<Users> Users { get; set; }
         public DbSet<WorkLocation> WorkLoc { get; set; }
         public DbSet<WorkSchedule> WorkSchedule { get; set; }
- 
+        public DbSet<DtrProcessLog>DtrProcessLog { get; set; }
+        public DbSet<TempTableDtr> TempTableDtr { get; set; }
+
         public AttendanceDbContext(string nameOrConnectionString)
             : base(nameOrConnectionString)
         {
