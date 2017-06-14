@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,46 +8,52 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Excel= Microsoft.Office.Interop.Excel;   //microsoft Excel 14 object in references-> COM tab
 using DtrController.Tools.DtrFileReader.Common;
+using DtrModel.Entities;
+using DtrCommon;
+
 
 
 namespace DtrController.Tools.DtrFileReader 
 {
     public class DtrFileReader
     {
-        //IDtrFile _dtrFile;
-        //String _dtrFolderPath;
-       
+        DtrFileModel _Dtr;
+        
+        
+
+        #region **************** comment *********************
+        //public DtrFileReader (IDtrFile dtrfile, IList dtrDataList)
+        //{
+        //    _dtrDataList = dtrDataList;
+        //    dtrfile.SetController(this);
+        //}
+
+        //public IList _DtrDataList
+        //{
+        //    get { return ArrayList.ReadOnly(_dtrDataList); }
+
+        //}
 
 
-        public List<IDtrFile> Dtrlist { get; } 
-        public DtrFileReader()
+
+        //public List<IDtrFile> Dtrlist { get; } 
+        //public DtrFileReader()
+        //{
+        //    Dtrlist = new List<IDtrFile>();
+        //}
+
+
+        #endregion*************************
+
+        
+
+        public List<DtrFileModel> ReadFile(string dtrFile)
         {
-            Dtrlist = new List<IDtrFile>();
-        }
-
-        public void ReadDtrFileFromFolder(String folderPath)
-        {
-            String[] dtrFiles= Directory.GetFiles(folderPath);
-            if (folderPath.Equals(String.Empty))
-            {
-                throw new Exception("Empty path....");
-
-            }
-
-            foreach (String dtrFile in dtrFiles)
-            {
-
-                Dtrlist.Add( this.ReadFile(dtrFile)); 
-                //Dtrlist.Add(dtrFile);
-            }
-
-
-        }
-        private IDtrFile ReadFile(string dtrFile)
-        {
-            
+            var list = new List<DtrFileModel>();
+            string _resourceId = "";
             Excel.Application xlsApp = new Excel.Application();
             Excel.Workbook xlsWorkBk = xlsApp.Workbooks.Open(dtrFile);
+            xlsWorkBk.Date1904 = true;
             Excel.Worksheet xlsWorkSht = xlsWorkBk.Sheets["DTR"];
             Excel.Range xlsRange = xlsWorkSht.UsedRange;
 
@@ -61,26 +68,51 @@ namespace DtrController.Tools.DtrFileReader
                 for (int j = 1; j <= colCount; j++)
                 {
                     //new line
-                    if (j == 1)
-                        Console.Write("\r\n");
+                    //if (j == 1)
+                    // Console.Write("\r\n");
 
                     //write the value to the console
                     //if (xlsRange.Cells[i, j] != null && xlsRange.Cells[i, j].Value2 != null)
                     //    Console.Write(xlsRange.Cells[i, j].Value2.ToString() + "\t");
-                    if (xlsRange.Cells[i, j] != null && xlsRange.Cells[i, j].Value2 != null)
+                    //if (xlsRange.Cells[i, j] != null && xlsRange.Cells[i, j].Value2 != null)
+                    //{
+
+                    if (String.Equals(xlsRange.Cells[i, j].Value2, "1. RESOURCE ID:"))
                     {
 
-                        if (String.Equals(xlsRange.Cells[i, j].Value2, "1. RESOURCE ID:"))
-                        {
-                            
-                            var ID = xlsRange.Cells[i, j + 1].Value2.ToString();
-                        }
-                           
+                        _resourceId = xlsRange.Cells[i, j + 1].Value2.ToString();
                     }
-                            
-                        
+
+                    //}
+
+                    if (i >= 12 && i <= rowCount && j <= 18)
+
+                    {
+                        _Dtr = new DtrFileModel();
+                        _Dtr.ClientName = xlsRange.Cells[i, 6].Value.ToString();
+                        _Dtr.Project = xlsRange.Cells[i, 8].Value.ToString();
+                        _Dtr.WorkLocation = xlsRange.Cells[i, 9].Value.ToString();
+                        _Dtr.TimeInSchedule = xlsRange.Cells[i, 10].Value.ToString();
+                        _Dtr.DateIn = DateTime.Parse(xlsRange.Cells[i, 11].Value.ToString());
+                        var test = xlsRange.Cells[i, 15].Value.ToString();
+                        _Dtr.TimeIn = xlsRange.Cells[i, 12].Value == null ? null : DateTime.Parse(xlsRange.Cells[i, 12].Value.ToString());
+                        _Dtr.DateOut = DateTime.Parse(xlsRange.Cells[i, 13].Value.ToString());
+                        _Dtr.TimeOut = xlsRange.Cells[i, 14].Value == null ? null : DateTime.Parse(xlsRange.Cells[i, 14].Value.ToString());
+                        _Dtr.WorkingHours = xlsRange.Cells[i, 15].Value == null || xlsRange.Cells[i, 15].Value == "" ? 0 : int.Parse(xlsRange.Cells[i, 15].Value.ToString());
+                        _Dtr.TimeOffReason = xlsRange.Cells[i, 16].Value.ToString();
+                        _Dtr.Notes = xlsRange.Cells[i, 18].Value.ToString();
+                        _Dtr.ResourceId = _resourceId;
+                        //this.updateViewDetailValues(_Dtr);
+                        list.Add(_Dtr);
+
+                    }
+
+
                 }
+
+
             }
+
 
 
             //cleanup
@@ -103,9 +135,16 @@ namespace DtrController.Tools.DtrFileReader
             xlsApp.Quit();
             Marshal.ReleaseComObject(xlsApp);
 
-            return null;
+            return list;
 
         }
 
+
+        #region////***************************************** D T R  L O G S *****************************************////
+   
+       
+        #endregion
+
+        
     }
 }
