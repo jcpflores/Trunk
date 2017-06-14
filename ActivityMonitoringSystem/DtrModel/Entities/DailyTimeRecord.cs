@@ -34,14 +34,10 @@ namespace DtrModel.Entities
         public int Late { get; set; }
         public int Overtime { get; set; }
         public string ReferenceId { get; set; }
-
         public int ProjectId { get; set; }
         public string WorkLocation { get; set; }
-
         public int ClientId { get; set; }
-
         public int TimeOffReasonId { get; set; }
-
         public DateTime DateProcess { get; set; }   
 
         public virtual ICollection<TimeoffReason> TimeOffReason { get; set;}
