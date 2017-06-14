@@ -74,6 +74,10 @@
     <Compile Include="Tools\DtrFileReader\IDtrFile.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DtrCommon\DtrCommon.csproj">
+      <Project>{a7e39d50-64ab-47df-8c71-aa98542db897}</Project>
+      <Name>DtrCommon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DtrDelegates\DtrDelegates.csproj">
       <Project>{a8fc8c26-3251-46ff-9547-330135c104c3}</Project>
       <Name>DtrDelegates</Name>
@@ -89,7 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="TestResults\packages.config" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">
