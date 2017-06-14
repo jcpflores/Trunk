@@ -5,28 +5,32 @@ using System.Text;
 using System.Threading.Tasks;
 using DtrController.Tools.DtrFileReader;
 
+
 namespace DtrController.Tools.DtrFileReader.Common
 {
-    public class DtrFileModel : IDtrFile
+    public class DtrFileModel 
     {
         public DtrFileModel()
         { }
-        public String getDtrFilePath { get; set; }
-        public String Sheet { get; set; }
+       
 
-        public DateTime Date { get; set; }
-        public DateTime TimeIn { get; set; }
-        public DateTime TimeOut { get; set; }
-        public String ProcessRole { get; set; }
-        public String ClientName { get; set; }
-        public String Contact { get; set; }
-        public String Project { get; set; }
-        public String WorkLocation { get; set; }
-        public String TimeInSchedule { get; set; }
-        public String Notes { get; set; }
-        public String Late { get; set; }
-        public String Overtime { get; set; }
-        public String Undertime { get; set; }
-
+        public DateTime DateIn { get; set; }
+        public DateTime DateOut { get; set; }
+        public string TimeIn { get; set; }
+        public string TimeOut { get; set; }
+        public string ProcessRole { get; set; }
+        public string ClientName { get; set; }
+        public string Contact { get; set; }
+        public string Project { get; set; }
+        public string WorkLocation { get; set; }
+        public string TimeInSchedule { get; set; }
+        public string Notes { get; set; }    
+        public string TimeOffReason { get; set; }
+        public int Late { get; set; }
+        public int Overtime { get; set; }
+        public string Undertime { get; set; }
+        public Nullable<int> WorkingHours { get; set; }
+        public string ResourceId { get; set; }
+      
     }
 }
