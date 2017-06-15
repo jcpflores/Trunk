@@ -17,7 +17,13 @@ namespace DtrView
         public event GetDtrDetailsEventHandler GetDtrDetailsEvent;
         public event SaveDtrInfoEventHandler SaveDtrInfoEvent;
         public View()
-        { }
+        {
+            Main mainForm = new Main();
+
+            mainForm.Show();
+            mainForm.GetFilesFromLocalEvent += GetFilesFromLocal;
+
+        }
 
         public void ShowFiles(string[] discoveredFiles)
         {
