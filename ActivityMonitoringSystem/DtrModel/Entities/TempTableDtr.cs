@@ -1,15 +1,18 @@
-﻿using System;
+﻿using SQLite.CodeFirst;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DtrModel.Interface;
 
 namespace DtrModel.Entities
 {
-  public class TempTableDtr
+  public class TempTableDtr : IEntity
     {
-        public string EmpId { get; set; }
+        
+        public int Id { get; set; }
 
         public string Contact { get; set; }
 
