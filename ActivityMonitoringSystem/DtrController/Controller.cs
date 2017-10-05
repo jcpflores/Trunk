@@ -55,7 +55,7 @@ namespace DtrController
         }
         private void _view_GetFilesFromLocalEvent(string localPath)
         {
-            //this.ReadDtrFiles(localPath);
+            _view.ShowMessage(localPath);
         }
         #endregion
 
