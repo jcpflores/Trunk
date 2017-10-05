@@ -19,7 +19,7 @@ namespace AttendanceApp
         public Main()
         {
             InitializeComponent();
-
+            this.labelToday.Text = System.DateTime.Now.ToString("dddd, MMMM dd yyyy");
             _controller = new Controller();
             _controller.SetView(this);
         }
@@ -50,21 +50,31 @@ namespace AttendanceApp
         }
         #endregion
 
-        private void btnUploadDtr_Click(object sender, EventArgs e)
+        private void btnDtr_Click(object sender, EventArgs e)
         {
-            string source = string.Empty;
-            using (OpenFileDialog openFile = new OpenFileDialog())
-            {
-                openFile.Multiselect = false;
-                openFile.CheckPathExists = true;
-                openFile.Filter = "Excel | *.xlsx";
-                if (openFile.ShowDialog() == DialogResult.OK)
-                {
-                    source = openFile.FileName;
-                }
-            }
+            DailyTimeRecordsForm dtrForm = new DailyTimeRecordsForm();
+            dtrForm.MdiParent = this;
+            this.panelProcessArea.Controls.Clear();
+            dtrForm.Size = this.panel1.Size;
+            this.panelProcessArea.Controls.Add(dtrForm);
+            dtrForm.Show();
+            dtrForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
 
-            GetFilesFromLocalEvent?.Invoke(source);
+            //string source = string.Empty;
+            //using (OpenFileDialog openFile = new OpenFileDialog())
+            //{
+            //    openFile.Multiselect = false;
+            //    openFile.CheckPathExists = true;
+            //    openFile.Filter = "Excel | *.xlsx";
+            //    if (openFile.ShowDialog() == DialogResult.OK)
+            //    {
+            //        source = openFile.FileName;
+            //    }
+            //}
+
+            //GetFilesFromLocalEvent?.Invoke(source);
         }
     }
 }
