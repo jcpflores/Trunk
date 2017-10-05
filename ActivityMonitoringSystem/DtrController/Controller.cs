@@ -23,21 +23,51 @@ namespace DtrController
         IView _view = null;
         DtrModel.AttendanceDbContext context = DtrModel.Model.GetAttendanceDbContext;
 
-        #region***************************  D T R   P R O C E S S  ***************************
-
-
-        #region ***************************  V I E W   P R O C E S S  ***************************
-
-        
+        #region IController
         public void SetView(IView view)
         {
             _view = view;
             _view.GetFilesFromLocalEvent += _view_GetFilesFromLocalEvent;
             _view.GetDtrDetailsEvent += _view_GetDtrDetailsEvent;
             _view.SaveDtrInfoEvent += _view_SaveDtrInfoEvent;
-
-
         }
+
+        public void ReadDtrInformation(string path)
+        { }
+
+        public void GetResourceInformation(List<UnprocessedResource> unprocessed)
+        { }
+
+        public void GetResourceInformation(UnprocessedResource unprocessed)
+        { }
+
+        public void UpdateResource(DtrInfo info)
+        { }
+
+        private void _view_SaveDtrInfoEvent(string _empID)
+        {
+            //SaveDtrData(_empID);
+            _view.ShowMessage("DTR is successfully save!..");
+        }
+        private void _view_GetDtrDetailsEvent(string resourceId)
+        {
+            //_view.ShowDtrInfo(GetDtrInfo(resourceId));
+        }
+        private void _view_GetFilesFromLocalEvent(string localPath)
+        {
+            //this.ReadDtrFiles(localPath);
+        }
+        #endregion
+
+        #region Old Code
+        /*
+        #region***************************  D T R   P R O C E S S  ***************************
+
+
+        #region ***************************  V I E W   P R O C E S S  ***************************
+
+
+
 
         private void _view_SaveDtrInfoEvent(string _empID)
         {
@@ -387,6 +417,8 @@ namespace DtrController
         }
 
         #endregion
+        #endregion
+        */
         #endregion
     }
 }
