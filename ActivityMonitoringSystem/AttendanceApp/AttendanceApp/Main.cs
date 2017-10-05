@@ -62,19 +62,12 @@ namespace AttendanceApp
             | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
 
-            //string source = string.Empty;
-            //using (OpenFileDialog openFile = new OpenFileDialog())
-            //{
-            //    openFile.Multiselect = false;
-            //    openFile.CheckPathExists = true;
-            //    openFile.Filter = "Excel | *.xlsx";
-            //    if (openFile.ShowDialog() == DialogResult.OK)
-            //    {
-            //        source = openFile.FileName;
-            //    }
-            //}
+            dtrForm.GetFilesFromLocalEvent += DtrForm_GetFilesFromLocalEvent;
+        }
 
-            //GetFilesFromLocalEvent?.Invoke(source);
+        private void DtrForm_GetFilesFromLocalEvent(string localPath)
+        {
+            GetFilesFromLocalEvent?.Invoke(localPath);
         }
     }
 }
