@@ -16,6 +16,7 @@ namespace AttendanceApp
     public partial class Main : Form, DtrInterfaces.IView
     {
         DtrController.Controller _controller = null;
+        DtrController.Tools.DtrFileReader.DtrExcelFile _dtrfile = new DtrController.Tools.DtrFileReader.DtrExcelFile();
         public Main()
         {
             InitializeComponent();
@@ -67,7 +68,8 @@ namespace AttendanceApp
 
         private void DtrForm_GetFilesFromLocalEvent(string localPath)
         {
-            GetFilesFromLocalEvent?.Invoke(localPath);
+            // GetFilesFromLocalEvent?.Invoke(localPath);
+            _dtrfile.ReadDtrFileFromFolder(localPath);
         }
     }
 }
