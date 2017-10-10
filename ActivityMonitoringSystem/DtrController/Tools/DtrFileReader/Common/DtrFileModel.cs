@@ -23,7 +23,7 @@ namespace DtrController.Tools.DtrFileReader.Common
         public string TechnicalRole { get; set; }
         public string Technology { get; set; }
         public string SkillLevel { get; set; }
-        public DateTime MonthYear { get; set; }
+        public string MonthYear { get; set; }
 
 
         public ICollection<ActualInOut> ActualInOut { get; set; }

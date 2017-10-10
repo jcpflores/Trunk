@@ -52,6 +52,7 @@ namespace DtrController.Tools.DtrFileReader
                     ContractRef = xlsRange.Cells[7, 6].Value.ToString(),
                     Project = xlsRange.Cells[8, 6].Value.ToString(),
                     WorkLocation = xlsRange.Cells[5, 9].Value.ToString(),
+                    MonthYear = xlsRange.Cells[12, 2].Value.ToString("y"),
                     TimeInSchedule = DateTime.FromOADate(xlsRange.Cells[6,9].Value == null ? 0 : double.Parse(xlsRange.Cells[6, 9].Value.ToString())),                                       
 
                     ActualInOut = new List<ActualInOut> { }
