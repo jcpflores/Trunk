@@ -22,12 +22,12 @@ namespace DtrController.Tools.DtrFileReader
             List<DtrFileModel> dtrModel = new List<DtrFileModel>();
 
             DtrFileReader dfr = new DtrFileReader();
-            string path = Path.GetDirectoryName(FolderPath);
-            string[] dtrFiles = Directory.GetFiles(path);
+            string[] dtrFiles = Directory.GetFiles(FolderPath);
 
             foreach (String dtrFile in dtrFiles)
             {
-                ReadExcelFileEmployeeDetail(dtrFile);
+                if(dtrFile.EndsWith("xlsx"))
+                    ReadExcelFileEmployeeDetail(dtrFile);
           
             }
         }

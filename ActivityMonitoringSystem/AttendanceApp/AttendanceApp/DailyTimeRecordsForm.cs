@@ -23,14 +23,11 @@ namespace AttendanceApp
         private void btnSetSource_Click(object sender, EventArgs e)
         {
             string source = string.Empty;
-            using (OpenFileDialog openFile = new OpenFileDialog())
+            using (FolderBrowserDialog openFolder = new FolderBrowserDialog())
             {
-                openFile.Multiselect = false;
-                openFile.CheckPathExists = true;
-                openFile.Filter = "Excel | *.xlsx";
-                if (openFile.ShowDialog() == DialogResult.OK)
+                if (openFolder.ShowDialog() == DialogResult.OK)
                 {
-                    source = openFile.FileName;
+                    source = openFolder.SelectedPath;
                 }
             }
 
