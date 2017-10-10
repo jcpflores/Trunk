@@ -13,9 +13,9 @@ namespace DtrController.Tools.DtrFileReader.Common
         public DtrFileModel()
         { }
 
-
-        public DateTime DateIn { get; set; }
-        public DateTime DateOut { get; set; }
+        public string ResourceId { get; set; }
+        public string DateIn { get; set; }
+        public string DateOut { get; set; }
         public string TimeIn { get; set; }
         public string TimeOut { get; set; }
         public string ProcessRole { get; set; }
@@ -23,19 +23,17 @@ namespace DtrController.Tools.DtrFileReader.Common
         public string ContractRef { get; set; }
         public string Project { get; set; }
         public string WorkLocation { get; set; }
-        public string TimeInSchedule { get; set; }
+        public DateTime TimeInSchedule { get; set; }
         public string Notes { get; set; }
         public string TimeOffReason { get; set; }
         public int Late { get; set; }
         public int Overtime { get; set; }
         public string Undertime { get; set; }
-        public Nullable<int> WorkingHours { get; set; }
-        public string ResourceId { get; set; }
+        public Nullable<int> WorkingHours { get; set; }   
         public string TechnicalRole { get; set; }
         public string Technology { get; set; }
-        public string SkillLevel { get; set; }
+        public string SkillLevel { get; set; }            
 
-
-
+        public ICollection<ActualInOut> ActualInOut { get; set; }
     }
 }

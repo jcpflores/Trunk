@@ -5,18 +5,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
+using DtrController.Tools.DtrFileReader.Common;
 
 namespace DtrController.Tools.DtrFileReader
 {
     public class DtrExcelFile
     {
-
+            
 
         DtrController.Tools.DtrFileReader.Common.DtrFileModel DtrFileModel = new DtrController.Tools.DtrFileReader.Common.DtrFileModel();
 
+
         public void ReadDtrFileFromFolder(string FolderPath)
         {
-            string[] TimeIn, TimeOut;
+           
+            List<DtrFileModel> dtrModel = new List<DtrFileModel>();
+
             DtrFileReader dfr = new DtrFileReader();
             string path = Path.GetDirectoryName(FolderPath);
             string[] dtrFiles = Directory.GetFiles(path);
@@ -24,16 +28,14 @@ namespace DtrController.Tools.DtrFileReader
             foreach (String dtrFile in dtrFiles)
             {
                 ReadExcelFileEmployeeDetail(dtrFile);
-                TimeIn = ReadExcelFileTimeIn(dtrFile);
-                TimeOut = ReadExcelFileTimeOut(dtrFile);
-
-                List<string> ArrayListTimeIn = new List<string>(TimeIn);
-                List<string> ArrayListTimeOn = new List<string>(TimeOut);
+          
             }
         }
 
 
-        public void ReadExcelFileEmployeeDetail(string FolderPath)
+
+
+        public DtrFileModel ReadExcelFileEmployeeDetail(string FolderPath)
         {
             Excel.Application xlsApp = new Excel.Application();
             Excel.Workbook xlsWorkBk = xlsApp.Workbooks.Open(FolderPath);
@@ -41,88 +43,74 @@ namespace DtrController.Tools.DtrFileReader
             Excel.Worksheet xlsWorkSht = xlsWorkBk.Sheets["DTR"];
             Excel.Range xlsRange = xlsWorkSht.UsedRange;
 
-            DtrFileModel.ResourceId = xlsRange.Cells[5, 3].Value.ToString();
-            DtrFileModel.ProcessRole = xlsRange.Cells[6, 3].Value.ToString();
-            DtrFileModel.TechnicalRole = xlsRange.Cells[7, 3].Value.ToString();
-            DtrFileModel.Technology = xlsRange.Cells[8, 3].Value.ToString();
-            DtrFileModel.SkillLevel = xlsRange.Cells[5, 6].Value.ToString();
-            DtrFileModel.ClientName = xlsRange.Cells[6, 6].Value.ToString();
-            DtrFileModel.ContractRef = xlsRange.Cells[7, 6].Value.ToString();
-            DtrFileModel.Project = xlsRange.Cells[8, 6].Value.ToString();
-            DtrFileModel.WorkLocation = xlsRange.Cells[5, 9].Value.ToString();
-            double _TimeIn = xlsRange.Cells[6, 9].Value == null ? 0 : double.Parse(xlsRange.Cells[6, 9].Value.ToString());
-            DateTime _ConvTimeIn = DateTime.FromOADate(_TimeIn);
-            DtrFileModel.TimeInSchedule = _ConvTimeIn.ToString("t");
+            DtrFileModel dtrModel = null;
 
-            xlsWorkBk.Close(false);
-            xlsApp.Quit();
-        }
+            try
+            {              
 
-        public string[] ReadExcelFileTimeIn(string FolderPath)
-        {
-
-            Excel.Application xlsApp = new Excel.Application();
-            Excel.Workbook xlsWorkBk = xlsApp.Workbooks.Open(FolderPath);
-            xlsWorkBk.Date1904 = true;
-            Excel.Worksheet xlsWorkSht = xlsWorkBk.Sheets["DTR"];
-            Excel.Range xlsRange = xlsWorkSht.UsedRange;
-
-            string[] ExcelFile = new string[31];
-
-            for (int i = 1; i <= 1; i++)
-            {
-                int ctr = 0;
-                for (int j = 12; j <= 42; j++)
+                dtrModel = new DtrFileModel()
                 {
-                    double day1 = xlsRange.Cells[j, 3].Value == null ? 0 : double.Parse(xlsRange.Cells[j, 3].Value.ToString());
-                    DateTime conv = DateTime.FromOADate(day1);
+                    ResourceId = xlsRange.Cells[5, 3].Value.ToString(),
+                    ProcessRole = xlsRange.Cells[6, 3].Value.ToString(),
+                    TechnicalRole = xlsRange.Cells[7, 3].Value.ToString(),
+                    Technology = xlsRange.Cells[8, 3].Value.ToString(),
+                    SkillLevel = xlsRange.Cells[5, 6].Value.ToString(),
+                    ClientName = xlsRange.Cells[6, 6].Value.ToString(),
+                    ContractRef = xlsRange.Cells[7, 6].Value.ToString(),
+                    Project = xlsRange.Cells[8, 6].Value.ToString(),
+                    WorkLocation = xlsRange.Cells[5, 9].Value.ToString(),
+                    TimeInSchedule = DateTime.FromOADate(xlsRange.Cells[6,9].Value == null ? 0 : double.Parse(xlsRange.Cells[6, 9].Value.ToString())),                                       
 
-                    ExcelFile[ctr] += conv.ToString("H:mm");
-                    ctr += 1;
+                    ActualInOut = new List<ActualInOut> { }
+
+                };
+
+                ActualInOut tempInOut;
+
+                for (int i = 12; i <= 42; i++)
+                {
+                    tempInOut = new ActualInOut();
+
+                    // Date 
+                    tempInOut.DateIn = xlsRange.Cells[i, 2].Value == null ? 0 : xlsRange.Cells[i, 2].Value.ToString();
+                    tempInOut.DateOut = xlsRange.Cells[i, 4].Value == null ? 0 : xlsRange.Cells[i, 4].Value.ToString();
+
+                    //Time In
+                    tempInOut.TimeIn = DateTime.FromOADate(xlsRange.Cells[i, 3].Value == null ? 0 : double.Parse(xlsRange.Cells[i, 3].Value.ToString()));
+
+                    //Time Out
+                    tempInOut.TimeOut = DateTime.FromOADate(xlsRange.Cells[i, 5].Value == null ? 0 : double.Parse(xlsRange.Cells[i, 5].Value.ToString()));
+
+                    tempInOut.WorkHours = xlsRange.Cells[i, 6].Value == null ? 0 : xlsRange.Cells[i, 6].Value.ToString();
+                    tempInOut.TimeOffReason = xlsRange.Cells[i, 7].Value == null ? "" : xlsRange.Cells[i, 7].Value.ToString();
+                    tempInOut.BillableWorkHours = xlsRange.Cells[i, 8].Value == null ? 0 : xlsRange.Cells[i, 8].Value.ToString();
+                    tempInOut.Notes = xlsRange.Cells[i, 9].Value == null ? "" : xlsRange.Cells[i, 9].Value.ToString();
+                    tempInOut.WorkLocation = xlsRange.Cells[i, 10].Value == null ? "" : xlsRange.Cells[i, 10].Value.ToString();
+                    
+                    //Add to Collection
+                    dtrModel.ActualInOut.Add(tempInOut);                 
                 }
 
-                xlsWorkBk.Close(false);
-                xlsApp.Quit();
+              
+            }       
+          
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
 
-            return ExcelFile;
-
-        }
-
-        
-
-        public string[] ReadExcelFileTimeOut(string FolderPath)
-        {
-
-            Excel.Application xlsApp = new Excel.Application();
-            Excel.Workbook xlsWorkBk = xlsApp.Workbooks.Open(FolderPath);
-            xlsWorkBk.Date1904 = true;
-            Excel.Worksheet xlsWorkSht = xlsWorkBk.Sheets["DTR"];
-            Excel.Range xlsRange = xlsWorkSht.UsedRange;
             
-            string[] ExcelFile = new string[31];
-
-            for (int i = 1; i <= 1; i++)
+            finally
             {
-
-                int ctr = 0;
-                for (int j = 12; j <= 42; j++)
-                {
-                    double day1 = xlsRange.Cells[j, 5].Value == null ? 0 : double.Parse(xlsRange.Cells[j, 5].Value.ToString());
-                    DateTime conv = DateTime.FromOADate(day1);
-
-                    ExcelFile[ctr] += conv.ToString("H:mm");
-                    ctr += 1;
-                }
-
-
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(xlsWorkSht);
                 xlsWorkBk.Close(false);
                 xlsApp.Quit();
+                xlsWorkBk = null;
+                xlsApp = null;               
             }
-
-            return ExcelFile;
-        }
-
+            return dtrModel;
+            
+        }        
 
 
     }
