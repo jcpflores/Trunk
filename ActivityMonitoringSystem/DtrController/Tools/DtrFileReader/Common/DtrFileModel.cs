@@ -13,9 +13,7 @@ namespace DtrController.Tools.DtrFileReader.Common
         public DtrFileModel()
         { }
 
-        public string ResourceId { get; set; }
-        public string DateIn { get; set; }
-        public string DateOut { get; set; }
+        public string ResourceId { get; set; }      
         public string TimeIn { get; set; }
         public string TimeOut { get; set; }
         public string ProcessRole { get; set; }
@@ -33,6 +31,8 @@ namespace DtrController.Tools.DtrFileReader.Common
         public string TechnicalRole { get; set; }
         public string Technology { get; set; }
         public string SkillLevel { get; set; }            
+        public DateTime MonthYear { get; set; }
+      
 
         public ICollection<ActualInOut> ActualInOut { get; set; }
     }

@@ -9,7 +9,8 @@ namespace DtrController.Tools.DtrFileReader.Common
     public class ActualInOut
     {
         
-        public string Date { get; set; }     
+        public string DateIn { get; set; }
+        public string DateOut { get; set; }
         public DateTime TimeIn { get; set; }
         public DateTime TimeOut { get; set; }
         public string WorkHours { get; set; }

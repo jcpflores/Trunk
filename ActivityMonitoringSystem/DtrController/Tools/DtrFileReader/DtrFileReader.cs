@@ -93,10 +93,10 @@ namespace DtrController.Tools.DtrFileReader
                         _Dtr.Project = xlsRange.Cells[i, 8].Value.ToString();
                         _Dtr.WorkLocation = xlsRange.Cells[i, 9].Value.ToString();
                         _Dtr.TimeInSchedule = xlsRange.Cells[i, 10].Value.ToString();
-                        _Dtr.DateIn = DateTime.Parse(xlsRange.Cells[i, 11].Value.ToString());
+                     //   _Dtr.DateIn = DateTime.Parse(xlsRange.Cells[i, 11].Value.ToString());
                         var test = xlsRange.Cells[i, 15].Value.ToString();
                         _Dtr.TimeIn = xlsRange.Cells[i, 12].Value == null ? null : DateTime.Parse(xlsRange.Cells[i, 12].Value.ToString());
-                        _Dtr.DateOut = DateTime.Parse(xlsRange.Cells[i, 13].Value.ToString());
+                       // _Dtr.DateOut = DateTime.Parse(xlsRange.Cells[i, 13].Value.ToString());
                         _Dtr.TimeOut = xlsRange.Cells[i, 14].Value == null ? null : DateTime.Parse(xlsRange.Cells[i, 14].Value.ToString());
                         _Dtr.WorkingHours = xlsRange.Cells[i, 15].Value == null || xlsRange.Cells[i, 15].Value == "" ? 0 : int.Parse(xlsRange.Cells[i, 15].Value.ToString());
                         _Dtr.TimeOffReason = xlsRange.Cells[i, 16].Value.ToString();
