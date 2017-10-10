@@ -22,6 +22,7 @@ namespace DtrController
 
         IView _view = null;
         DtrModel.AttendanceDbContext context = DtrModel.Model.GetAttendanceDbContext;
+        Tools.DtrFileReader.DtrExcelFile _dtrfile = new DtrController.Tools.DtrFileReader.DtrExcelFile();
 
         #region IController
         public void SetView(IView view)
@@ -55,7 +56,8 @@ namespace DtrController
         }
         private void _view_GetFilesFromLocalEvent(string localPath)
         {
-            _view.ShowMessage(localPath);
+            _dtrfile.ReadDtrFileFromFolder(localPath);
+            //_view.ShowMessage(localPath);
         }
         #endregion
 
