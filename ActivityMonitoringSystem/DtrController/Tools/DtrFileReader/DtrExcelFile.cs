@@ -72,8 +72,7 @@ namespace DtrController.Tools.DtrFileReader
                     tempInOut = new ActualInOut();
 
                     // Date 
-                    tempInOut.DateIn = xlsRange.Cells[i, 2].Value == null ? 0 : xlsRange.Cells[i, 2].Value.ToString();
-                    tempInOut.DateOut = xlsRange.Cells[i, 4].Value == null ? 0 : xlsRange.Cells[i, 4].Value.ToString();
+                    tempInOut.Date = xlsRange.Cells[i, 2].Value == null ? "" : xlsRange.Cells[i, 2].Value.ToString();                    
 
                     //Time In
                     tempInOut.TimeIn = DateTime.FromOADate(xlsRange.Cells[i, 3].Value == null ? 0 : double.Parse(xlsRange.Cells[i, 3].Value.ToString()));
