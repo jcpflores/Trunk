@@ -11,10 +11,7 @@ namespace DtrController.Tools.DtrFileReader
 {
     public class DtrExcelFile
     {
-            
-
         DtrController.Tools.DtrFileReader.Common.DtrFileModel DtrFileModel = new DtrController.Tools.DtrFileReader.Common.DtrFileModel();
-
 
         public void ReadDtrFileFromFolder(string FolderPath)
         {
@@ -28,12 +25,8 @@ namespace DtrController.Tools.DtrFileReader
             {
                 if(dtrFile.EndsWith("xlsx"))
                     ReadExcelFileEmployeeDetail(dtrFile);
-          
             }
         }
-
-
-
 
         public DtrFileModel ReadExcelFileEmployeeDetail(string FolderPath)
         {
