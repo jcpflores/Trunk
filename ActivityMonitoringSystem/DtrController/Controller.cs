@@ -16,13 +16,19 @@ namespace DtrController
 {
     public class Controller : IController
     {
+        IView _view = null;
+        DtrModel.AttendanceDbContext _context = null;
+        Tools.DtrFileReader.DtrExcelFile _dtrfile = new DtrController.Tools.DtrFileReader.DtrExcelFile();
+
         public Controller()
         {
+            InitializeModel();
         }
 
-        IView _view = null;
-        DtrModel.AttendanceDbContext context = DtrModel.Model.GetAttendanceDbContext;
-        Tools.DtrFileReader.DtrExcelFile _dtrfile = new DtrController.Tools.DtrFileReader.DtrExcelFile();
+        private void InitializeModel()
+        {
+            _context = DtrModel.Model.GetAttendanceDbContext;
+        }
 
         #region IController
         public void SetView(IView view)
@@ -56,8 +62,17 @@ namespace DtrController
         }
         private void _view_GetFilesFromLocalEvent(string localPath)
         {
-            _dtrfile.ReadDtrFileFromFolder(localPath);
-            //_view.ShowMessage(localPath);
+            //_dtrfile.ReadDtrFileFromFolder(localPath);
+
+            ICollection<string> xlsxFiles = new List<string>();
+            foreach (string dtrFile in Directory.GetFiles(localPath))
+            {
+                if(dtrFile.EndsWith("xlsx"))
+                {
+                    xlsxFiles.Add(dtrFile);
+                }
+            }
+            _view.ShowFiles(xlsxFiles);
         }
         #endregion
 

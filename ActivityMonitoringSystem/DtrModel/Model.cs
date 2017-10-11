@@ -24,10 +24,10 @@ namespace DtrModel
 
         private static void Create(AttendanceDbContext context)
         {
-            //if (context.Set<SkillLevel>().Count() != 0)
-            //{
-            //    return;
-            //}
+            if (context.Set<SkillLevel>().Count() != 0)
+            {
+                return;
+            }
         }
     }
 }

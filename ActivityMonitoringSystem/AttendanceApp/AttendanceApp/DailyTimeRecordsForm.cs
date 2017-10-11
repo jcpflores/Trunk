@@ -31,6 +31,7 @@ namespace AttendanceApp
                 }
             }
 
+            this.textBox1.Text = source;
             GetFilesFromLocalEvent?.Invoke(source);
         }
     }
