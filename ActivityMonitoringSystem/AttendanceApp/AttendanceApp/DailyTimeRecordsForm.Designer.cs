@@ -38,6 +38,7 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnSave = new System.Windows.Forms.Button();
+            this.btnSaveCurrent = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -57,6 +58,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnSaveCurrent);
             this.tabPage1.Controls.Add(this.btnSave);
             this.tabPage1.Controls.Add(this.dataGridView1);
             this.tabPage1.Controls.Add(this.comboBox1);
@@ -102,6 +104,7 @@
             this.btnReview.TabIndex = 2;
             this.btnReview.Text = "Review";
             this.btnReview.UseVisualStyleBackColor = true;
+            this.btnReview.Click += new System.EventHandler(this.btnReview_Click);
             // 
             // lblDiscovered
             // 
@@ -142,18 +145,30 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(17, 107);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(399, 77);
+            this.dataGridView1.Size = new System.Drawing.Size(408, 77);
             this.dataGridView1.TabIndex = 6;
             // 
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(340, 190);
+            this.btnSave.Location = new System.Drawing.Point(350, 190);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 7;
-            this.btnSave.Text = "Save";
+            this.btnSave.Text = "Save All";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnSaveCurrent
+            // 
+            this.btnSaveCurrent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSaveCurrent.Location = new System.Drawing.Point(17, 190);
+            this.btnSaveCurrent.Name = "btnSaveCurrent";
+            this.btnSaveCurrent.Size = new System.Drawing.Size(89, 23);
+            this.btnSaveCurrent.TabIndex = 8;
+            this.btnSaveCurrent.Text = "Save Current";
+            this.btnSaveCurrent.UseVisualStyleBackColor = true;
+            this.btnSaveCurrent.Click += new System.EventHandler(this.btnSaveCurrent_Click);
             // 
             // DailyTimeRecordsForm
             // 
@@ -184,5 +199,6 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnSaveCurrent;
     }
 }

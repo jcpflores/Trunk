@@ -1,4 +1,5 @@
 ﻿using DtrCommon;
+using System.Collections.Generic;
 
 namespace DtrDelegates
 {
@@ -6,7 +7,7 @@ namespace DtrDelegates
 
     public delegate void GetFilesFromRemoteEventHandler(string remotePath);
 
-    public delegate void ParseFilesEventHandler(string[] filesToProcess);
+    public delegate void ParseFilesEventHandler(ICollection<string> filesToProcess);
 
     public delegate void GetDtrDetailsEventHandler(string resourceId);
 

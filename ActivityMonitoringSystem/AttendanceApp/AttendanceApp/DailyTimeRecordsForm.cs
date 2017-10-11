@@ -19,6 +19,8 @@ namespace AttendanceApp
         }
 
         public event GetFilesFromLocalEventHandler GetFilesFromLocalEvent;
+        public event ParseFilesEventHandler ParseFilesEvent;
+        public event SaveDtrInfoEventHandler SaveDtrInfoEvent;
 
         private void btnSetSource_Click(object sender, EventArgs e)
         {
@@ -33,6 +35,21 @@ namespace AttendanceApp
 
             this.textBox1.Text = source;
             GetFilesFromLocalEvent?.Invoke(source);
+        }
+
+        private void btnReview_Click(object sender, EventArgs e)
+        {
+            ParseFilesEvent?.Invoke(null);
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            SaveDtrInfoEvent?.Invoke("All");
+        }
+
+        private void btnSaveCurrent_Click(object sender, EventArgs e)
+        {
+            SaveDtrInfoEvent?.Invoke("Current");
         }
     }
 }

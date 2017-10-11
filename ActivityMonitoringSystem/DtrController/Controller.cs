@@ -37,6 +37,12 @@ namespace DtrController
             _view.GetFilesFromLocalEvent += _view_GetFilesFromLocalEvent;
             _view.GetDtrDetailsEvent += _view_GetDtrDetailsEvent;
             _view.SaveDtrInfoEvent += _view_SaveDtrInfoEvent;
+            _view.ParseFilesEvent += _view_ParseFilesEvent;
+        }
+
+        private void _view_ParseFilesEvent(ICollection<string> filesToProcess)
+        {
+            _dtrfile.ReadDtrFileFromFolder(filesToProcess);
         }
 
         public void ReadDtrInformation(string path)
@@ -51,10 +57,10 @@ namespace DtrController
         public void UpdateResource(DtrInfo info)
         { }
 
-        private void _view_SaveDtrInfoEvent(string _empID)
+        private void _view_SaveDtrInfoEvent(string empID)
         {
             //SaveDtrData(_empID);
-            _view.ShowMessage("DTR is successfully save!..");
+            _view.ShowMessage("Saved " + empID);
         }
         private void _view_GetDtrDetailsEvent(string resourceId)
         {
@@ -62,8 +68,6 @@ namespace DtrController
         }
         private void _view_GetFilesFromLocalEvent(string localPath)
         {
-            //_dtrfile.ReadDtrFileFromFolder(localPath);
-
             ICollection<string> xlsxFiles = new List<string>();
             foreach (string dtrFile in Directory.GetFiles(localPath))
             {

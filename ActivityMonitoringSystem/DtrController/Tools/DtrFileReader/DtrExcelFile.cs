@@ -13,18 +13,11 @@ namespace DtrController.Tools.DtrFileReader
     {
         DtrController.Tools.DtrFileReader.Common.DtrFileModel DtrFileModel = new DtrController.Tools.DtrFileReader.Common.DtrFileModel();
 
-        public void ReadDtrFileFromFolder(string FolderPath)
+        public void ReadDtrFileFromFolder(ICollection<string> filesToProcess)
         {
-
-            List<DtrFileModel> dtrModel = new List<DtrFileModel>();
-
-            DtrFileReader dfr = new DtrFileReader();
-            string[] dtrFiles = Directory.GetFiles(FolderPath);
-
-            foreach (String dtrFile in dtrFiles)
+            foreach (String dtrFile in filesToProcess)
             {
-                if (dtrFile.EndsWith("xlsx"))
-                    ReadExcelFileEmployeeDetail(dtrFile);
+                ReadExcelFileEmployeeDetail(dtrFile);
             }
         }
 
