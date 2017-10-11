@@ -15,7 +15,7 @@ namespace DtrController.Tools.DtrFileReader
 
         public void ReadDtrFileFromFolder(string FolderPath)
         {
-           
+
             List<DtrFileModel> dtrModel = new List<DtrFileModel>();
 
             DtrFileReader dfr = new DtrFileReader();
@@ -23,7 +23,7 @@ namespace DtrController.Tools.DtrFileReader
 
             foreach (String dtrFile in dtrFiles)
             {
-                if(dtrFile.EndsWith("xlsx"))
+                if (dtrFile.EndsWith("xlsx"))
                     ReadExcelFileEmployeeDetail(dtrFile);
             }
         }
@@ -32,14 +32,14 @@ namespace DtrController.Tools.DtrFileReader
         {
             Excel.Application xlsApp = new Excel.Application();
             Excel.Workbook xlsWorkBk = xlsApp.Workbooks.Open(FolderPath);
-            xlsWorkBk.Date1904 = true;
+            xlsWorkBk.Date1904 = false;
             Excel.Worksheet xlsWorkSht = xlsWorkBk.Sheets["DTR"];
             Excel.Range xlsRange = xlsWorkSht.UsedRange;
 
             DtrFileModel dtrModel = null;
 
             try
-            {              
+            {
 
                 dtrModel = new DtrFileModel()
                 {
@@ -53,7 +53,7 @@ namespace DtrController.Tools.DtrFileReader
                     Project = xlsRange.Cells[8, 6].Value.ToString(),
                     WorkLocation = xlsRange.Cells[5, 9].Value.ToString(),
                     MonthYear = xlsRange.Cells[12, 2].Value.ToString("y"),
-                    TimeInSchedule = DateTime.FromOADate(xlsRange.Cells[6,9].Value == null ? 0 : double.Parse(xlsRange.Cells[6, 9].Value.ToString())),                                       
+                    TimeInSchedule = DateTime.FromOADate(xlsRange.Cells[6, 9].Value == null ? 0 : double.Parse(xlsRange.Cells[6, 9].Value.ToString())),
 
                     ActualInOut = new List<ActualInOut> { }
 
@@ -61,50 +61,58 @@ namespace DtrController.Tools.DtrFileReader
 
                 ActualInOut tempInOut;
 
-                for (int i = 12; i <= 42; i++)
-                {
-                    tempInOut = new ActualInOut();
+                //get the last day of the Month
+                var lastDayOfMonth = DateTime.DaysInMonth(Convert.ToDateTime(xlsRange.Cells[12, 2].Value).Year, Convert.ToDateTime(xlsRange.Cells[12, 2].Value).Month);
 
-                    // Date 
-                    tempInOut.DateIn = xlsRange.Cells[i, 2].Value == null ? "" : xlsRange.Cells[i, 2].Value.ToString();
-                    tempInOut.DateOut = xlsRange.Cells[i, 4].Value == null ? "" : xlsRange.Cells[i, 4].Value.ToString();
+                int count = 1;
+                for (int i = 12; count <= lastDayOfMonth; i++)
+                {                 
+                   
+                        tempInOut = new ActualInOut();
 
-                    //Time In
-                    tempInOut.TimeIn = DateTime.FromOADate(xlsRange.Cells[i, 3].Value == null ? 0 : double.Parse(xlsRange.Cells[i, 3].Value.ToString()));
+                        // Date In/Out and Time In/Out
 
-                    //Time Out
-                    tempInOut.TimeOut = DateTime.FromOADate(xlsRange.Cells[i, 5].Value == null ? 0 : double.Parse(xlsRange.Cells[i, 5].Value.ToString()));
+                        DateTime TimeIn = DateTime.FromOADate(xlsRange.Cells[i, 3].Value == null ? 0 : double.Parse(xlsRange.Cells[i, 3].Value.ToString()));
+                        DateTime TimeOut = DateTime.FromOADate(xlsRange.Cells[i, 5].Value == null ? 0 : double.Parse(xlsRange.Cells[i, 5].Value.ToString()));
 
-                    tempInOut.WorkHours = xlsRange.Cells[i, 6].Value == null ? 0 : xlsRange.Cells[i, 6].Value.ToString();
-                    tempInOut.TimeOffReason = xlsRange.Cells[i, 7].Value == null ? "" : xlsRange.Cells[i, 7].Value.ToString();
-                    tempInOut.BillableWorkHours = xlsRange.Cells[i, 8].Value == null ? 0 : xlsRange.Cells[i, 8].Value.ToString();
-                    tempInOut.Notes = xlsRange.Cells[i, 9].Value == null ? "" : xlsRange.Cells[i, 9].Value.ToString();
-                    tempInOut.WorkLocation = xlsRange.Cells[i, 10].Value == null ? "" : xlsRange.Cells[i, 10].Value.ToString();
-                    
-                    //Add to Collection
-                    dtrModel.ActualInOut.Add(tempInOut);                 
+                        tempInOut.DateTimeIn = xlsRange.Cells[i, 2].Value.ToString("d") + " " + String.Format("{0:T}", TimeIn);
+                        tempInOut.DateTimeOut = xlsRange.Cells[i, 4].Value.ToString("d") + " " + String.Format("{0:T}", TimeOut);
+
+
+                        tempInOut.WorkHours = xlsRange.Cells[i, 6].Value == null ? 0 : xlsRange.Cells[i, 6].Value.ToString();
+                        tempInOut.TimeOffReason = xlsRange.Cells[i, 7].Value == null ? "" : xlsRange.Cells[i, 7].Value.ToString();
+                        tempInOut.BillableWorkHours = xlsRange.Cells[i, 8].Value == null ? 0 : xlsRange.Cells[i, 8].Value.ToString();
+                        tempInOut.Notes = xlsRange.Cells[i, 9].Value == null ? "" : xlsRange.Cells[i, 9].Value.ToString();
+                        tempInOut.WorkLocation = xlsRange.Cells[i, 10].Value == null ? "" : xlsRange.Cells[i, 10].Value.ToString();
+
+                        //Add to Collection
+                        dtrModel.ActualInOut.Add(tempInOut);
+
+                    count += 1;
                 }
 
-              
-            }       
-          
+
+            }
+
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
 
-            
+
             finally
             {
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(xlsWorkSht);
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(xlsWorkSht);                
                 xlsWorkBk.Close(false);
                 xlsApp.Quit();
                 xlsWorkBk = null;
-                xlsApp = null;               
+                xlsApp = null;
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
             }
             return dtrModel;
-            
-        }        
+
+        }
 
 
     }
