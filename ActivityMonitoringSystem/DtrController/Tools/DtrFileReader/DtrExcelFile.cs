@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
-using DtrController.Tools.DtrFileReader.Common;
 using DtrDelegates;
 using DtrModel.Entities;
 
@@ -13,7 +12,6 @@ namespace DtrController.Tools.DtrFileReader
 {
     public class DtrExcelFile
     {
-        DtrController.Tools.DtrFileReader.Common.DtrFileModel DtrFileModel = new DtrController.Tools.DtrFileReader.Common.DtrFileModel();
         ICollection<TempTableDtr> _dtrList;
 
         public event DoneParsingFilesEventHandler DoneParsingFilesEvent;

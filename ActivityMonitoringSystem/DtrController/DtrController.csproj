@@ -69,11 +69,7 @@
   <ItemGroup>
     <Compile Include="Controller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tools\DtrFileReader\Common\ActualInOut.cs" />
-    <Compile Include="Tools\DtrFileReader\Common\DtrFileModel.cs" />
     <Compile Include="Tools\DtrFileReader\DtrExcelFile.cs" />
-    <Compile Include="Tools\DtrFileReader\DtrFileReader.cs" />
-    <Compile Include="Tools\DtrFileReader\IDtrFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DtrCommon\DtrCommon.csproj">
