@@ -23,12 +23,14 @@ namespace DtrModel
         public DbSet<Project> Project { get; set; }
         public DbSet<SkillLevel> SkillLevel { get; set; }
         public DbSet<TechnicalRole> TechnicalRole { get; set; }
-        public DbSet<TimeoffReason> TimeOffReason { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<WorkLocation> WorkLoc { get; set; }
         public DbSet<WorkSchedule> WorkSchedule { get; set; }
         public DbSet<DtrProcessLog>DtrProcessLog { get; set; }
         public DbSet<TempTableDtr> TempTableDtr { get; set; }
+        public DbSet<TimeInOut> TimeInOut { get; set; }
+        public DbSet<TempTableTimeInOut> TempTableimeInOut { get; set; }
+
 
         public AttendanceDbContext(string nameOrConnectionString)
             : base(nameOrConnectionString)

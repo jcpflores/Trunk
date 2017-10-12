@@ -7,19 +7,20 @@ using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
 using DtrController.Tools.DtrFileReader.Common;
 using DtrDelegates;
+using DtrModel.Entities;
 
 namespace DtrController.Tools.DtrFileReader
 {
     public class DtrExcelFile
     {
         DtrController.Tools.DtrFileReader.Common.DtrFileModel DtrFileModel = new DtrController.Tools.DtrFileReader.Common.DtrFileModel();
-        ICollection<DtrFileModel> _dtrList;
+        ICollection<TempTableDtr> _dtrList;
 
         public event DoneParsingFilesEventHandler DoneParsingFilesEvent;
 
         public void ReadDtrFileFromFolder(ICollection<string> filesToProcess)
         {
-            _dtrList = new List<DtrFileModel>();
+            _dtrList = new List<TempTableDtr>();
 
             foreach (String dtrFile in filesToProcess)
             {
@@ -29,12 +30,12 @@ namespace DtrController.Tools.DtrFileReader
             DoneParsingFilesEvent?.Invoke();
         }
 
-        public ICollection<DtrFileModel> ProcessDtr
+        public ICollection<TempTableDtr> ProcessDtr
         {
             get { return _dtrList; }
         }
 
-        public DtrFileModel ReadExcelFileEmployeeDetail(string FolderPath)
+        public TempTableDtr ReadExcelFileEmployeeDetail(string FolderPath)
         {
             Excel.Application xlsApp = new Excel.Application();
             Excel.Workbook xlsWorkBk = xlsApp.Workbooks.Open(FolderPath);
@@ -42,12 +43,12 @@ namespace DtrController.Tools.DtrFileReader
             Excel.Worksheet xlsWorkSht = xlsWorkBk.Sheets["DTR"];
             Excel.Range xlsRange = xlsWorkSht.UsedRange;
 
-            DtrFileModel dtrModel = null;
+            TempTableDtr dtrModel = null;
 
             try
             {
 
-                dtrModel = new DtrFileModel()
+                dtrModel = new TempTableDtr()
                 {
                     ResourceId = xlsRange.Cells[5, 3].Value.ToString(),
                     ProcessRole = xlsRange.Cells[6, 3].Value.ToString(),
@@ -57,15 +58,15 @@ namespace DtrController.Tools.DtrFileReader
                     ClientName = xlsRange.Cells[6, 6].Value.ToString(),
                     ContractRef = xlsRange.Cells[7, 6].Value.ToString(),
                     Project = xlsRange.Cells[8, 6].Value.ToString(),
-                    WorkLocation = xlsRange.Cells[5, 9].Value.ToString(),
+                    WorkLocationDefault = xlsRange.Cells[5, 9].Value.ToString(),
                     MonthYear = xlsRange.Cells[12, 2].Value.ToString("y"),
-                    TimeInSchedule = DateTime.FromOADate(xlsRange.Cells[6, 9].Value == null ? 0 : double.Parse(xlsRange.Cells[6, 9].Value.ToString())),
+                    TimeInScheduleDefault = DateTime.FromOADate(xlsRange.Cells[6, 9].Value == null ? 0 : double.Parse(xlsRange.Cells[6, 9].Value.ToString())),
 
-                    ActualInOut = new List<ActualInOut> { }
+                    TempTableTimeInOut = new List<TempTableTimeInOut> { }
 
                 };
 
-                ActualInOut tempInOut;
+                TempTableTimeInOut tempInOut;
 
                 //get the last day of the Month
                 var lastDayOfMonth = DateTime.DaysInMonth(Convert.ToDateTime(xlsRange.Cells[12, 2].Value).Year, Convert.ToDateTime(xlsRange.Cells[12, 2].Value).Month);
@@ -74,7 +75,7 @@ namespace DtrController.Tools.DtrFileReader
                 for (int i = 12; count <= lastDayOfMonth; i++)
                 {                 
                    
-                        tempInOut = new ActualInOut();
+                        tempInOut = new TempTableTimeInOut();
 
                         // Date In/Out and Time In/Out
 
@@ -92,7 +93,7 @@ namespace DtrController.Tools.DtrFileReader
                         tempInOut.WorkLocation = xlsRange.Cells[i, 10].Value == null ? "" : xlsRange.Cells[i, 10].Value.ToString();
 
                         //Add to Collection
-                        dtrModel.ActualInOut.Add(tempInOut);
+                        dtrModel.TempTableTimeInOut.Add(tempInOut);
 
                     count += 1;
                 }

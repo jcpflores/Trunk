@@ -14,33 +14,19 @@ namespace DtrModel.Entities
     {
         public int Id { get; set; }
 
-        public string EmpId { get; set; }
+        public string ResourceId { get; set; }
+        public string ProcessRole { get; set; }
+        public string ClientName { get; set; }
+        public string ContractRef { get; set; }
+        public string Project { get; set; }
+        public string WorkLocationDefault { get; set; }
+        public DateTime TimeInScheduleDefault { get; set; }
+        public string TechnicalRole { get; set; }
+        public string Technology { get; set; }
+        public string SkillLevel { get; set; }
+        public string MonthYear { get; set; }
 
-        public string Contact { get; set; }
-
-        public DateTime DateIn { get; set; }
-        public DateTime DateOut { get; set; }
-
-        public string TimeIn { get; set; }
-
-        public string TimeOut { get; set; }
-
-        public string TimeInSchedule { get; set; }
-
-        public string TimeOffSchedule { get; set; }
-
-        [MaxLength(255)]
-        public string Notes { get; set; }
-        public int Late { get; set; }
-        public int Overtime { get; set; }
-        public string ReferenceId { get; set; }
-        public int ProjectId { get; set; }
-        public string WorkLocation { get; set; }
-        public int ClientId { get; set; }
-        public int TimeOffReasonId { get; set; }
-        public DateTime DateProcess { get; set; }   
-
-        public virtual ICollection<TimeoffReason> TimeOffReason { get; set;}
+        public virtual ICollection<TimeInOut> TimeInOut { get; set;}
     }
 }
  

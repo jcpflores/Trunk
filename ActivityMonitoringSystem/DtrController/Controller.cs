@@ -28,7 +28,11 @@ namespace DtrController
 
         private void _dtrfile_DoneParsingFilesEvent()
         {
-           // _dtrfile.
+            foreach (TempTableDtr dtr in _dtrfile.ProcessDtr)
+            {
+                _context.Set<TempTableDtr>().Add(dtr);
+                _context.SaveChanges();
+            }
         }
 
         private void InitializeModel()
