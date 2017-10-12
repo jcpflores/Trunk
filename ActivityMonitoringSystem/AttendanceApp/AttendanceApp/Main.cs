@@ -44,8 +44,15 @@ namespace AttendanceApp
             ((System.Windows.Forms.Label)_dtrForm.Controls[0].Controls[0].Controls[5]).Text = "Discovered: " + discoveredFiles.Count.ToString();
         }
 
-        public void ShowProcessedResources(List<ProcessedResource> processed)
-        { }
+        public void ShowProcessedResources(ICollection<ProcessedResource> processed)
+        {
+            foreach(ProcessedResource resource in processed)
+            {
+                ((System.Windows.Forms.ComboBox)_dtrForm.Controls[0].Controls[0].Controls[3]).Items.Add(resource.ResourceId + " - " + resource.MonthYear);
+            }
+
+            MessageBox.Show("DTRs are now ready for reviewing!");
+        }
 
         public void ShowDtrInfo(DtrInfo info)
         { }
@@ -58,19 +65,28 @@ namespace AttendanceApp
 
         private void btnDtr_Click(object sender, EventArgs e)
         {
-            _dtrForm = new DailyTimeRecordsForm();
-            _dtrForm.MdiParent = this;
-            this.panelProcessArea.Controls.Clear();
-            _dtrForm.Size = this.panel1.Size;
-            this.panelProcessArea.Controls.Add(_dtrForm);
-            _dtrForm.Show();
-            _dtrForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+            if(!_dtrForm.Visible)
+            { 
+                _dtrForm = new DailyTimeRecordsForm();
+                _dtrForm.MdiParent = this;
+                this.panelProcessArea.Controls.Clear();
+                _dtrForm.Size = this.panel1.Size;
+                this.panelProcessArea.Controls.Add(_dtrForm);
+                _dtrForm.Show();
+                _dtrForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                | System.Windows.Forms.AnchorStyles.Left)
+                | System.Windows.Forms.AnchorStyles.Right)));
 
-            _dtrForm.GetFilesFromLocalEvent += DtrForm_GetFilesFromLocalEvent;
-            _dtrForm.ParseFilesEvent += _dtrForm_ParseFilesEvent;
-            _dtrForm.SaveDtrInfoEvent += _dtrForm_SaveDtrInfoEvent;
+                _dtrForm.GetFilesFromLocalEvent += DtrForm_GetFilesFromLocalEvent;
+                _dtrForm.ParseFilesEvent += _dtrForm_ParseFilesEvent;
+                _dtrForm.SaveDtrInfoEvent += _dtrForm_SaveDtrInfoEvent;
+                _dtrForm.GetDtrDetailsEvent += _dtrForm_GetDtrDetailsEvent;
+            }
+        }
+
+        private void _dtrForm_GetDtrDetailsEvent(string resourceId)
+        {
+            GetDtrDetailsEvent?.Invoke(resourceId);
         }
 
         private void _dtrForm_SaveDtrInfoEvent(string empId)

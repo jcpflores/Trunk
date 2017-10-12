@@ -18,7 +18,7 @@ namespace DtrInterfaces
 
         void ShowFiles(ICollection<string> discoveredFiles);
 
-        void ShowProcessedResources(List<ProcessedResource> processed);
+        void ShowProcessedResources(ICollection<ProcessedResource> processed);
 
         void ShowDtrInfo(DtrInfo info);
 

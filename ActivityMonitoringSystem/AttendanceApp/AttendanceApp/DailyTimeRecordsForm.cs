@@ -16,11 +16,16 @@ namespace AttendanceApp
         public DailyTimeRecordsForm()
         {
             InitializeComponent();
+
+            this.comboBox1.SelectedValueChanged += ComboBox1_SelectedValueChanged;
         }
+
+        
 
         public event GetFilesFromLocalEventHandler GetFilesFromLocalEvent;
         public event ParseFilesEventHandler ParseFilesEvent;
         public event SaveDtrInfoEventHandler SaveDtrInfoEvent;
+        public event GetDtrDetailsEventHandler GetDtrDetailsEvent;
 
         private void btnSetSource_Click(object sender, EventArgs e)
         {
@@ -30,11 +35,10 @@ namespace AttendanceApp
                 if (openFolder.ShowDialog() == DialogResult.OK)
                 {
                     source = openFolder.SelectedPath;
+                    this.textBox1.Text = source;
+                    GetFilesFromLocalEvent?.Invoke(source);
                 }
             }
-
-            this.textBox1.Text = source;
-            GetFilesFromLocalEvent?.Invoke(source);
         }
 
         private void btnReview_Click(object sender, EventArgs e)
@@ -50,6 +54,11 @@ namespace AttendanceApp
         private void btnSaveCurrent_Click(object sender, EventArgs e)
         {
             SaveDtrInfoEvent?.Invoke("Current");
+        }
+
+        private void ComboBox1_SelectedValueChanged(object sender, EventArgs e)
+        {
+            GetDtrDetailsEvent?.Invoke(this.comboBox1.SelectedItem.ToString());
         }
     }
 }

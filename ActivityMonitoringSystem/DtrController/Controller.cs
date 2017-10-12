@@ -32,11 +32,44 @@ namespace DtrController
                 _context.Set<TempTableDtr>().Add(dtr);
                 _context.SaveChanges();
             }
+
+            QueryTempTableDtr();
         }
 
         private void InitializeModel()
         {
             _context = DtrModel.Model.GetAttendanceDbContext;
+            ClearAllTempTables();
+            DtrModel.Model.ChangesSavedEvent += Model_ChangesSavedEvent;
+        }
+
+        private void ClearAllTempTables()
+        {
+            _context.TempTableimeInOut.RemoveRange(_context.TempTableimeInOut);
+            _context.TempTableDtr.RemoveRange(_context.TempTableDtr);
+            _context.SaveChanges();
+        }
+
+        private void Model_ChangesSavedEvent()
+        {
+        }
+
+        private void QueryTempTableDtr()
+        {
+            var query = _context.TempTableDtr;
+            ICollection<ProcessedResource> resources = new List<ProcessedResource>();
+
+
+            foreach (TempTableDtr dtr in query)
+            {
+                resources.Add(new ProcessedResource()
+                {
+                    ResourceId = dtr.ResourceId,
+                    MonthYear = dtr.MonthYear
+                });
+            }
+
+            _view.ShowProcessedResources(resources);
         }
 
         #region IController
@@ -68,12 +101,11 @@ namespace DtrController
 
         private void _view_SaveDtrInfoEvent(string empID)
         {
-            //SaveDtrData(_empID);
             _view.ShowMessage("Saved " + empID);
         }
         private void _view_GetDtrDetailsEvent(string resourceId)
         {
-            //_view.ShowDtrInfo(GetDtrInfo(resourceId));
+            _view.ShowMessage(resourceId);
         }
         private void _view_GetFilesFromLocalEvent(string localPath)
         {

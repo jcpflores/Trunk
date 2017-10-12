@@ -15,6 +15,8 @@ namespace DtrDelegates
 
     public delegate void DoneParsingFilesEventHandler();
 
+    public delegate void DataChangeEventHandler();
+
     public delegate void GetExcelFilesProgressEventHandler(int progressCount);
 
     public delegate void GetExcelErrorFileEventHandler();

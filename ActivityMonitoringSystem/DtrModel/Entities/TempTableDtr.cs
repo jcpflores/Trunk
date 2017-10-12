@@ -9,7 +9,7 @@ using DtrModel.Interface;
 
 namespace DtrModel.Entities
 {
-  public class TempTableDtr : IEntity
+    public class TempTableDtr : IEntity
     {
         
         public int Id { get; set; }
