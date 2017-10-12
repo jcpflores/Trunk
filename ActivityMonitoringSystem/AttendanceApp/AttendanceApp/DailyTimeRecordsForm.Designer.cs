@@ -30,15 +30,15 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btnSetSource = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.btnReview = new System.Windows.Forms.Button();
-            this.lblDiscovered = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btnSave = new System.Windows.Forms.Button();
             this.btnSaveCurrent = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblDiscovered = new System.Windows.Forms.Label();
+            this.btnReview = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnSetSource = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -75,36 +75,57 @@
             this.tabPage1.Text = "Overview";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // btnSetSource
+            // btnSaveCurrent
             // 
-            this.btnSetSource.Location = new System.Drawing.Point(17, 19);
-            this.btnSetSource.Name = "btnSetSource";
-            this.btnSetSource.Size = new System.Drawing.Size(100, 23);
-            this.btnSetSource.TabIndex = 0;
-            this.btnSetSource.Text = "Set DAR Source";
-            this.btnSetSource.UseVisualStyleBackColor = true;
-            this.btnSetSource.Click += new System.EventHandler(this.btnSetSource_Click);
+            this.btnSaveCurrent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSaveCurrent.Location = new System.Drawing.Point(17, 190);
+            this.btnSaveCurrent.Name = "btnSaveCurrent";
+            this.btnSaveCurrent.Size = new System.Drawing.Size(89, 23);
+            this.btnSaveCurrent.TabIndex = 8;
+            this.btnSaveCurrent.Text = "Save Current";
+            this.btnSaveCurrent.UseVisualStyleBackColor = true;
+            this.btnSaveCurrent.Click += new System.EventHandler(this.btnSaveCurrent_Click);
             // 
-            // textBox1
+            // btnSave
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.Location = new System.Drawing.Point(350, 190);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 7;
+            this.btnSave.Text = "Save All";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(123, 21);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(66, 20);
-            this.textBox1.TabIndex = 1;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(17, 107);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(408, 67);
+            this.dataGridView1.TabIndex = 6;
             // 
-            // btnReview
+            // comboBox1
             // 
-            this.btnReview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnReview.Location = new System.Drawing.Point(195, 19);
-            this.btnReview.Name = "btnReview";
-            this.btnReview.Size = new System.Drawing.Size(75, 23);
-            this.btnReview.TabIndex = 2;
-            this.btnReview.Text = "Review";
-            this.btnReview.UseVisualStyleBackColor = true;
-            this.btnReview.Click += new System.EventHandler(this.btnReview_Click);
+            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(90, 63);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(99, 21);
+            this.comboBox1.TabIndex = 5;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(14, 66);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(70, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Resource ID:";
             // 
             // lblDiscovered
             // 
@@ -118,57 +139,36 @@
             this.lblDiscovered.Text = "Discovered:";
             this.lblDiscovered.Visible = false;
             // 
-            // label1
+            // btnReview
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 66);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Resource ID:";
+            this.btnReview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReview.Location = new System.Drawing.Point(195, 19);
+            this.btnReview.Name = "btnReview";
+            this.btnReview.Size = new System.Drawing.Size(75, 23);
+            this.btnReview.TabIndex = 2;
+            this.btnReview.Text = "Review";
+            this.btnReview.UseVisualStyleBackColor = true;
+            this.btnReview.Click += new System.EventHandler(this.btnReview_Click);
             // 
-            // comboBox1
+            // textBox1
             // 
-            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(90, 63);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(99, 21);
-            this.comboBox1.TabIndex = 5;
+            this.textBox1.Location = new System.Drawing.Point(123, 21);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(66, 20);
+            this.textBox1.TabIndex = 1;
             // 
-            // dataGridView1
+            // btnSetSource
             // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(17, 107);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(408, 77);
-            this.dataGridView1.TabIndex = 6;
-            // 
-            // btnSave
-            // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(350, 190);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 7;
-            this.btnSave.Text = "Save All";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // btnSaveCurrent
-            // 
-            this.btnSaveCurrent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSaveCurrent.Location = new System.Drawing.Point(17, 190);
-            this.btnSaveCurrent.Name = "btnSaveCurrent";
-            this.btnSaveCurrent.Size = new System.Drawing.Size(89, 23);
-            this.btnSaveCurrent.TabIndex = 8;
-            this.btnSaveCurrent.Text = "Save Current";
-            this.btnSaveCurrent.UseVisualStyleBackColor = true;
-            this.btnSaveCurrent.Click += new System.EventHandler(this.btnSaveCurrent_Click);
+            this.btnSetSource.Location = new System.Drawing.Point(17, 19);
+            this.btnSetSource.Name = "btnSetSource";
+            this.btnSetSource.Size = new System.Drawing.Size(100, 23);
+            this.btnSetSource.TabIndex = 0;
+            this.btnSetSource.Text = "Set DAR Source";
+            this.btnSetSource.UseVisualStyleBackColor = true;
+            this.btnSetSource.Click += new System.EventHandler(this.btnSetSource_Click);
             // 
             // DailyTimeRecordsForm
             // 

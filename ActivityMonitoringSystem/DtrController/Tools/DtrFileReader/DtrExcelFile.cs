@@ -6,19 +6,32 @@ using System.Text;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
 using DtrController.Tools.DtrFileReader.Common;
+using DtrDelegates;
 
 namespace DtrController.Tools.DtrFileReader
 {
     public class DtrExcelFile
     {
         DtrController.Tools.DtrFileReader.Common.DtrFileModel DtrFileModel = new DtrController.Tools.DtrFileReader.Common.DtrFileModel();
+        ICollection<DtrFileModel> _dtrList;
+
+        public event DoneParsingFilesEventHandler DoneParsingFilesEvent;
 
         public void ReadDtrFileFromFolder(ICollection<string> filesToProcess)
         {
+            _dtrList = new List<DtrFileModel>();
+
             foreach (String dtrFile in filesToProcess)
             {
-                ReadExcelFileEmployeeDetail(dtrFile);
+                _dtrList.Add(ReadExcelFileEmployeeDetail(dtrFile));
             }
+
+            DoneParsingFilesEvent?.Invoke();
+        }
+
+        public ICollection<DtrFileModel> ProcessDtr
+        {
+            get { return _dtrList; }
         }
 
         public DtrFileModel ReadExcelFileEmployeeDetail(string FolderPath)

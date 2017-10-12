@@ -22,7 +22,13 @@ namespace DtrController
 
         public Controller()
         {
+            _dtrfile.DoneParsingFilesEvent += _dtrfile_DoneParsingFilesEvent;
             InitializeModel();
+        }
+
+        private void _dtrfile_DoneParsingFilesEvent()
+        {
+           // _dtrfile.
         }
 
         private void InitializeModel()
