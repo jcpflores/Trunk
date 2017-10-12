@@ -74,6 +74,7 @@
     <Compile Include="Entities\DailyTimeRecord.cs" />
     <Compile Include="Entities\DtrProcessLog.cs" />
     <Compile Include="Entities\Employee.cs" />
+    <Compile Include="Entities\ExcelErrorFile.cs" />
     <Compile Include="Entities\Holiday.cs" />
     <Compile Include="Entities\ProcessRole.cs" />
     <Compile Include="Entities\Project.cs" />
