@@ -13,20 +13,33 @@ namespace DtrController.Tools.DtrFileReader
     public class DtrExcelFile
     {
         ICollection<TempTableDtr> _dtrList;
+        ICollection<ExcelErrorFile> _errorFileList;
 
         public event DoneParsingFilesEventHandler DoneParsingFilesEvent;
+        public event GetExcelFilesProgressEventHandler GetExcelFilesProgressEvent;
+        public event GetExcelErrorFileEventHandler GetExcelErrorFileEvent;
+        string _filename;
+        bool _errorNotification = false;
 
         public void ReadDtrFileFromFolder(ICollection<string> filesToProcess)
         {
             _dtrList = new List<TempTableDtr>();
 
+            int _progressCount = 0;
             foreach (String dtrFile in filesToProcess)
             {
                 _dtrList.Add(ReadExcelFileEmployeeDetail(dtrFile));
+                _progressCount += 1;
+                GetExcelFilesProgressEvent?.Invoke(_progressCount);
             }
-
             DoneParsingFilesEvent?.Invoke();
         }
+
+        public ICollection<ExcelErrorFile> ErrorFile
+        {
+            get { return _errorFileList; }
+        }
+
 
         public ICollection<TempTableDtr> ProcessDtr
         {
@@ -45,6 +58,7 @@ namespace DtrController.Tools.DtrFileReader
 
             try
             {
+                _filename = FolderPath.Split('\\').Last();
 
                 dtrModel = new TempTableDtr()
                 {
@@ -71,27 +85,27 @@ namespace DtrController.Tools.DtrFileReader
 
                 int count = 1;
                 for (int i = 12; count <= lastDayOfMonth; i++)
-                {                 
-                   
-                        tempInOut = new TempTableTimeInOut();
+                {
 
-                        // Date In/Out and Time In/Out
+                    tempInOut = new TempTableTimeInOut();
 
-                        DateTime TimeIn = DateTime.FromOADate(xlsRange.Cells[i, 3].Value == null ? 0 : double.Parse(xlsRange.Cells[i, 3].Value.ToString()));
-                        DateTime TimeOut = DateTime.FromOADate(xlsRange.Cells[i, 5].Value == null ? 0 : double.Parse(xlsRange.Cells[i, 5].Value.ToString()));
+                    // Date In/Out and Time In/Out
 
-                        tempInOut.DateTimeIn = xlsRange.Cells[i, 2].Value.ToString("d") + " " + String.Format("{0:T}", TimeIn);
-                        tempInOut.DateTimeOut = xlsRange.Cells[i, 4].Value.ToString("d") + " " + String.Format("{0:T}", TimeOut);
+                    DateTime TimeIn = DateTime.FromOADate(xlsRange.Cells[i, 3].Value == null ? 0 : double.Parse(xlsRange.Cells[i, 3].Value.ToString()));
+                    DateTime TimeOut = DateTime.FromOADate(xlsRange.Cells[i, 5].Value == null ? 0 : double.Parse(xlsRange.Cells[i, 5].Value.ToString()));
+
+                    tempInOut.DateTimeIn = xlsRange.Cells[i, 2].Value.ToString("d") + " " + String.Format("{0:T}", TimeIn);
+                    tempInOut.DateTimeOut = xlsRange.Cells[i, 4].Value.ToString("d") + " " + String.Format("{0:T}", TimeOut);
 
 
-                        tempInOut.WorkHours = xlsRange.Cells[i, 6].Value == null ? 0 : xlsRange.Cells[i, 6].Value.ToString();
-                        tempInOut.TimeOffReason = xlsRange.Cells[i, 7].Value == null ? "" : xlsRange.Cells[i, 7].Value.ToString();
-                        tempInOut.BillableWorkHours = xlsRange.Cells[i, 8].Value == null ? 0 : xlsRange.Cells[i, 8].Value.ToString();
-                        tempInOut.Notes = xlsRange.Cells[i, 9].Value == null ? "" : xlsRange.Cells[i, 9].Value.ToString();
-                        tempInOut.WorkLocation = xlsRange.Cells[i, 10].Value == null ? "" : xlsRange.Cells[i, 10].Value.ToString();
+                    tempInOut.WorkHours = xlsRange.Cells[i, 6].Value == null ? 0 : xlsRange.Cells[i, 6].Value.ToString();
+                    tempInOut.TimeOffReason = xlsRange.Cells[i, 7].Value == null ? "" : xlsRange.Cells[i, 7].Value.ToString();
+                    tempInOut.BillableWorkHours = xlsRange.Cells[i, 8].Value == null ? 0 : xlsRange.Cells[i, 8].Value.ToString();
+                    tempInOut.Notes = xlsRange.Cells[i, 9].Value == null ? "" : xlsRange.Cells[i, 9].Value.ToString();
+                    tempInOut.WorkLocation = xlsRange.Cells[i, 10].Value == null ? "" : xlsRange.Cells[i, 10].Value.ToString();
 
-                        //Add to Collection
-                        dtrModel.TempTableTimeInOut.Add(tempInOut);
+                    //Add to Collection
+                    dtrModel.TempTableTimeInOut.Add(tempInOut);
 
                     count += 1;
                 }
@@ -99,15 +113,18 @@ namespace DtrController.Tools.DtrFileReader
 
             }
 
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine(ex.ToString());
+                //Console.WriteLine(ex.ToString());
+                _errorNotification = true;
+                _errorFileList = new List<ExcelErrorFile>();
+                _errorFileList.Add(ErrorExcelFilename(_filename));
             }
 
 
             finally
             {
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(xlsWorkSht);                
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(xlsWorkSht);
                 xlsWorkBk.Close(false);
                 xlsApp.Quit();
                 xlsWorkBk = null;
@@ -117,6 +134,18 @@ namespace DtrController.Tools.DtrFileReader
             }
             return dtrModel;
 
+        }
+
+        public ExcelErrorFile ErrorExcelFilename(string name)
+        {
+            ExcelErrorFile excelErrorList = null;
+
+            excelErrorList = new ExcelErrorFile()
+            {
+                Filename = name
+            };
+
+            return excelErrorList;
         }
 
 
