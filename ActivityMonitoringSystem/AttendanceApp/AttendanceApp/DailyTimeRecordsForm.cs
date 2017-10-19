@@ -8,11 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DtrDelegates;
+using DtrCommon;
 
 namespace AttendanceApp
 {
-    public partial class DailyTimeRecordsForm : Form
+    public partial class DailyTimeRecordsForm : Form, DtrInterfaces.IView
     {
+        ICollection<string> _discoveredFiles;
+
         public DailyTimeRecordsForm()
         {
             InitializeComponent();
@@ -20,12 +23,68 @@ namespace AttendanceApp
             this.comboBox1.SelectedValueChanged += ComboBox1_SelectedValueChanged;
         }
 
-        
 
+        public event GetFilesFromRemoteEventHandler GetFilesFromRemoteEvent;
         public event GetFilesFromLocalEventHandler GetFilesFromLocalEvent;
         public event ParseFilesEventHandler ParseFilesEvent;
         public event SaveDtrInfoEventHandler SaveDtrInfoEvent;
         public event GetDtrDetailsEventHandler GetDtrDetailsEvent;
+
+        public void ShowDtrInfo(DtrInfo info)
+        {
+            ShowHeaders();
+            this.lblId.Text = info.ResourceId;
+            this.lblProcRole.Text = info.ProcessRole;
+            this.lblTechRole.Text = info.TechnicalRole;
+            this.lblTech.Text = info.Technology;
+            this.lblSkill.Text = info.SkillLevel;
+            this.lblClient.Text = info.ClientName;
+            this.lblLocation.Text = info.WorkLocationDefault;
+            this.lblTimeIn.Text = info.TimeInScheduleDefault.ToString("HH:mm tt");
+            this.lblMonthYear.Text = info.MonthYear;
+            this.lblContract.Text = info.ContractRef;
+            this.lblProject.Text = info.Project;
+
+            BindingSource bs = new BindingSource();
+            bs.DataSource = info.DtrInOut;
+            this.dataGridView1.DataSource = bs;
+        }
+
+        private void ShowHeaders()
+        {
+            this.lblId.Visible = true;
+            this.lblProcRole.Visible = true;
+            this.lblTechRole.Visible = true;
+            this.lblTech.Visible = true;
+            this.lblSkill.Visible = true;
+            this.lblClient.Visible = true;
+            this.lblLocation.Visible = true;
+            this.lblTimeIn.Visible = true;
+            this.lblMonthYear.Visible = true;
+            this.lblContract.Visible = true;
+            this.lblProject.Visible = true;
+        }
+
+        public void ShowFiles(ICollection<string> discoveredFiles)
+        {
+            _discoveredFiles = discoveredFiles;
+            this.lblDiscovered.Visible = true;
+            this.lblDiscovered.Text = "Discovered: " + discoveredFiles.Count.ToString();
+        }
+
+        public void ShowProcessedResources(ICollection<ProcessedResource> processed)
+        {
+            foreach (ProcessedResource resource in processed)
+            {
+                this.comboBox1.Items.Add(resource.ResourceId + " - " + resource.MonthYear);
+            }
+
+            MessageBox.Show("DTRs are now ready for reviewing!");
+        }
+
+        public void ShowMessage(string message)
+        {
+        }
 
         private void btnSetSource_Click(object sender, EventArgs e)
         {
@@ -43,7 +102,7 @@ namespace AttendanceApp
 
         private void btnReview_Click(object sender, EventArgs e)
         {
-            ParseFilesEvent?.Invoke(null);
+            ParseFilesEvent?.Invoke(_discoveredFiles);
         }
 
         private void btnSave_Click(object sender, EventArgs e)

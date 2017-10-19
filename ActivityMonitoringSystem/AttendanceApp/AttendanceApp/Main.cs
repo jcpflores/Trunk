@@ -17,7 +17,7 @@ namespace AttendanceApp
     {
         DtrController.Controller _controller = null;
         DailyTimeRecordsForm _dtrForm = new DailyTimeRecordsForm();
-        ICollection<string> _discoveredFiles;
+        
         public Main()
         {
             InitializeComponent();
@@ -39,23 +39,19 @@ namespace AttendanceApp
 
         public void ShowFiles(ICollection<string> discoveredFiles)
         {
-            _discoveredFiles = discoveredFiles;
-            ((System.Windows.Forms.Label)_dtrForm.Controls[0].Controls[0].Controls[5]).Visible = true;
-            ((System.Windows.Forms.Label)_dtrForm.Controls[0].Controls[0].Controls[5]).Text = "Discovered: " + discoveredFiles.Count.ToString();
+            //_discoveredFiles = discoveredFiles;
+            _dtrForm.ShowFiles(discoveredFiles);
         }
 
         public void ShowProcessedResources(ICollection<ProcessedResource> processed)
         {
-            foreach(ProcessedResource resource in processed)
-            {
-                ((System.Windows.Forms.ComboBox)_dtrForm.Controls[0].Controls[0].Controls[3]).Items.Add(resource.ResourceId + " - " + resource.MonthYear);
-            }
-
-            MessageBox.Show("DTRs are now ready for reviewing!");
+            _dtrForm.ShowProcessedResources(processed);
         }
 
         public void ShowDtrInfo(DtrInfo info)
-        { }
+        {
+            _dtrForm.ShowDtrInfo(info);
+        }
 
         public void ShowMessage(string message)
         {
@@ -96,8 +92,8 @@ namespace AttendanceApp
 
         private void _dtrForm_ParseFilesEvent(ICollection<string> filesToProcess)
         {
-            if(_discoveredFiles.Count > 0)
-                ParseFilesEvent?.Invoke(_discoveredFiles);
+            if(filesToProcess.Count > 0)
+                ParseFilesEvent?.Invoke(filesToProcess);
         }
 
         private void DtrForm_GetFilesFromLocalEvent(string localPath)

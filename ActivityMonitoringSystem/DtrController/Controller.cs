@@ -82,11 +82,6 @@ namespace DtrController
             _view.ParseFilesEvent += _view_ParseFilesEvent;
         }
 
-        private void _view_ParseFilesEvent(ICollection<string> filesToProcess)
-        {
-            _dtrfile.ReadDtrFileFromFolder(filesToProcess);
-        }
-
         public void ReadDtrInformation(string path)
         { }
 
@@ -105,7 +100,15 @@ namespace DtrController
         }
         private void _view_GetDtrDetailsEvent(string resourceId)
         {
-            _view.ShowMessage(resourceId);
+            string[] filter = resourceId.Replace(" ","").Split(new char[] { '-' });
+            string resId = filter[0];
+            string monthYear = filter[1];
+
+
+            TempTableDtr queryTempTableDtr = _context.TempTableDtr
+                .Where(t => t.ResourceId == resId && t.MonthYear == monthYear).FirstOrDefault<TempTableDtr>();
+
+            _view.ShowDtrInfo(queryTempTableDtr);
         }
         private void _view_GetFilesFromLocalEvent(string localPath)
         {
@@ -118,6 +121,11 @@ namespace DtrController
                 }
             }
             _view.ShowFiles(xlsxFiles);
+        }
+
+        private void _view_ParseFilesEvent(ICollection<string> filesToProcess)
+        {
+            _dtrfile.ReadDtrFileFromFolder(filesToProcess);
         }
         #endregion
 

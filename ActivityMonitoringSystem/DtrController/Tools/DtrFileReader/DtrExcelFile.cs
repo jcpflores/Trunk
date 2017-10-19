@@ -71,10 +71,10 @@ namespace DtrController.Tools.DtrFileReader
                     ContractRef = xlsRange.Cells[7, 6].Value.ToString(),
                     Project = xlsRange.Cells[8, 6].Value.ToString(),
                     WorkLocationDefault = xlsRange.Cells[5, 9].Value.ToString(),
-                    MonthYear = xlsRange.Cells[12, 2].Value.ToString("y"),
+                    MonthYear = ((string)xlsRange.Cells[12, 2].Value.ToString("y")).Replace(" ",""),
                     TimeInScheduleDefault = DateTime.FromOADate(xlsRange.Cells[6, 9].Value == null ? 0 : double.Parse(xlsRange.Cells[6, 9].Value.ToString())),
 
-                    TempTableTimeInOut = new List<TempTableTimeInOut> { }
+                    DtrInOut = new List<DtrCommon.DtrInOut> { }
 
                 };
 
@@ -105,7 +105,7 @@ namespace DtrController.Tools.DtrFileReader
                     tempInOut.WorkLocation = xlsRange.Cells[i, 10].Value == null ? "" : xlsRange.Cells[i, 10].Value.ToString();
 
                     //Add to Collection
-                    dtrModel.TempTableTimeInOut.Add(tempInOut);
+                    dtrModel.DtrInOut.Add(tempInOut);
 
                     count += 1;
                 }
