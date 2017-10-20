@@ -80,8 +80,6 @@
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\SkillLevel.cs" />
     <Compile Include="Entities\TechnicalRole.cs" />
-    <Compile Include="Entities\TempTableDtr.cs" />
-    <Compile Include="Entities\TempTableTimeInOut.cs" />
     <Compile Include="Entities\TimeInOut.cs" />
     <Compile Include="Entities\TimeoffReason.cs" />
     <Compile Include="Entities\Users.cs" />

@@ -12,7 +12,7 @@ namespace DtrController.Tools.DtrFileReader
 {
     public class DtrExcelFile
     {
-        ICollection<TempTableDtr> _dtrList;
+        ICollection<DtrCommon.DtrInfo> _dtrList;
         ICollection<ExcelErrorFile> _errorFileList;
 
         public event DoneParsingFilesEventHandler DoneParsingFilesEvent;
@@ -23,7 +23,7 @@ namespace DtrController.Tools.DtrFileReader
 
         public void ReadDtrFileFromFolder(ICollection<string> filesToProcess)
         {
-            _dtrList = new List<TempTableDtr>();
+            _dtrList = new List<DtrCommon.DtrInfo>();
 
             int _progressCount = 0;
             foreach (String dtrFile in filesToProcess)
@@ -41,12 +41,12 @@ namespace DtrController.Tools.DtrFileReader
         }
 
 
-        public ICollection<TempTableDtr> ProcessDtr
+        public ICollection<DtrCommon.DtrInfo> ProcessDtr
         {
             get { return _dtrList; }
         }
 
-        public TempTableDtr ReadExcelFileEmployeeDetail(string FolderPath)
+        public DtrCommon.DtrInfo ReadExcelFileEmployeeDetail(string FolderPath)
         {
             Excel.Application xlsApp = new Excel.Application();
             Excel.Workbook xlsWorkBk = xlsApp.Workbooks.Open(FolderPath);
@@ -54,13 +54,13 @@ namespace DtrController.Tools.DtrFileReader
             Excel.Worksheet xlsWorkSht = xlsWorkBk.Sheets["DTR"];
             Excel.Range xlsRange = xlsWorkSht.UsedRange;
 
-            TempTableDtr dtrModel = null;
+            DtrCommon.DtrInfo dtrModel = null;
 
             try
             {
                 _filename = FolderPath.Split('\\').Last();
 
-                dtrModel = new TempTableDtr()
+                dtrModel = new DtrCommon.DtrInfo()
                 {
                     ResourceId = xlsRange.Cells[5, 3].Value.ToString(),
                     ProcessRole = xlsRange.Cells[6, 3].Value.ToString(),

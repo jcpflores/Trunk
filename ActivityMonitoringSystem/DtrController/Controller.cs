@@ -27,9 +27,9 @@ namespace DtrController
 
         private void _dtrfile_DoneParsingFilesEvent()
         {
-            foreach (TempTableDtr dtr in _dtrfile.ProcessDtr)
+            foreach (DtrCommon.DtrInfo dtr in _dtrfile.ProcessDtr)
             {
-                _context.Set<TempTableDtr>().Add(dtr);
+                _context.Set<DtrCommon.DtrInfo>().Add(dtr);
                 _context.SaveChanges();
             }
 
@@ -59,7 +59,7 @@ namespace DtrController
             var query = _context.TempDtr;
             ICollection<ProcessedResource> resources = new List<ProcessedResource>();
 
-            foreach (TempTableDtr dtr in query)
+            foreach (DtrInfo dtr in query)
             {
                 resources.Add(new ProcessedResource()
                 {
