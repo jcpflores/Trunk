@@ -50,10 +50,10 @@ namespace AttendanceApp
             this.dataGridView1.DataSource = bs;
 
             this.dataGridView1.Columns[0].Visible = false;
-            SetWeekendsColor();
+            SetWeekendsColor(Color.White, Color.Blue);
         }
 
-        private void SetWeekendsColor()
+        private void SetWeekendsColor(Color foreColor, Color backColor)
         {
             for (int i = 1; i < this.dataGridView1.Rows.Count; i++)
             {
@@ -62,8 +62,8 @@ namespace AttendanceApp
 
                 if ((DateTime.Parse(this.dataGridView1.Rows[i].Cells[1].Value.ToString()).DayOfWeek == DayOfWeek.Saturday) || (DateTime.Parse(this.dataGridView1.Rows[i].Cells[1].Value.ToString()).DayOfWeek == DayOfWeek.Sunday))
                 {
-                    this.dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.White;
-                    this.dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Blue;
+                    this.dataGridView1.Rows[i].DefaultCellStyle.ForeColor = foreColor;
+                    this.dataGridView1.Rows[i].DefaultCellStyle.BackColor = backColor;
                 }
             }
         }
