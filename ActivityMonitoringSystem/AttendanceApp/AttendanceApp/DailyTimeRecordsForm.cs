@@ -48,6 +48,24 @@ namespace AttendanceApp
             BindingSource bs = new BindingSource();
             bs.DataSource = info.DtrInOut;
             this.dataGridView1.DataSource = bs;
+
+            this.dataGridView1.Columns[0].Visible = false;
+            SetWeekendsColor();
+        }
+
+        private void SetWeekendsColor()
+        {
+            for (int i = 1; i < this.dataGridView1.Rows.Count; i++)
+            {
+                if (this.dataGridView1.Rows[i].Cells[1].Value == null)
+                    continue;
+
+                if ((DateTime.Parse(this.dataGridView1.Rows[i].Cells[1].Value.ToString()).DayOfWeek == DayOfWeek.Saturday) || (DateTime.Parse(this.dataGridView1.Rows[i].Cells[1].Value.ToString()).DayOfWeek == DayOfWeek.Sunday))
+                {
+                    this.dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.White;
+                    this.dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                }
+            }
         }
 
         private void ShowHeaders()
