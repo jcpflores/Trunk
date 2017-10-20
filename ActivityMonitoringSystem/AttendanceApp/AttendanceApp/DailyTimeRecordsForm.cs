@@ -63,7 +63,7 @@ namespace AttendanceApp
                 if ((DateTime.Parse(this.dataGridView1.Rows[i].Cells[1].Value.ToString()).DayOfWeek == DayOfWeek.Saturday) || (DateTime.Parse(this.dataGridView1.Rows[i].Cells[1].Value.ToString()).DayOfWeek == DayOfWeek.Sunday))
                 {
                     this.dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.White;
-                    this.dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                    this.dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Blue;
                 }
             }
         }
