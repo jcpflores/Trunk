@@ -45,8 +45,8 @@ namespace DtrController
 
         private void ClearAllTempTables()
         {
-            _context.TempTableimeInOut.RemoveRange(_context.TempTableimeInOut);
-            _context.TempTableDtr.RemoveRange(_context.TempTableDtr);
+            _context.TempDtrInOut.RemoveRange(_context.TempDtrInOut);
+            _context.TempDtr.RemoveRange(_context.TempDtr);
             _context.SaveChanges();
         }
 
@@ -56,9 +56,8 @@ namespace DtrController
 
         private void QueryTempTableDtr()
         {
-            var query = _context.TempTableDtr;
+            var query = _context.TempDtr;
             ICollection<ProcessedResource> resources = new List<ProcessedResource>();
-
 
             foreach (TempTableDtr dtr in query)
             {
@@ -105,8 +104,8 @@ namespace DtrController
             string monthYear = filter[1];
 
 
-            TempTableDtr queryTempTableDtr = _context.TempTableDtr
-                .Where(t => t.ResourceId == resId && t.MonthYear == monthYear).FirstOrDefault<TempTableDtr>();
+            DtrInfo queryTempTableDtr = _context.TempDtr
+                .Where(t => t.ResourceId == resId && t.MonthYear == monthYear).FirstOrDefault<DtrInfo>();
 
             _view.ShowDtrInfo(queryTempTableDtr);
         }

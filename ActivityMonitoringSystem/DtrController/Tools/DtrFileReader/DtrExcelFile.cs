@@ -78,7 +78,7 @@ namespace DtrController.Tools.DtrFileReader
 
                 };
 
-                TempTableTimeInOut tempInOut;
+                DtrCommon.DtrInOut tempInOut;
 
                 //get the last day of the Month
                 var lastDayOfMonth = DateTime.DaysInMonth(Convert.ToDateTime(xlsRange.Cells[12, 2].Value).Year, Convert.ToDateTime(xlsRange.Cells[12, 2].Value).Month);
@@ -87,7 +87,7 @@ namespace DtrController.Tools.DtrFileReader
                 for (int i = 12; count <= lastDayOfMonth; i++)
                 {
 
-                    tempInOut = new TempTableTimeInOut();
+                    tempInOut = new DtrCommon.DtrInOut();
 
                     // Date In/Out and Time In/Out
 

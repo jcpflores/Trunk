@@ -19,15 +19,14 @@ namespace DtrModel
 
         private static void ConfigureAttendanceEntity(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.PluralizingTableNameConvention>();
+
             modelBuilder.Entity<Employee>();
             modelBuilder.Entity<AttendanceSummary>();
             modelBuilder.Entity<Client>();
             modelBuilder.Entity<ClientContract>();
             modelBuilder.Entity<ClientHoliday>();
-            modelBuilder.Entity<DailyTimeRecord>();
-            modelBuilder.Entity<TimeInOut>();
-            modelBuilder.Entity<TempTableDtr>();
-            modelBuilder.Entity<TempTableTimeInOut>();
+            
             modelBuilder.Entity<Holiday>();
             modelBuilder.Entity<ProcessRole>();
             modelBuilder.Entity<Project>();
@@ -38,7 +37,13 @@ namespace DtrModel
             modelBuilder.Entity<Users>();
             modelBuilder.Entity<DtrProcessLog>();
             modelBuilder.Entity<AuditTrail>();
-    }  
+
+            modelBuilder.Entity<DailyTimeRecord>();
+            modelBuilder.Entity<TimeInOut>();
+
+            modelBuilder.Entity<DtrCommon.DtrInfo>();
+            modelBuilder.Entity<DtrCommon.DtrInOut>();
+        }  
 
        
       

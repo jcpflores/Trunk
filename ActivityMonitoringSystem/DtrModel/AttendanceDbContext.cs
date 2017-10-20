@@ -17,7 +17,7 @@ namespace DtrModel
         public DbSet<Client> Client { get; set; }
         public DbSet<ClientContract> ClientContract { get; set; }
         public DbSet<ClientHoliday> ClientHoliday { get; set; }
-        public DbSet<DailyTimeRecord> DailyTimeRecord { get; set; }
+        
         public DbSet<Holiday> Holiday { get; set; }
         public DbSet<ProcessRole> ProcessRole { get; set; }
         public DbSet<Project> Project { get; set; }
@@ -27,9 +27,13 @@ namespace DtrModel
         public DbSet<WorkLocation> WorkLoc { get; set; }
         public DbSet<WorkSchedule> WorkSchedule { get; set; }
         public DbSet<DtrProcessLog>DtrProcessLog { get; set; }
-        public DbSet<TempTableDtr> TempTableDtr { get; set; }
+
+        public DbSet<DailyTimeRecord> DailyTimeRecord { get; set; }
         public DbSet<TimeInOut> TimeInOut { get; set; }
-        public DbSet<TempTableTimeInOut> TempTableimeInOut { get; set; }
+
+        //Temp Tables
+        public DbSet<DtrCommon.DtrInfo> TempDtr { get; set; }
+        public DbSet<DtrCommon.DtrInOut> TempDtrInOut { get; set; }
 
 
         public AttendanceDbContext(string nameOrConnectionString)
