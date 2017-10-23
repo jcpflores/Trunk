@@ -30,6 +30,7 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lblError = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.lblProject = new System.Windows.Forms.Label();
@@ -61,6 +62,7 @@
             this.btnReview = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnSetSource = new System.Windows.Forms.Button();
+            this.listBoxError = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -80,6 +82,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.listBoxError);
+            this.tabPage1.Controls.Add(this.lblError);
             this.tabPage1.Controls.Add(this.label13);
             this.tabPage1.Controls.Add(this.label14);
             this.tabPage1.Controls.Add(this.lblProject);
@@ -118,6 +122,20 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Overview";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // lblError
+            // 
+            this.lblError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblError.AutoSize = true;
+            this.lblError.ForeColor = System.Drawing.Color.DarkRed;
+            this.lblError.Location = new System.Drawing.Point(634, 24);
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new System.Drawing.Size(32, 13);
+            this.lblError.TabIndex = 32;
+            this.lblError.Text = "Error:";
+            this.lblError.Visible = false;
+            this.lblError.MouseLeave += new System.EventHandler(this.lblError_MouseLeave);
+            this.lblError.MouseHover += new System.EventHandler(this.lblError_MouseHover);
             // 
             // label13
             // 
@@ -445,6 +463,15 @@
             this.btnSetSource.UseVisualStyleBackColor = true;
             this.btnSetSource.Click += new System.EventHandler(this.btnSetSource_Click);
             // 
+            // listBoxError
+            // 
+            this.listBoxError.FormattingEnabled = true;
+            this.listBoxError.Location = new System.Drawing.Point(782, 190);
+            this.listBoxError.Name = "listBoxError";
+            this.listBoxError.Size = new System.Drawing.Size(83, 108);
+            this.listBoxError.TabIndex = 33;
+            this.listBoxError.Visible = false;
+            // 
             // DailyTimeRecordsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -497,5 +524,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label lblProject;
         private System.Windows.Forms.Label lblContract;
+        private System.Windows.Forms.Label lblError;
+        private System.Windows.Forms.ListBox listBoxError;
     }
 }

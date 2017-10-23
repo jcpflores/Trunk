@@ -23,5 +23,8 @@ namespace DtrInterfaces
         void ShowDtrInfo(DtrInfo info);
 
         void ShowMessage(string message);
+        void ShowProgress(int count, int totalFiles);
+
+        void ShowError(ICollection<string> erroFiles);
     }
 }

@@ -8,18 +8,20 @@ using Excel = Microsoft.Office.Interop.Excel;
 using DtrDelegates;
 using DtrModel.Entities;
 
+
+
+
 namespace DtrController.Tools.DtrFileReader
 {
     public class DtrExcelFile
     {
         ICollection<DtrCommon.DtrInfo> _dtrList;
-        ICollection<ExcelErrorFile> _errorFileList;
+        ICollection<ExcelErrorFile> _errorFileList = new List<ExcelErrorFile>();
 
         public event DoneParsingFilesEventHandler DoneParsingFilesEvent;
         public event GetExcelFilesProgressEventHandler GetExcelFilesProgressEvent;
         public event GetExcelErrorFileEventHandler GetExcelErrorFileEvent;
-        string _filename;
-        bool _errorNotification = false;
+        
 
         public void ReadDtrFileFromFolder(ICollection<string> filesToProcess)
         {
@@ -30,8 +32,9 @@ namespace DtrController.Tools.DtrFileReader
             {
                 _dtrList.Add(ReadExcelFileEmployeeDetail(dtrFile));
                 _progressCount += 1;
-                GetExcelFilesProgressEvent?.Invoke(_progressCount);
+                GetExcelFilesProgressEvent?.Invoke(_progressCount, filesToProcess.Count());
             }
+            GetExcelErrorFileEvent?.Invoke();
             DoneParsingFilesEvent?.Invoke();
         }
 
@@ -46,11 +49,15 @@ namespace DtrController.Tools.DtrFileReader
             get { return _dtrList; }
         }
 
+        
+
         public DtrCommon.DtrInfo ReadExcelFileEmployeeDetail(string FolderPath)
         {
+           
             Excel.Application xlsApp = new Excel.Application();
             Excel.Workbook xlsWorkBk = xlsApp.Workbooks.Open(FolderPath);
-            xlsWorkBk.Date1904 = false;
+            //xlsWorkBk.Date1904 = true;
+            bool is1904 = xlsWorkBk.Date1904;
             Excel.Worksheet xlsWorkSht = xlsWorkBk.Sheets["DTR"];
             Excel.Range xlsRange = xlsWorkSht.UsedRange;
 
@@ -58,8 +65,7 @@ namespace DtrController.Tools.DtrFileReader
 
             try
             {
-                _filename = FolderPath.Split('\\').Last();
-
+                
                 dtrModel = new DtrCommon.DtrInfo()
                 {
                     ResourceId = xlsRange.Cells[5, 3].Value.ToString(),
@@ -115,10 +121,8 @@ namespace DtrController.Tools.DtrFileReader
 
             catch
             {
-                //Console.WriteLine(ex.ToString());
-                _errorNotification = true;
-                _errorFileList = new List<ExcelErrorFile>();
-                _errorFileList.Add(ErrorExcelFilename(_filename));
+                //Console.WriteLine(ex.ToString());                                
+                _errorFileList.Add(ErrorExcelFilename(FolderPath.Split('\\').Last()));
             }
 
 
@@ -144,9 +148,11 @@ namespace DtrController.Tools.DtrFileReader
             {
                 Filename = name
             };
-
             return excelErrorList;
         }
+
+      
+
 
 
     }

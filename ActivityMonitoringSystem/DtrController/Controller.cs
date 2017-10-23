@@ -22,15 +22,37 @@ namespace DtrController
         public Controller()
         {
             _dtrfile.DoneParsingFilesEvent += _dtrfile_DoneParsingFilesEvent;
+            _dtrfile.GetExcelErrorFileEvent += _dtrfile_GetExcelErrorFileEvent;
+            _dtrfile.GetExcelFilesProgressEvent += _dtrfile_GetExcelFilesProgressEvent;
             InitializeModel();
+        }
+
+        private void _dtrfile_GetExcelFilesProgressEvent(int progressCount, int filesToProcess)
+        {
+            _view.ShowProgress(progressCount, filesToProcess);
+        }
+
+        private void _dtrfile_GetExcelErrorFileEvent()
+        {
+
+            ICollection<string> errorFiles = new List<string>();
+            foreach (ExcelErrorFile err in _dtrfile.ErrorFile)
+            {
+                errorFiles.Add(err.Filename);
+            }
+            _view.ShowError(errorFiles);
+
         }
 
         private void _dtrfile_DoneParsingFilesEvent()
         {
             foreach (DtrCommon.DtrInfo dtr in _dtrfile.ProcessDtr)
             {
-                _context.Set<DtrCommon.DtrInfo>().Add(dtr);
-                _context.SaveChanges();
+                if (dtr != null)
+                {
+                    _context.Set<DtrCommon.DtrInfo>().Add(dtr);
+                    _context.SaveChanges();
+                }
             }
 
             QueryTempTableDtr();

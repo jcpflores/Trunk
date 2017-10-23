@@ -17,9 +17,11 @@ namespace DtrDelegates
 
     public delegate void DataChangeEventHandler();
 
-    public delegate void GetExcelFilesProgressEventHandler(int progressCount);
+    public delegate void GetExcelFilesProgressEventHandler(int progressCount, int filesToProcess);
 
     public delegate void GetExcelErrorFileEventHandler();
+
+    public delegate void GetErrorFileListEventHandler(ICollection<string> errorFileList);
 
 
 }

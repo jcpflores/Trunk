@@ -17,7 +17,9 @@ namespace AttendanceApp
     {
         DtrController.Controller _controller = null;
         DailyTimeRecordsForm _dtrForm = new DailyTimeRecordsForm();
-        
+        Calendar _dtrCalendar = new Calendar();
+
+
         public Main()
         {
             InitializeComponent();
@@ -43,9 +45,23 @@ namespace AttendanceApp
             _dtrForm.ShowFiles(discoveredFiles);
         }
 
+        public void ShowError(ICollection<string> errorFiles)
+        {
+            _dtrForm.ShowError(errorFiles);        
+        }
+
+        public void ShowProgress(int processedFiles, int totalFiles)
+        {
+            this.toolStripProgressBar1.Minimum = 0;
+            this.toolStripProgressBar1.Maximum = totalFiles;
+            this.toolStripProgressBar1.Value = processedFiles;
+            this.toolStripProgressBar1.Visible = true;
+        }
+
         public void ShowProcessedResources(ICollection<ProcessedResource> processed)
         {
             _dtrForm.ShowProcessedResources(processed);
+            this.toolStripProgressBar1.Visible = false;
         }
 
         public void ShowDtrInfo(DtrInfo info)
@@ -53,7 +69,7 @@ namespace AttendanceApp
             _dtrForm.ShowDtrInfo(info);
         }
 
-        public void ShowMessage(string message)
+        public void ShowMessage(string message) 
         {
             MessageBox.Show(message);
         }
@@ -100,6 +116,19 @@ namespace AttendanceApp
         {
             GetFilesFromLocalEvent?.Invoke(localPath);
             //_dtrfile.ReadDtrFileFromFolder(localPath);
+        }
+
+        private void labelToday_Click(Object sender, EventArgs e)
+        {
+            _dtrCalendar = new Calendar();
+            _dtrCalendar.MdiParent = this;
+            this.panelProcessArea.Controls.Clear();
+            _dtrCalendar.Size = this.panel1.Size;
+            this.panelProcessArea.Controls.Add(_dtrCalendar);
+            _dtrCalendar.Show();
+            _dtrCalendar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
         }
     }
 }
