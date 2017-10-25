@@ -16,6 +16,9 @@ namespace AttendanceApp
     {
         ICollection<string> _discoveredFiles;
         ICollection<string> _errorList;
+        DataGridViewImageColumn _editbutton;
+        BindingSource _bs;
+        Color EDITED_COLOR = Color.Pink;
 
         public DailyTimeRecordsForm()
         {
@@ -34,6 +37,8 @@ namespace AttendanceApp
 
         public void ShowDtrInfo(DtrInfo info)
         {
+            InitDatagridView();
+
             ShowHeaders();
             this.lblId.Text = info.ResourceId;
             this.lblProcRole.Text = info.ProcessRole;
@@ -47,27 +52,83 @@ namespace AttendanceApp
             this.lblContract.Text = info.ContractRef;
             this.lblProject.Text = info.Project;
 
-            BindingSource bs = new BindingSource();
-            bs.DataSource = info.DtrInOut;
-            this.dataGridView1.DataSource = bs;
-
+            _bs = new BindingSource();
+            _bs.DataSource = info.DtrInOut;
+            this.dataGridView1.DataSource = _bs;
             this.dataGridView1.Columns[0].Visible = false;
-            SetWeekendsColor(Color.White, Color.Blue);
+
+            _editbutton = new DataGridViewImageColumn();
+            _editbutton.Image = AttendanceApp.Properties.Resources.saveicon;
+            _editbutton.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            _editbutton.Width = 50;
+            _editbutton.Name = "Save";
+            _editbutton.ReadOnly = true;
+            dataGridView1.Columns.Add(_editbutton);
+            
+            SetWeekendsColumnProperty(Color.White, Color.Blue);
+
+            this.dataGridView1.CellValueChanged += DataGridView1_CellValueChanged;
+            this.dataGridView1.CellClick += DataGridView1_CellClick;
         }
 
-        private void SetWeekendsColor(Color foreColor, Color backColor)
+        private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            for (int i = 1; i < this.dataGridView1.Rows.Count; i++)
+            if (e.ColumnIndex == this.dataGridView1.Columns["Save"].Index && this.dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor == EDITED_COLOR)
+            {
+                if (IsWeekendDate(this.dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString()))
+                {
+                    this.dataGridView1.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.White;
+                    this.dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Blue;
+
+                    return;
+                }
+                this.dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                this.dataGridView1.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Black;
+            }
+        }
+
+        private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            this.dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = EDITED_COLOR;
+            this.dataGridView1.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Black;
+        }
+
+        private void InitDatagridView()
+        {
+            this.dataGridView1.CellValueChanged -= DataGridView1_CellValueChanged;
+            this.dataGridView1.CellClick -= DataGridView1_CellClick;
+            _bs = null;
+            this.dataGridView1.DataSource = null;
+            _editbutton = null;
+            this.dataGridView1.Columns.Clear();
+
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToOrderColumns = false;
+        }
+
+        private void SetWeekendsColumnProperty(Color foreColor, Color backColor)
+        {
+            for (int i = 0; i < this.dataGridView1.Rows.Count; i++)
             {
                 if (this.dataGridView1.Rows[i].Cells[1].Value == null)
                     continue;
 
-                if ((DateTime.Parse(this.dataGridView1.Rows[i].Cells[1].Value.ToString()).DayOfWeek == DayOfWeek.Saturday) || (DateTime.Parse(this.dataGridView1.Rows[i].Cells[1].Value.ToString()).DayOfWeek == DayOfWeek.Sunday))
+                if (IsWeekendDate(this.dataGridView1.Rows[i].Cells[1].Value.ToString()))
                 {
                     this.dataGridView1.Rows[i].DefaultCellStyle.ForeColor = foreColor;
                     this.dataGridView1.Rows[i].DefaultCellStyle.BackColor = backColor;
                 }
             }
+        }
+
+        private bool IsWeekendDate(string date)
+        {
+            if ((DateTime.Parse(date).DayOfWeek == DayOfWeek.Saturday) || (DateTime.Parse(date).DayOfWeek == DayOfWeek.Sunday))
+            {
+                return true;
+            }
+            return false;
         }
 
         private void ShowHeaders()
