@@ -16,6 +16,8 @@ namespace DtrInterfaces
 
         event SaveDtrInfoEventHandler SaveDtrInfoEvent;
 
+        event EditDtrInOutEventHandler EditDtrInOutEvent;
+
         void ShowFiles(ICollection<string> discoveredFiles);
 
         void ShowProcessedResources(ICollection<ProcessedResource> processed);

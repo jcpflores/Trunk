@@ -34,6 +34,7 @@ namespace AttendanceApp
         public event SaveDtrInfoEventHandler SaveDtrInfoEvent;
         public event GetDtrDetailsEventHandler GetDtrDetailsEvent;
         public event GetErrorFileListEventHandler GetErrorFileListEvent;
+        public event EditDtrInOutEventHandler EditDtrInOutEvent;
 
         public void ShowDtrInfo(DtrInfo info)
         {
@@ -75,6 +76,8 @@ namespace AttendanceApp
         {
             if (e.ColumnIndex == this.dataGridView1.Columns["Save"].Index && this.dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor == EDITED_COLOR)
             {
+                EditDtrInOutEvent?.Invoke((DtrInOut)this.dataGridView1.Rows[e.RowIndex].DataBoundItem);
+
                 if (IsWeekendDate(this.dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString()))
                 {
                     this.dataGridView1.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.White;
@@ -201,14 +204,20 @@ namespace AttendanceApp
             GetErrorFileListEvent?.Invoke(_errorList);
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void btnSaveCurrToDb_Click(object sender, EventArgs e)
         {
-            SaveDtrInfoEvent?.Invoke("All");
+            if (MessageBox.Show("Are you sure you want save to the current DAR to the database?", "ATTENTION", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                SaveDtrInfoEvent?.Invoke("CURRENT");
+            }
         }
 
-        private void btnSaveCurrent_Click(object sender, EventArgs e)
+        private void btnSaveAllToDb_Click(object sender, EventArgs e)
         {
-            SaveDtrInfoEvent?.Invoke("Current");
+            if (MessageBox.Show("Are you sure you want save to all DAR to the database?", "ATTENTION", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                SaveDtrInfoEvent?.Invoke("ALL");
+            }
         }
 
         private void ComboBox1_SelectedValueChanged(object sender, EventArgs e)

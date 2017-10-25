@@ -15,5 +15,6 @@ namespace DtrInterfaces
         void GetResourceInformation(UnprocessedResource unprocessed);
 
         void UpdateResource(DtrInfo info);
+
     }
 }

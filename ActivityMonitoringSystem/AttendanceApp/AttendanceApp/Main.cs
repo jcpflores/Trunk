@@ -39,6 +39,8 @@ namespace AttendanceApp
 
         public event SaveDtrInfoEventHandler SaveDtrInfoEvent;
 
+        public event EditDtrInOutEventHandler EditDtrInOutEvent;
+
         public void ShowFiles(ICollection<string> discoveredFiles)
         {
             //_discoveredFiles = discoveredFiles;
@@ -93,7 +95,13 @@ namespace AttendanceApp
                 _dtrForm.ParseFilesEvent += _dtrForm_ParseFilesEvent;
                 _dtrForm.SaveDtrInfoEvent += _dtrForm_SaveDtrInfoEvent;
                 _dtrForm.GetDtrDetailsEvent += _dtrForm_GetDtrDetailsEvent;
+                _dtrForm.EditDtrInOutEvent += _dtrForm_EditDtrInOutEvent;
             }
+        }
+
+        private void _dtrForm_EditDtrInOutEvent(DtrInOut inOut)
+        {
+            EditDtrInOutEvent?.Invoke(inOut);
         }
 
         private void _dtrForm_GetDtrDetailsEvent(string resourceId)

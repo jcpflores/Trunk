@@ -101,6 +101,13 @@ namespace DtrController
             _view.GetDtrDetailsEvent += _view_GetDtrDetailsEvent;
             _view.SaveDtrInfoEvent += _view_SaveDtrInfoEvent;
             _view.ParseFilesEvent += _view_ParseFilesEvent;
+            _view.EditDtrInOutEvent += _view_EditDtrInOutEvent;
+        }
+
+        private void _view_EditDtrInOutEvent(DtrInOut inOut)
+        {
+            _context.Entry(inOut).State = System.Data.Entity.EntityState.Modified;
+            _context.SaveChanges();
         }
 
         public void ReadDtrInformation(string path)

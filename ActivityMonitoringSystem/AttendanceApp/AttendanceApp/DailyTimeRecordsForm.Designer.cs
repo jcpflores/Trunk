@@ -30,6 +30,7 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.listBoxError = new System.Windows.Forms.ListBox();
             this.lblError = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -53,8 +54,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lblProcRole = new System.Windows.Forms.Label();
             this.lblId = new System.Windows.Forms.Label();
-            this.btnSaveCurrent = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
+            this.btnSaveAllToDb = new System.Windows.Forms.Button();
+            this.btnSaveCurrToDb = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -62,7 +63,7 @@
             this.btnReview = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnSetSource = new System.Windows.Forms.Button();
-            this.listBoxError = new System.Windows.Forms.ListBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -74,6 +75,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -106,8 +108,8 @@
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.lblProcRole);
             this.tabPage1.Controls.Add(this.lblId);
-            this.tabPage1.Controls.Add(this.btnSaveCurrent);
-            this.tabPage1.Controls.Add(this.btnSave);
+            this.tabPage1.Controls.Add(this.btnSaveAllToDb);
+            this.tabPage1.Controls.Add(this.btnSaveCurrToDb);
             this.tabPage1.Controls.Add(this.dataGridView1);
             this.tabPage1.Controls.Add(this.comboBox1);
             this.tabPage1.Controls.Add(this.label1);
@@ -120,8 +122,17 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(890, 319);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Overview";
+            this.tabPage1.Text = "DAR Processing";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // listBoxError
+            // 
+            this.listBoxError.FormattingEnabled = true;
+            this.listBoxError.Location = new System.Drawing.Point(782, 190);
+            this.listBoxError.Name = "listBoxError";
+            this.listBoxError.Size = new System.Drawing.Size(83, 108);
+            this.listBoxError.TabIndex = 33;
+            this.listBoxError.Visible = false;
             // 
             // lblError
             // 
@@ -368,27 +379,27 @@
             this.lblId.Text = "[id]";
             this.lblId.Visible = false;
             // 
-            // btnSaveCurrent
+            // btnSaveAllToDb
             // 
-            this.btnSaveCurrent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSaveCurrent.Location = new System.Drawing.Point(17, 190);
-            this.btnSaveCurrent.Name = "btnSaveCurrent";
-            this.btnSaveCurrent.Size = new System.Drawing.Size(89, 23);
-            this.btnSaveCurrent.TabIndex = 8;
-            this.btnSaveCurrent.Text = "Save Current";
-            this.btnSaveCurrent.UseVisualStyleBackColor = true;
-            this.btnSaveCurrent.Click += new System.EventHandler(this.btnSaveCurrent_Click);
+            this.btnSaveAllToDb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSaveAllToDb.Location = new System.Drawing.Point(17, 190);
+            this.btnSaveAllToDb.Name = "btnSaveAllToDb";
+            this.btnSaveAllToDb.Size = new System.Drawing.Size(151, 23);
+            this.btnSaveAllToDb.TabIndex = 8;
+            this.btnSaveAllToDb.Text = "Save All DAR To Database";
+            this.btnSaveAllToDb.UseVisualStyleBackColor = true;
+            this.btnSaveAllToDb.Click += new System.EventHandler(this.btnSaveAllToDb_Click);
             // 
-            // btnSave
+            // btnSaveCurrToDb
             // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(622, 190);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 7;
-            this.btnSave.Text = "Save All";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnSaveCurrToDb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveCurrToDb.Location = new System.Drawing.Point(522, 190);
+            this.btnSaveCurrToDb.Name = "btnSaveCurrToDb";
+            this.btnSaveCurrToDb.Size = new System.Drawing.Size(175, 23);
+            this.btnSaveCurrToDb.TabIndex = 7;
+            this.btnSaveCurrToDb.Text = "Save Current DAR To Database";
+            this.btnSaveCurrToDb.UseVisualStyleBackColor = true;
+            this.btnSaveCurrToDb.Click += new System.EventHandler(this.btnSaveCurrToDb_Click);
             // 
             // dataGridView1
             // 
@@ -463,14 +474,14 @@
             this.btnSetSource.UseVisualStyleBackColor = true;
             this.btnSetSource.Click += new System.EventHandler(this.btnSetSource_Click);
             // 
-            // listBoxError
+            // tabPage2
             // 
-            this.listBoxError.FormattingEnabled = true;
-            this.listBoxError.Location = new System.Drawing.Point(782, 190);
-            this.listBoxError.Name = "listBoxError";
-            this.listBoxError.Size = new System.Drawing.Size(83, 108);
-            this.listBoxError.TabIndex = 33;
-            this.listBoxError.Visible = false;
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Size = new System.Drawing.Size(890, 319);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "DAR Database";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // DailyTimeRecordsForm
             // 
@@ -500,8 +511,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnSaveCurrent;
+        private System.Windows.Forms.Button btnSaveCurrToDb;
+        private System.Windows.Forms.Button btnSaveAllToDb;
         private System.Windows.Forms.Label lblId;
         private System.Windows.Forms.Label lblProcRole;
         private System.Windows.Forms.Label label2;
@@ -526,5 +537,6 @@
         private System.Windows.Forms.Label lblContract;
         private System.Windows.Forms.Label lblError;
         private System.Windows.Forms.ListBox listBoxError;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }

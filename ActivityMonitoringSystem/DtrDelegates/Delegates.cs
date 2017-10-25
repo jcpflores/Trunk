@@ -13,6 +13,8 @@ namespace DtrDelegates
 
     public delegate void SaveDtrInfoEventHandler(string empId);
 
+    public delegate void EditDtrInOutEventHandler(DtrInOut inOut);
+
     public delegate void DoneParsingFilesEventHandler();
 
     public delegate void DataChangeEventHandler();
