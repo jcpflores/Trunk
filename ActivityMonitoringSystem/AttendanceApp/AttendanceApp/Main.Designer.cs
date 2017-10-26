@@ -38,6 +38,10 @@
             this.panelProcessArea = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnEmployee = new System.Windows.Forms.Button();
+            this.btnClient = new System.Windows.Forms.Button();
+            this.btnMaintenance = new System.Windows.Forms.Button();
+            this.btnReports = new System.Windows.Forms.Button();
             this.panelControls.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -45,7 +49,7 @@
             // 
             // btnDtr
             // 
-            this.btnDtr.Location = new System.Drawing.Point(3, 3);
+            this.btnDtr.Location = new System.Drawing.Point(3, 6);
             this.btnDtr.Name = "btnDtr";
             this.btnDtr.Size = new System.Drawing.Size(146, 23);
             this.btnDtr.TabIndex = 0;
@@ -92,6 +96,10 @@
             this.panelControls.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.panelControls.BackColor = System.Drawing.Color.Maroon;
+            this.panelControls.Controls.Add(this.btnReports);
+            this.panelControls.Controls.Add(this.btnMaintenance);
+            this.panelControls.Controls.Add(this.btnClient);
+            this.panelControls.Controls.Add(this.btnEmployee);
             this.panelControls.Controls.Add(this.btnDtr);
             this.panelControls.Location = new System.Drawing.Point(12, 90);
             this.panelControls.Name = "panelControls";
@@ -147,6 +155,42 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
+            // btnEmployee
+            // 
+            this.btnEmployee.Location = new System.Drawing.Point(3, 35);
+            this.btnEmployee.Name = "btnEmployee";
+            this.btnEmployee.Size = new System.Drawing.Size(146, 23);
+            this.btnEmployee.TabIndex = 1;
+            this.btnEmployee.Text = "Employee Records";
+            this.btnEmployee.UseVisualStyleBackColor = true;
+            // 
+            // btnClient
+            // 
+            this.btnClient.Location = new System.Drawing.Point(3, 64);
+            this.btnClient.Name = "btnClient";
+            this.btnClient.Size = new System.Drawing.Size(146, 23);
+            this.btnClient.TabIndex = 2;
+            this.btnClient.Text = "Client Records";
+            this.btnClient.UseVisualStyleBackColor = true;
+            // 
+            // btnMaintenance
+            // 
+            this.btnMaintenance.Location = new System.Drawing.Point(3, 93);
+            this.btnMaintenance.Name = "btnMaintenance";
+            this.btnMaintenance.Size = new System.Drawing.Size(146, 23);
+            this.btnMaintenance.TabIndex = 3;
+            this.btnMaintenance.Text = "Maintenance";
+            this.btnMaintenance.UseVisualStyleBackColor = true;
+            // 
+            // btnReports
+            // 
+            this.btnReports.Location = new System.Drawing.Point(3, 122);
+            this.btnReports.Name = "btnReports";
+            this.btnReports.Size = new System.Drawing.Size(146, 23);
+            this.btnReports.TabIndex = 4;
+            this.btnReports.Text = "Reports";
+            this.btnReports.UseVisualStyleBackColor = true;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -186,6 +230,10 @@
         private System.Windows.Forms.Panel panelProcessArea;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.Button btnReports;
+        private System.Windows.Forms.Button btnMaintenance;
+        private System.Windows.Forms.Button btnClient;
+        private System.Windows.Forms.Button btnEmployee;
     }
 }
 
