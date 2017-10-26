@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DtrModel.Interface;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DtrModel.Entities
 {
@@ -15,9 +16,15 @@ namespace DtrModel.Entities
         public string DateTimeOut { get; set; }
         public string WorkHours { get; set; }
         public string WorkLocation { get; set; }
+        public string Client { get; set; }
         public string TimeOffReason { get; set; }
         public int BillableWorkHours { get; set; }
         [MaxLength(255)]
         public string Notes { get; set; }
+
+        [ForeignKey("DailyTimeRecord")]
+        public int DailyTimeRecordRefId { get; set; }
+
+        public DailyTimeRecord DailyTimeRecord { get; set; }
     }
 }

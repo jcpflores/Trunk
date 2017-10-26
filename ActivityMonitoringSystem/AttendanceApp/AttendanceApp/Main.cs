@@ -109,9 +109,9 @@ namespace AttendanceApp
             GetDtrDetailsEvent?.Invoke(resourceId);
         }
 
-        private void _dtrForm_SaveDtrInfoEvent(string empId)
+        private void _dtrForm_SaveDtrInfoEvent(string resourceId)
         {
-            SaveDtrInfoEvent?.Invoke(empId);
+            SaveDtrInfoEvent?.Invoke(resourceId);
         }
 
         private void _dtrForm_ParseFilesEvent(ICollection<string> filesToProcess)

@@ -39,10 +39,18 @@ namespace DtrModel
             modelBuilder.Entity<AuditTrail>();
 
             modelBuilder.Entity<DailyTimeRecord>();
-            modelBuilder.Entity<TimeInOut>();
+            modelBuilder.Entity<TimeInOut>()
+                .HasRequired(t => t.DailyTimeRecord)
+                .WithMany(t => t.TimeInOut)
+                .HasForeignKey(t => t.DailyTimeRecordRefId)
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<DtrCommon.DtrInfo>();
-            modelBuilder.Entity<DtrCommon.DtrInOut>();
+            modelBuilder.Entity<DtrCommon.DtrInOut>()
+                .HasRequired(t => t.DtrInfo)
+                .WithMany(t => t.DtrInOut)
+                .HasForeignKey(t => t.DtrInfoRefId)
+                .WillCascadeOnDelete(true);
         }  
 
        

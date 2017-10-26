@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DtrCommon
 {
@@ -14,9 +15,15 @@ namespace DtrCommon
         public string DateTimeOut { get; set; }
         public string WorkHours { get; set; }
         public string WorkLocation { get; set; }
+        public string Client { get; set; }
         public string TimeOffReason { get; set; }
         public int BillableWorkHours { get; set; }
         [MaxLength(255)]
         public string Notes { get; set; }
+
+        [ForeignKey("DtrInfo")]
+        public int DtrInfoRefId { get; set; }
+
+        public DtrInfo DtrInfo { get; set; }
     }
 }

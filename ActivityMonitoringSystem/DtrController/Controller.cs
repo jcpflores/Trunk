@@ -122,9 +122,54 @@ namespace DtrController
         public void UpdateResource(DtrInfo info)
         { }
 
-        private void _view_SaveDtrInfoEvent(string empID)
+        private void _view_SaveDtrInfoEvent(string resourceId)
         {
-            _view.ShowMessage("Saved " + empID);
+            if (resourceId.Equals("ALL"))
+            { }
+            else
+            {
+                DtrInfo dtrinfo = _context.Set<DtrInfo>()
+                    .Where(t => t.ResourceId.Equals(resourceId)).FirstOrDefault<DtrInfo>();
+
+                ICollection<TimeInOut> timeInOutList = new List<TimeInOut>();
+
+                foreach (DtrInOut inOut in dtrinfo.DtrInOut)
+                {
+                    timeInOutList.Add(new TimeInOut()
+                    {
+                        DateTimeIn = inOut.DateTimeIn,
+                        DateTimeOut = inOut.DateTimeOut,
+                        WorkHours = inOut.WorkHours,
+                        WorkLocation = inOut.WorkLocation,
+                        Client = inOut.Client,
+                        TimeOffReason = inOut.TimeOffReason,
+                        BillableWorkHours = inOut.BillableWorkHours,
+                        Notes = inOut.Notes
+                    });
+                }
+
+                _context.Set<DailyTimeRecord>().Add(new DailyTimeRecord()
+                {
+                    ResourceId = dtrinfo.ResourceId,
+                    ProcessRole = dtrinfo.ProcessRole,
+                    ClientName = dtrinfo.ClientName,
+                    ContractRef = dtrinfo.ContractRef,
+                    Project = dtrinfo.Project,
+                    WorkLocationDefault = dtrinfo.WorkLocationDefault,
+                    TimeInScheduleDefault = dtrinfo.TimeInScheduleDefault,
+                    TechnicalRole = dtrinfo.TechnicalRole,
+                    Technology = dtrinfo.Technology,
+                    SkillLevel = dtrinfo.SkillLevel,
+                    MonthYear = dtrinfo.MonthYear,
+                    TimeInOut = timeInOutList
+                });
+
+                _context.Set<DtrInfo>().Remove(dtrinfo);
+                _context.SaveChanges();
+
+                _view.ShowDtrInfo(null);
+                this.QueryTempTableDtr();
+            }
         }
         private void _view_GetDtrDetailsEvent(string resourceId)
         {

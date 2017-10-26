@@ -40,6 +40,9 @@ namespace AttendanceApp
         {
             InitDatagridView();
 
+            if (info == null)
+                return;
+
             ShowHeaders();
             this.lblId.Text = info.ResourceId;
             this.lblProcRole.Text = info.ProcessRole;
@@ -57,6 +60,8 @@ namespace AttendanceApp
             _bs.DataSource = info.DtrInOut;
             this.dataGridView1.DataSource = _bs;
             this.dataGridView1.Columns[0].Visible = false;
+            this.dataGridView1.Columns["DtrInfoRefId"].Visible = false;
+            this.dataGridView1.Columns["DtrInfo"].Visible = false;
 
             _editbutton = new DataGridViewImageColumn();
             _editbutton.Image = AttendanceApp.Properties.Resources.saveicon;
@@ -171,12 +176,15 @@ namespace AttendanceApp
 
         public void ShowProcessedResources(ICollection<ProcessedResource> processed)
         {
+            this.comboBox1.Items.Clear();
+            this.comboBox1.Text = string.Empty;
             foreach (ProcessedResource resource in processed)
             {
                 this.comboBox1.Items.Add(resource.ResourceId + " - " + resource.MonthYear);
             }
 
-            MessageBox.Show("DTRs are now ready for reviewing!");
+            if (processed != null)
+                MessageBox.Show("DTRs are now ready for reviewing!");
 
         }
 
@@ -208,7 +216,7 @@ namespace AttendanceApp
         {
             if (MessageBox.Show("Are you sure you want save to the current DAR to the database?", "ATTENTION", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                SaveDtrInfoEvent?.Invoke("CURRENT");
+                SaveDtrInfoEvent?.Invoke(this.lblId.Text);
             }
         }
 
@@ -216,7 +224,7 @@ namespace AttendanceApp
         {
             if (MessageBox.Show("Are you sure you want save to all DAR to the database?", "ATTENTION", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                SaveDtrInfoEvent?.Invoke("ALL");
+                SaveDtrInfoEvent?.Invoke(null);
             }
         }
 
