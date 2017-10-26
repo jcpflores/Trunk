@@ -38,7 +38,7 @@ namespace AttendanceApp
 
         public void ShowDtrInfo(DtrInfo info)
         {
-            InitDatagridView();
+            InitInfoView();
 
             if (info == null)
                 return;
@@ -101,8 +101,20 @@ namespace AttendanceApp
             this.dataGridView1.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Black;
         }
 
-        private void InitDatagridView()
+        private void InitInfoView()
         {
+            this.lblId.Text = string.Empty;
+            this.lblProcRole.Text = string.Empty;
+            this.lblTechRole.Text = string.Empty;
+            this.lblTech.Text = string.Empty;
+            this.lblSkill.Text = string.Empty;
+            this.lblClient.Text = string.Empty;
+            this.lblLocation.Text = string.Empty;
+            this.lblTimeIn.Text = string.Empty;
+            this.lblMonthYear.Text = string.Empty;
+            this.lblContract.Text = string.Empty;
+            this.lblProject.Text = string.Empty;
+
             this.dataGridView1.CellValueChanged -= DataGridView1_CellValueChanged;
             this.dataGridView1.CellClick -= DataGridView1_CellClick;
             _bs = null;
@@ -182,10 +194,6 @@ namespace AttendanceApp
             {
                 this.comboBox1.Items.Add(resource.ResourceId + " - " + resource.MonthYear);
             }
-
-            if (processed != null)
-                MessageBox.Show("DTRs are now ready for reviewing!");
-
         }
 
         public void ShowMessage(string message)
@@ -214,7 +222,7 @@ namespace AttendanceApp
 
         private void btnSaveCurrToDb_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want save to the current DAR to the database?", "ATTENTION", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Are you sure you want save to the current DTR to the database?", "ATTENTION", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 SaveDtrInfoEvent?.Invoke(this.lblId.Text);
             }
@@ -222,7 +230,7 @@ namespace AttendanceApp
 
         private void btnSaveAllToDb_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want save to all DAR to the database?", "ATTENTION", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (MessageBox.Show("Are you sure you want save to all DTR to the database?", "ATTENTION", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 SaveDtrInfoEvent?.Invoke(null);
             }
