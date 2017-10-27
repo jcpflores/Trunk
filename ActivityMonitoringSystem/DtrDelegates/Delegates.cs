@@ -25,5 +25,7 @@ namespace DtrDelegates
 
     public delegate void GetErrorFileListEventHandler(ICollection<string> errorFileList);
 
+    public delegate void StartProgressBarEventHandler(bool startProgressBar);
+
 
 }

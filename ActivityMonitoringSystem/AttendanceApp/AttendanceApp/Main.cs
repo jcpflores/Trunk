@@ -56,8 +56,7 @@ namespace AttendanceApp
         {
             this.toolStripProgressBar1.Minimum = 0;
             this.toolStripProgressBar1.Maximum = totalFiles;
-            this.toolStripProgressBar1.Value = processedFiles;
-            this.toolStripProgressBar1.Visible = true;
+            this.toolStripProgressBar1.Value = processedFiles;            
         }
 
         public void ShowProcessedResources(ICollection<ProcessedResource> processed)
@@ -96,7 +95,13 @@ namespace AttendanceApp
                 _dtrForm.SaveDtrInfoEvent += _dtrForm_SaveDtrInfoEvent;
                 _dtrForm.GetDtrDetailsEvent += _dtrForm_GetDtrDetailsEvent;
                 _dtrForm.EditDtrInOutEvent += _dtrForm_EditDtrInOutEvent;
+                _dtrForm.StartProgressBarEvent += _dtrForm_StartProgressBarEvent;
             }
+        }
+
+        private void _dtrForm_StartProgressBarEvent(bool startProgressBar)
+        {
+            this.toolStripProgressBar1.Visible = startProgressBar;
         }
 
         private void _dtrForm_EditDtrInOutEvent(DtrInOut inOut)

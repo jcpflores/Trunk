@@ -35,6 +35,7 @@ namespace AttendanceApp
         public event GetDtrDetailsEventHandler GetDtrDetailsEvent;
         public event GetErrorFileListEventHandler GetErrorFileListEvent;
         public event EditDtrInOutEventHandler EditDtrInOutEvent;
+        public event StartProgressBarEventHandler StartProgressBarEvent;
 
         public void ShowDtrInfo(DtrInfo info)
         {
@@ -216,8 +217,10 @@ namespace AttendanceApp
 
         private void btnReview_Click(object sender, EventArgs e)
         {
+            StartProgressBarEvent?.Invoke(true);
             ParseFilesEvent?.Invoke(_discoveredFiles);
             GetErrorFileListEvent?.Invoke(_errorList);
+            StartProgressBarEvent?.Invoke(false);
         }
 
         private void btnSaveCurrToDb_Click(object sender, EventArgs e)

@@ -33,15 +33,15 @@
             this.labelToday = new System.Windows.Forms.Label();
             this.panelBar = new System.Windows.Forms.Panel();
             this.panelControls = new System.Windows.Forms.Panel();
+            this.btnReports = new System.Windows.Forms.Button();
+            this.btnMaintenance = new System.Windows.Forms.Button();
+            this.btnClient = new System.Windows.Forms.Button();
+            this.btnEmployee = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.panelProcessArea = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.btnEmployee = new System.Windows.Forms.Button();
-            this.btnClient = new System.Windows.Forms.Button();
-            this.btnMaintenance = new System.Windows.Forms.Button();
-            this.btnReports = new System.Windows.Forms.Button();
             this.panelControls.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -106,12 +106,49 @@
             this.panelControls.Size = new System.Drawing.Size(153, 345);
             this.panelControls.TabIndex = 5;
             // 
+            // btnReports
+            // 
+            this.btnReports.Location = new System.Drawing.Point(3, 122);
+            this.btnReports.Name = "btnReports";
+            this.btnReports.Size = new System.Drawing.Size(146, 23);
+            this.btnReports.TabIndex = 4;
+            this.btnReports.Text = "Reports";
+            this.btnReports.UseVisualStyleBackColor = true;
+            // 
+            // btnMaintenance
+            // 
+            this.btnMaintenance.Location = new System.Drawing.Point(3, 93);
+            this.btnMaintenance.Name = "btnMaintenance";
+            this.btnMaintenance.Size = new System.Drawing.Size(146, 23);
+            this.btnMaintenance.TabIndex = 3;
+            this.btnMaintenance.Text = "Maintenance";
+            this.btnMaintenance.UseVisualStyleBackColor = true;
+            // 
+            // btnClient
+            // 
+            this.btnClient.Location = new System.Drawing.Point(3, 64);
+            this.btnClient.Name = "btnClient";
+            this.btnClient.Size = new System.Drawing.Size(146, 23);
+            this.btnClient.TabIndex = 2;
+            this.btnClient.Text = "Client Records";
+            this.btnClient.UseVisualStyleBackColor = true;
+            // 
+            // btnEmployee
+            // 
+            this.btnEmployee.Location = new System.Drawing.Point(3, 35);
+            this.btnEmployee.Name = "btnEmployee";
+            this.btnEmployee.Size = new System.Drawing.Size(146, 23);
+            this.btnEmployee.TabIndex = 1;
+            this.btnEmployee.Text = "Employee Records";
+            this.btnEmployee.UseVisualStyleBackColor = true;
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 441);
             this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.statusStrip1.Size = new System.Drawing.Size(809, 22);
             this.statusStrip1.TabIndex = 6;
             this.statusStrip1.Text = "statusStrip1";
@@ -119,7 +156,8 @@
             // toolStripProgressBar1
             // 
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(700, 16);
+            this.toolStripProgressBar1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(400, 16);
             this.toolStripProgressBar1.Visible = false;
             // 
             // panelProcessArea
@@ -154,42 +192,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(782, 48);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
-            // 
-            // btnEmployee
-            // 
-            this.btnEmployee.Location = new System.Drawing.Point(3, 35);
-            this.btnEmployee.Name = "btnEmployee";
-            this.btnEmployee.Size = new System.Drawing.Size(146, 23);
-            this.btnEmployee.TabIndex = 1;
-            this.btnEmployee.Text = "Employee Records";
-            this.btnEmployee.UseVisualStyleBackColor = true;
-            // 
-            // btnClient
-            // 
-            this.btnClient.Location = new System.Drawing.Point(3, 64);
-            this.btnClient.Name = "btnClient";
-            this.btnClient.Size = new System.Drawing.Size(146, 23);
-            this.btnClient.TabIndex = 2;
-            this.btnClient.Text = "Client Records";
-            this.btnClient.UseVisualStyleBackColor = true;
-            // 
-            // btnMaintenance
-            // 
-            this.btnMaintenance.Location = new System.Drawing.Point(3, 93);
-            this.btnMaintenance.Name = "btnMaintenance";
-            this.btnMaintenance.Size = new System.Drawing.Size(146, 23);
-            this.btnMaintenance.TabIndex = 3;
-            this.btnMaintenance.Text = "Maintenance";
-            this.btnMaintenance.UseVisualStyleBackColor = true;
-            // 
-            // btnReports
-            // 
-            this.btnReports.Location = new System.Drawing.Point(3, 122);
-            this.btnReports.Name = "btnReports";
-            this.btnReports.Size = new System.Drawing.Size(146, 23);
-            this.btnReports.TabIndex = 4;
-            this.btnReports.Text = "Reports";
-            this.btnReports.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
