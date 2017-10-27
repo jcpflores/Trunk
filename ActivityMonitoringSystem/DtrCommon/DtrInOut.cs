@@ -22,8 +22,8 @@ namespace DtrCommon
         public string Notes { get; set; }
 
         [ForeignKey("DtrInfo")]
-        public int DtrInfoRefId { get; set; }
+        public virtual int DtrInfoRefId { get; set; }
 
-        public DtrInfo DtrInfo { get; set; }
+        public virtual DtrInfo DtrInfo { get; set; }
     }
 }
