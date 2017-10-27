@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DtrController.Tools.DtrFileReader;
-
+using DtrController;
 
 namespace UnitTestProject1
 {
@@ -12,10 +12,9 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod1()
         {
-            DtrFileReader dfr = new DtrFileReader();
-            dfr.ReadDtrFileFromFolder(@"C:\Users\KATION\Desktop\Dtr");
+            Controller cntrl = new Controller();
+            cntrl._ReadDtrFile(@"C:\Users\KATION\Desktop\Dtr");
            // Assert.IsNotNull(dfr.Dtrlist);
-
         }
     }
 }

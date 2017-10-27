@@ -16,12 +16,17 @@ namespace DtrInterfaces
 
         event SaveDtrInfoEventHandler SaveDtrInfoEvent;
 
-        void ShowFiles(string[] discoveredFiles);
+        event EditDtrInOutEventHandler EditDtrInOutEvent;
 
-        void ShowProcessedResources(List<ProcessedResource> processed);
+        void ShowFiles(ICollection<string> discoveredFiles);
+
+        void ShowProcessedResources(ICollection<ProcessedResource> processed);
 
         void ShowDtrInfo(DtrInfo info);
 
         void ShowMessage(string message);
+        void ShowProgress(int count, int totalFiles);
+
+        void ShowError(ICollection<string> erroFiles);
     }
 }

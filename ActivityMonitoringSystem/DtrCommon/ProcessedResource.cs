@@ -3,7 +3,8 @@ namespace DtrCommon
 {
     public class ProcessedResource
     {
-        string ResourceId { get; set; }
-        bool HasExistingRecord { get; set; }
+        public string ResourceId { get; set; }
+        public string MonthYear { get; set; }
+        public bool HasExistingRecord { get; set; }
     }
 }

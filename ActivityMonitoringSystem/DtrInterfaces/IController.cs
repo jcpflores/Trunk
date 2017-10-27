@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DtrCommon;
+using DtrDelegates;
 
 namespace DtrInterfaces
 {
@@ -14,5 +15,6 @@ namespace DtrInterfaces
         void GetResourceInformation(UnprocessedResource unprocessed);
 
         void UpdateResource(DtrInfo info);
+
     }
 }

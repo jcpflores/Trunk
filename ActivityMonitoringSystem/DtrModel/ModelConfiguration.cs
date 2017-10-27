@@ -19,23 +19,38 @@ namespace DtrModel
 
         private static void ConfigureAttendanceEntity(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Employee>();                           
+            modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.PluralizingTableNameConvention>();
+
+            modelBuilder.Entity<Employee>();
+            modelBuilder.Entity<AttendanceSummary>();
             modelBuilder.Entity<Client>();
+            modelBuilder.Entity<ClientContract>();
+            modelBuilder.Entity<ClientHoliday>();
+            
+            modelBuilder.Entity<Holiday>();
             modelBuilder.Entity<ProcessRole>();
+            modelBuilder.Entity<Project>();
             modelBuilder.Entity<SkillLevel>();
+            modelBuilder.Entity<TechnicalRole>();
             modelBuilder.Entity<WorkLocation>();
             modelBuilder.Entity<WorkSchedule>();
-            modelBuilder.Entity<TechnicalRole>();
-            modelBuilder.Entity<AttendanceSummary>();
-            modelBuilder.Entity<ClientContract>();
-            modelBuilder.Entity<Project>();
-            modelBuilder.Entity<DailyTimeRecord>();
-            modelBuilder.Entity<Holiday>();
             modelBuilder.Entity<Users>();
-            modelBuilder.Entity<TimeoffReason>();
-            modelBuilder.Entity<ClientHoliday>();
+            modelBuilder.Entity<DtrProcessLog>();
             modelBuilder.Entity<AuditTrail>();
-         
+
+            modelBuilder.Entity<DailyTimeRecord>();
+            modelBuilder.Entity<TimeInOut>()
+                .HasRequired(t => t.DailyTimeRecord)
+                .WithMany(t => t.TimeInOut)
+                .HasForeignKey(t => t.DailyTimeRecordRefId)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<DtrCommon.DtrInfo>();
+            modelBuilder.Entity<DtrCommon.DtrInOut>()
+                .HasRequired(t => t.DtrInfo)
+                .WithMany(t => t.DtrInOut)
+                .HasForeignKey(t => t.DtrInfoRefId)
+                .WillCascadeOnDelete(true);
         }  
 
        

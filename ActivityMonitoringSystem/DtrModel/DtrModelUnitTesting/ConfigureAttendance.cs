@@ -22,7 +22,7 @@ namespace DtrModelUnitTesting
 
         }
 
-        [TestCleanup]
+       // [TestCleanup]
         public void TestCleanup()
         {
             if (_context != null)
@@ -36,6 +36,29 @@ namespace DtrModelUnitTesting
 
             if (System.IO.File.Exists(@"C:\Temp\AttendanceDb.sqlite"))
                 System.IO.File.Delete(@"C:\Temp\AttendanceDb.sqlite");
+
+        }
+
+        [TestMethod]
+        public void Test_CreateUser()
+        {
+            string expectedUsername = "admin1";
+
+            _context.Set<Users>().Add(new Users
+            {
+                Username = "admin1",
+                Password = "pass1",
+                Name = "JohnCabugao",
+                Active = true
+            });
+
+            _context.SaveChanges();
+
+            var _usr = _context.Set<Users>()
+                 .Where(t => t.Username.Equals("admin1"))
+                 .First();
+
+            Assert.AreEqual(expectedUsername, _usr.Username);
 
         }
 
@@ -109,28 +132,7 @@ namespace DtrModelUnitTesting
             Assert.IsNotNull(_context.Set<Project>());
         }
 
-       //     [TestMethod]
-        public void Test_CreateUser()
-        {
-            string expectedUsername = "admin1";
-
-            _context.Set<Users>().Add(new Users
-            {
-                Username = "admin1",
-                Password = "pass1",
-                Name = "JohnCabugao",
-                Active = true
-            });
-
-            _context.SaveChanges();
-
-            var _usr = _context.Set<Users>()
-                 .Where(t => t.Username.Equals("admin1"))
-                 .First();
-
-            Assert.AreEqual(expectedUsername, _usr.Username);
-
-        }
+     
 
         // [TestMethod]
         public void Test_CreateTechnical()

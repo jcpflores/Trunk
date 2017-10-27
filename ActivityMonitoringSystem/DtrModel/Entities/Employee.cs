@@ -26,6 +26,12 @@ namespace DtrModel.Entities
         public string Initial { get; set; }
 
         [Required]
+        public string EmpId { get; set; }
+
+        [Required]
+        public string Email { get; set; }
+
+        [Required]
         public bool Gender { get; set; }
 
         [Required]
@@ -40,6 +46,7 @@ namespace DtrModel.Entities
         [Required]
         public int PaternityLeave { get; set; }
       
+   
 
         public virtual ICollection<AttendanceSummary> AttendanceSummary { get; set; }
         public virtual ICollection<SkillLevel> Skills { get; set; }
