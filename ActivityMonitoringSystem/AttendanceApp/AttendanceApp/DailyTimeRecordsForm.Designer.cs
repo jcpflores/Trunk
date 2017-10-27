@@ -30,7 +30,6 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.listBoxError = new System.Windows.Forms.ListBox();
             this.lblError = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -84,7 +83,6 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.listBoxError);
             this.tabPage1.Controls.Add(this.lblError);
             this.tabPage1.Controls.Add(this.label13);
             this.tabPage1.Controls.Add(this.label14);
@@ -126,28 +124,20 @@
             this.tabPage1.Text = "DTR Processing";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // listBoxError
-            // 
-            this.listBoxError.FormattingEnabled = true;
-            this.listBoxError.Location = new System.Drawing.Point(782, 190);
-            this.listBoxError.Name = "listBoxError";
-            this.listBoxError.Size = new System.Drawing.Size(83, 108);
-            this.listBoxError.TabIndex = 33;
-            this.listBoxError.Visible = false;
-            // 
             // lblError
             // 
             this.lblError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblError.AutoSize = true;
-            this.lblError.ForeColor = System.Drawing.Color.DarkRed;
+            this.lblError.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblError.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblError.ForeColor = System.Drawing.Color.Red;
             this.lblError.Location = new System.Drawing.Point(634, 24);
             this.lblError.Name = "lblError";
             this.lblError.Size = new System.Drawing.Size(32, 13);
             this.lblError.TabIndex = 32;
             this.lblError.Text = "Error:";
             this.lblError.Visible = false;
-            this.lblError.MouseLeave += new System.EventHandler(this.lblError_MouseLeave);
-            this.lblError.MouseHover += new System.EventHandler(this.lblError_MouseHover);
+            this.lblError.Click += new System.EventHandler(this.lblError_Click);
             // 
             // label13
             // 
@@ -539,7 +529,6 @@
         private System.Windows.Forms.Label lblProject;
         private System.Windows.Forms.Label lblContract;
         private System.Windows.Forms.Label lblError;
-        private System.Windows.Forms.ListBox listBoxError;
         private System.Windows.Forms.TabPage tabPage2;
     }
 }

@@ -19,6 +19,8 @@ namespace AttendanceApp
         DataGridViewImageColumn _editbutton;
         BindingSource _bs;
         Color EDITED_COLOR = Color.Pink;
+        ErrorForm _errorForm = new ErrorForm();
+  
 
         public DailyTimeRecordsForm()
         {
@@ -71,7 +73,7 @@ namespace AttendanceApp
             _editbutton.Name = "Save";
             _editbutton.ReadOnly = true;
             dataGridView1.Columns.Add(_editbutton);
-            
+
             SetWeekendsColumnProperty(Color.White, Color.Blue);
 
             this.dataGridView1.CellValueChanged += DataGridView1_CellValueChanged;
@@ -179,10 +181,9 @@ namespace AttendanceApp
         {
             _errorList = errorFiles;
             this.lblError.Visible = true;
-            this.lblError.Text = "Error: " + errorFiles.Count.ToString();
-            listBoxError.DataSource = errorFiles;
+            this.lblError.Text = "Error: " + errorFiles.Count.ToString();        
         }
-
+    
         public void ShowProgress(int count, int totalCount)
         {
         }
@@ -244,19 +245,15 @@ namespace AttendanceApp
             GetDtrDetailsEvent?.Invoke(this.comboBox1.SelectedItem.ToString());
         }
 
-        private void lblError_MouseHover(object sender, EventArgs e)
+        private void lblError_Click(object sender, EventArgs e)
         {
-            this.listBoxError.Visible = true;
-            this.listBoxError.Width = 300;
-            this.listBoxError.Height = 300;
-            this.listBoxError.Location = new Point(350, 25);
-        }
-
-        private void lblError_MouseLeave(object sender, EventArgs e)
-        {
-            this.listBoxError.Visible = false;
-            this.listBoxError.Location = new Point(350, 25);
+            _errorForm = new ErrorForm();
+            _errorForm.Show();
+            _errorForm.ShowError(_errorList);
 
         }
+
+
+
     }
 }
