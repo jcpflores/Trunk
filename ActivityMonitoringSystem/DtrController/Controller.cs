@@ -63,6 +63,12 @@ namespace DtrController
             _context = DtrModel.Model.GetAttendanceDbContext;
             ClearAllTempTables();
             DtrModel.Model.ChangesSavedEvent += Model_ChangesSavedEvent;
+            GetHolidays();
+        }
+
+        private void GetHolidays()
+        {
+            Tools.GoogleHolidayApi.GoogleHolidayApi.GetHolidays();
         }
 
         private void ClearAllTempTables()
