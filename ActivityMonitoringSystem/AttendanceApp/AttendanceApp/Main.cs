@@ -133,15 +133,9 @@ namespace AttendanceApp
 
         private void labelToday_Click(Object sender, EventArgs e)
         {
-            _dtrCalendar = new Calendar();
-            _dtrCalendar.MdiParent = this;
-            this.panelProcessArea.Controls.Clear();
-            _dtrCalendar.Size = this.panel1.Size;
-            this.panelProcessArea.Controls.Add(_dtrCalendar);
+            _dtrCalendar = new Calendar();      
             _dtrCalendar.Show();
-            _dtrCalendar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+          
         }
     }
 }
