@@ -50,10 +50,14 @@ namespace DtrController.Tools.GoogleHolidayApi
 
             foreach (var myEvent in events.Items)
             {
-                _holidayList.Add(new Holiday {
-                    HolidayDate = DateTime.Parse(myEvent.Start.Date),
-                    HolidayName = myEvent.Summary
-                });
+                if (DateTime.Parse(myEvent.Start.Date).Year == DateTime.Now.Year)
+                {
+                    _holidayList.Add(new Holiday
+                    {
+                        HolidayDate = DateTime.Parse(myEvent.Start.Date),
+                        HolidayName = myEvent.Summary
+                    });
+                }
             }
 
         }

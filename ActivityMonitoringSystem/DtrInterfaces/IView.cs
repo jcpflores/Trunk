@@ -18,6 +18,8 @@ namespace DtrInterfaces
 
         event EditDtrInOutEventHandler EditDtrInOutEvent;
 
+        event GetHolidayListEventHandler GetHolidayListEvent;
+
         void ShowFiles(ICollection<string> discoveredFiles);
 
         void ShowProcessedResources(ICollection<ProcessedResource> processed);
@@ -28,5 +30,7 @@ namespace DtrInterfaces
         void ShowProgress(int count, int totalFiles);
 
         void ShowError(ICollection<string> erroFiles);
+
+        void ShowHolidayList(ICollection<DtrCommon.Holiday> holidayList);
     }
 }

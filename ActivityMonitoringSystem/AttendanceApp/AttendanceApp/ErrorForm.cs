@@ -29,6 +29,7 @@ namespace AttendanceApp
         public event GetErrorFileListEventHandler GetErrorFileListEvent;
         public event EditDtrInOutEventHandler EditDtrInOutEvent;
         public event StartProgressBarEventHandler StartProgressBarEvent;
+        public event GetHolidayListEventHandler GetHolidayListEvent;
 
         public void ShowDtrInfo(DtrInfo info)
         { }
@@ -47,5 +48,9 @@ namespace AttendanceApp
         {
             listBoxError.DataSource = errorFiles;
         }
-    }
+
+        public void ShowHolidayList(ICollection<DtrCommon.Holiday> holidayList)
+        { }
+
+        }
 }

@@ -18,7 +18,7 @@ namespace AttendanceApp
         DtrController.Controller _controller = null;
         DailyTimeRecordsForm _dtrForm = new DailyTimeRecordsForm();
         Calendar _dtrCalendar = new Calendar();
-
+     
 
         public Main()
         {
@@ -40,6 +40,8 @@ namespace AttendanceApp
         public event SaveDtrInfoEventHandler SaveDtrInfoEvent;
 
         public event EditDtrInOutEventHandler EditDtrInOutEvent;
+
+        public event GetHolidayListEventHandler GetHolidayListEvent;
 
         public void ShowFiles(ICollection<string> discoveredFiles)
         {
@@ -96,7 +98,13 @@ namespace AttendanceApp
                 _dtrForm.GetDtrDetailsEvent += _dtrForm_GetDtrDetailsEvent;
                 _dtrForm.EditDtrInOutEvent += _dtrForm_EditDtrInOutEvent;
                 _dtrForm.StartProgressBarEvent += _dtrForm_StartProgressBarEvent;
+                _dtrForm.GetHolidayListEvent += _dtrForm_GetHolidayListEvent;
             }
+        }
+
+        private void _dtrForm_GetHolidayListEvent()
+        {
+            GetHolidayListEvent?.Invoke();
         }
 
         private void _dtrForm_StartProgressBarEvent(bool startProgressBar)
@@ -137,5 +145,11 @@ namespace AttendanceApp
             _dtrCalendar.Show();
           
         }
+
+        public void ShowHolidayList(ICollection<DtrCommon.Holiday> holiday)
+        {          
+            _dtrForm.ShowHolidayList(holiday);         
+        }
+
     }
 }

@@ -63,12 +63,17 @@ namespace DtrController
             _context = DtrModel.Model.GetAttendanceDbContext;
             ClearAllTempTables();
             DtrModel.Model.ChangesSavedEvent += Model_ChangesSavedEvent;
-            GetHolidays();
+
         }
 
         private void GetHolidays()
         {
-            Tools.GoogleHolidayApi.GoogleHolidayApi.GetHolidays();
+
+            ICollection<DtrCommon.Holiday> holidayList = new List<DtrCommon.Holiday>();
+            holidayList = Tools.GoogleHolidayApi.GoogleHolidayApi.GetHolidays();
+
+            _view.ShowHolidayList(holidayList);
+
         }
 
         private void ClearAllTempTables()
@@ -108,6 +113,12 @@ namespace DtrController
             _view.SaveDtrInfoEvent += _view_SaveDtrInfoEvent;
             _view.ParseFilesEvent += _view_ParseFilesEvent;
             _view.EditDtrInOutEvent += _view_EditDtrInOutEvent;
+            _view.GetHolidayListEvent += _view_GetHolidayListEvent;
+        }
+
+        private void _view_GetHolidayListEvent()
+        {
+            GetHolidays();
         }
 
         private void _view_EditDtrInOutEvent(DtrInOut inOut)
@@ -179,7 +190,7 @@ namespace DtrController
         }
         private void _view_GetDtrDetailsEvent(string resourceId)
         {
-            string[] filter = resourceId.Replace(" ","").Split(new char[] { '-' });
+            string[] filter = resourceId.Replace(" ", "").Split(new char[] { '-' });
             string resId = filter[0];
             string monthYear = filter[1];
 
@@ -194,7 +205,7 @@ namespace DtrController
             ICollection<string> xlsxFiles = new List<string>();
             foreach (string dtrFile in Directory.GetFiles(localPath))
             {
-                if(dtrFile.EndsWith("xlsx"))
+                if (dtrFile.EndsWith("xlsx"))
                 {
                     xlsxFiles.Add(dtrFile);
                 }

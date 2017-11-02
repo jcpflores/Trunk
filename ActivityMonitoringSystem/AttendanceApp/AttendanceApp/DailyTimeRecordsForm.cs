@@ -16,17 +16,20 @@ namespace AttendanceApp
     {
         ICollection<string> _discoveredFiles;
         ICollection<string> _errorList;
+        ICollection<DtrCommon.Holiday> _holidayList = new List<DtrCommon.Holiday>();
         DataGridViewImageColumn _editbutton;
         BindingSource _bs;
         Color EDITED_COLOR = Color.Pink;
         ErrorForm _errorForm = new ErrorForm();
-  
+
 
         public DailyTimeRecordsForm()
         {
             InitializeComponent();
 
             this.comboBox1.SelectedValueChanged += ComboBox1_SelectedValueChanged;
+
+          
         }
 
 
@@ -38,6 +41,7 @@ namespace AttendanceApp
         public event GetErrorFileListEventHandler GetErrorFileListEvent;
         public event EditDtrInOutEventHandler EditDtrInOutEvent;
         public event StartProgressBarEventHandler StartProgressBarEvent;
+        public event GetHolidayListEventHandler GetHolidayListEvent;
 
         public void ShowDtrInfo(DtrInfo info)
         {
@@ -73,6 +77,8 @@ namespace AttendanceApp
             _editbutton.Name = "Save";
             _editbutton.ReadOnly = true;
             dataGridView1.Columns.Add(_editbutton);
+
+            GetHolidayListEvent?.Invoke();
 
             SetWeekendsColumnProperty(Color.White, Color.Blue);
 
@@ -142,6 +148,12 @@ namespace AttendanceApp
                     this.dataGridView1.Rows[i].DefaultCellStyle.ForeColor = foreColor;
                     this.dataGridView1.Rows[i].DefaultCellStyle.BackColor = backColor;
                 }
+
+                if (IsHolidayDate(this.dataGridView1.Rows[i].Cells[1].Value.ToString()))
+                {
+                    this.dataGridView1.Rows[i].DefaultCellStyle.ForeColor = foreColor;
+                    this.dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.ForestGreen;
+                }
             }
         }
 
@@ -152,6 +164,19 @@ namespace AttendanceApp
                 return true;
             }
             return false;
+        }
+
+        private bool IsHolidayDate(string date)
+        {
+           
+            var holidayExist = _holidayList.Where(x => x.HolidayDate == DateTime.Parse(date)).ToList();
+
+            if (holidayExist.Count() > 0)
+            {
+                return true;
+            }
+            return false;
+
         }
 
         private void ShowHeaders()
@@ -170,6 +195,10 @@ namespace AttendanceApp
             this.lblError.Visible = true;
         }
 
+
+
+
+
         public void ShowFiles(ICollection<string> discoveredFiles)
         {
             _discoveredFiles = discoveredFiles;
@@ -180,10 +209,15 @@ namespace AttendanceApp
         public void ShowError(ICollection<string> errorFiles)
         {
             _errorList = errorFiles;
-            this.lblError.Visible = true;
-            this.lblError.Text = "Error: " + errorFiles.Count.ToString();        
+
+            if (errorFiles.Count > 0)
+            {
+                this.lblError.Visible = true;
+            }
+            
+            this.lblError.Text = "Error: " + errorFiles.Count.ToString();
         }
-    
+
         public void ShowProgress(int count, int totalCount)
         {
         }
@@ -253,7 +287,10 @@ namespace AttendanceApp
 
         }
 
-
+        public void ShowHolidayList(ICollection<DtrCommon.Holiday> holiday)
+        {
+            _holidayList = holiday;
+        }
 
     }
 }
