@@ -44,6 +44,7 @@
     <Compile Include="DtrInfo.cs" />
     <Compile Include="DtrInOut.cs" />
     <Compile Include="DtrLogs.cs" />
+    <Compile Include="Employee.cs" />
     <Compile Include="Holiday.cs" />
     <Compile Include="ProcessedResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

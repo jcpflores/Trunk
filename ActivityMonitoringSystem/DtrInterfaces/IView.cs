@@ -20,6 +20,12 @@ namespace DtrInterfaces
 
         event GetHolidayListEventHandler GetHolidayListEvent;
 
+        event SaveEmployeeRecordsEventHandler SaveEmployeeRecordsEvent;
+
+        event GetEmployeeListEventHandler GetEmployeeListEvent;
+
+        event GetExistEmployeeRecordEventHandler GetExistEmployeeRecordEvent;
+
         void ShowFiles(ICollection<string> discoveredFiles);
 
         void ShowProcessedResources(ICollection<ProcessedResource> processed);
@@ -32,5 +38,9 @@ namespace DtrInterfaces
         void ShowError(ICollection<string> erroFiles);
 
         void ShowHolidayList(ICollection<DtrCommon.Holiday> holidayList);
+
+        void ShowEmployeeList(ICollection<DtrCommon.Employee> employeeList);
+
+        void ExistEmployeeRecord(bool existEmployee);
     }
 }

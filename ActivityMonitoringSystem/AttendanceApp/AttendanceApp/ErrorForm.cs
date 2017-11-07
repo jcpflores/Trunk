@@ -30,6 +30,9 @@ namespace AttendanceApp
         public event EditDtrInOutEventHandler EditDtrInOutEvent;
         public event StartProgressBarEventHandler StartProgressBarEvent;
         public event GetHolidayListEventHandler GetHolidayListEvent;
+        public event SaveEmployeeRecordsEventHandler SaveEmployeeRecordsEvent;
+        public event GetEmployeeListEventHandler GetEmployeeListEvent;
+        public event GetExistEmployeeRecordEventHandler GetExistEmployeeRecordEvent;
 
         public void ShowDtrInfo(DtrInfo info)
         { }
@@ -52,5 +55,10 @@ namespace AttendanceApp
         public void ShowHolidayList(ICollection<DtrCommon.Holiday> holidayList)
         { }
 
-        }
+        public void ShowEmployeeList(ICollection<DtrCommon.Employee> employee)
+        { }
+        public void ExistEmployeeRecord(bool empRecord)
+        { }
+
+    }
 }

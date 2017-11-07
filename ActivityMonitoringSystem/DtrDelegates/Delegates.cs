@@ -26,8 +26,14 @@ namespace DtrDelegates
     public delegate void GetErrorFileListEventHandler(ICollection<string> errorFileList);
 
     public delegate void StartProgressBarEventHandler(bool startProgressBar);
-        
+
     public delegate void GetHolidayListEventHandler();
+
+    public delegate void SaveEmployeeRecordsEventHandler(DtrCommon.Employee employeeRecord);
+
+    public delegate void GetEmployeeListEventHandler(DtrCommon.Employee employeeRecord);
+
+    public delegate void GetExistEmployeeRecordEventHandler(string employeeNo);
 
 
 }

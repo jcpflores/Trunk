@@ -29,7 +29,7 @@ namespace AttendanceApp
 
             this.comboBox1.SelectedValueChanged += ComboBox1_SelectedValueChanged;
 
-          
+           
         }
 
 
@@ -42,6 +42,10 @@ namespace AttendanceApp
         public event EditDtrInOutEventHandler EditDtrInOutEvent;
         public event StartProgressBarEventHandler StartProgressBarEvent;
         public event GetHolidayListEventHandler GetHolidayListEvent;
+        public event SaveEmployeeRecordsEventHandler SaveEmployeeRecordsEvent;
+        public event GetEmployeeListEventHandler GetEmployeeListEvent;
+        public event GetExistEmployeeRecordEventHandler GetExistEmployeeRecordEvent;
+
 
         public void ShowDtrInfo(DtrInfo info)
         {
@@ -49,6 +53,8 @@ namespace AttendanceApp
 
             if (info == null)
                 return;
+
+              GetHolidayListEvent?.Invoke();
 
             ShowHeaders();
             this.lblId.Text = info.ResourceId;
@@ -78,7 +84,7 @@ namespace AttendanceApp
             _editbutton.ReadOnly = true;
             dataGridView1.Columns.Add(_editbutton);
 
-            GetHolidayListEvent?.Invoke();
+        
 
             SetWeekendsColumnProperty(Color.White, Color.Blue);
 
@@ -192,7 +198,7 @@ namespace AttendanceApp
             this.lblMonthYear.Visible = true;
             this.lblContract.Visible = true;
             this.lblProject.Visible = true;
-            this.lblError.Visible = true;
+          
         }
 
 
@@ -246,6 +252,7 @@ namespace AttendanceApp
                     source = openFolder.SelectedPath;
                     this.textBox1.Text = source;
                     GetFilesFromLocalEvent?.Invoke(source);
+                    btnReview.Enabled = true;
                 }
             }
         }
@@ -256,6 +263,9 @@ namespace AttendanceApp
             ParseFilesEvent?.Invoke(_discoveredFiles);
             GetErrorFileListEvent?.Invoke(_errorList);
             StartProgressBarEvent?.Invoke(false);
+
+            if (_discoveredFiles.Count > 0)
+            { comboBox1.Enabled = true;  }
         }
 
         private void btnSaveCurrToDb_Click(object sender, EventArgs e)
@@ -277,6 +287,8 @@ namespace AttendanceApp
         private void ComboBox1_SelectedValueChanged(object sender, EventArgs e)
         {
             GetDtrDetailsEvent?.Invoke(this.comboBox1.SelectedItem.ToString());
+            btnSaveAllToDb.Enabled = true;
+            btnSaveCurrToDb.Enabled = true;
         }
 
         private void lblError_Click(object sender, EventArgs e)
@@ -289,8 +301,15 @@ namespace AttendanceApp
 
         public void ShowHolidayList(ICollection<DtrCommon.Holiday> holiday)
         {
+           
             _holidayList = holiday;
         }
 
-    }
+        public void ShowEmployeeList(ICollection<DtrCommon.Employee> employee)
+        { }
+
+        public void ExistEmployeeRecord(bool empRecord)
+        { }
+
+        }
 }

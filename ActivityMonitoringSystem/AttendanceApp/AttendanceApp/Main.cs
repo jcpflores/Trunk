@@ -18,7 +18,8 @@ namespace AttendanceApp
         DtrController.Controller _controller = null;
         DailyTimeRecordsForm _dtrForm = new DailyTimeRecordsForm();
         Calendar _dtrCalendar = new Calendar();
-     
+        EmployeeRecords _dtrEmployee = new EmployeeRecords();
+
 
         public Main()
         {
@@ -43,6 +44,12 @@ namespace AttendanceApp
 
         public event GetHolidayListEventHandler GetHolidayListEvent;
 
+        public event SaveEmployeeRecordsEventHandler SaveEmployeeRecordsEvent;
+
+        public event GetEmployeeListEventHandler GetEmployeeListEvent;
+
+        public event GetExistEmployeeRecordEventHandler GetExistEmployeeRecordEvent;
+
         public void ShowFiles(ICollection<string> discoveredFiles)
         {
             //_discoveredFiles = discoveredFiles;
@@ -51,14 +58,14 @@ namespace AttendanceApp
 
         public void ShowError(ICollection<string> errorFiles)
         {
-            _dtrForm.ShowError(errorFiles);        
+            _dtrForm.ShowError(errorFiles);
         }
 
         public void ShowProgress(int processedFiles, int totalFiles)
         {
             this.toolStripProgressBar1.Minimum = 0;
             this.toolStripProgressBar1.Maximum = totalFiles;
-            this.toolStripProgressBar1.Value = processedFiles;            
+            this.toolStripProgressBar1.Value = processedFiles;
         }
 
         public void ShowProcessedResources(ICollection<ProcessedResource> processed)
@@ -72,7 +79,7 @@ namespace AttendanceApp
             _dtrForm.ShowDtrInfo(info);
         }
 
-        public void ShowMessage(string message) 
+        public void ShowMessage(string message)
         {
             MessageBox.Show(message);
         }
@@ -80,8 +87,8 @@ namespace AttendanceApp
 
         private void btnDtr_Click(object sender, EventArgs e)
         {
-            if(!_dtrForm.Visible)
-            { 
+            if (!_dtrForm.Visible)
+            {
                 _dtrForm = new DailyTimeRecordsForm();
                 _dtrForm.MdiParent = this;
                 this.panelProcessArea.Controls.Clear();
@@ -99,8 +106,11 @@ namespace AttendanceApp
                 _dtrForm.EditDtrInOutEvent += _dtrForm_EditDtrInOutEvent;
                 _dtrForm.StartProgressBarEvent += _dtrForm_StartProgressBarEvent;
                 _dtrForm.GetHolidayListEvent += _dtrForm_GetHolidayListEvent;
+
             }
         }
+
+
 
         private void _dtrForm_GetHolidayListEvent()
         {
@@ -129,7 +139,7 @@ namespace AttendanceApp
 
         private void _dtrForm_ParseFilesEvent(ICollection<string> filesToProcess)
         {
-            if(filesToProcess.Count > 0)
+            if (filesToProcess.Count > 0)
                 ParseFilesEvent?.Invoke(filesToProcess);
         }
 
@@ -141,15 +151,59 @@ namespace AttendanceApp
 
         private void labelToday_Click(Object sender, EventArgs e)
         {
-            _dtrCalendar = new Calendar();      
+            _dtrCalendar = new Calendar();
             _dtrCalendar.Show();
-          
         }
 
         public void ShowHolidayList(ICollection<DtrCommon.Holiday> holiday)
-        {          
-            _dtrForm.ShowHolidayList(holiday);         
+        {
+            _dtrForm.ShowHolidayList(holiday);
         }
+
+        public void ShowEmployeeList(ICollection<DtrCommon.Employee> employee)
+        {
+            //GetEmployeeListEvent?.Invoke(employee);
+            _dtrEmployee.ShowEmployeeList(employee);
+        }
+
+        public void ExistEmployeeRecord(bool empRecord)
+        {
+            _dtrEmployee.ExistEmployeeRecord(empRecord);
+        }
+
+        private void btnEmployee_Click(object sender, EventArgs e)
+        {
+            _dtrEmployee = new EmployeeRecords();
+            _dtrEmployee.MdiParent = this;
+            this.panelProcessArea.Controls.Clear();
+            _dtrEmployee.Size = this.panel1.Size;
+            this.panelProcessArea.Controls.Add(_dtrEmployee);
+            _dtrEmployee.Show();
+            _dtrEmployee.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+
+            _dtrEmployee.SaveEmployeeRecordsEvent += _dtrEmployee_SaveEmployeeRecordsEvent;
+            _dtrEmployee.GetEmployeeListEvent += _dtrEmployee_GetEmployeeListEvent;
+            _dtrEmployee.GetExistEmployeeRecordEvent += _dtrEmployee_GetExistEmployeeRecordEvent;
+            GetEmployeeListEvent?.Invoke(null);
+        }
+
+        private void _dtrEmployee_GetExistEmployeeRecordEvent(string empNo)
+        {
+            GetExistEmployeeRecordEvent?.Invoke(empNo);
+        }
+
+        private void _dtrEmployee_GetEmployeeListEvent(Employee employeeRecord)
+        {
+            GetEmployeeListEvent?.Invoke(employeeRecord);
+        }
+
+        private void _dtrEmployee_SaveEmployeeRecordsEvent(Employee employeeRecord)
+        {
+            SaveEmployeeRecordsEvent?.Invoke(employeeRecord);
+        }
+
 
     }
 }

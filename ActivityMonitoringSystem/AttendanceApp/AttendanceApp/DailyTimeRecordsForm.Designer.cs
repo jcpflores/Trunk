@@ -373,6 +373,7 @@
             // btnSaveAllToDb
             // 
             this.btnSaveAllToDb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSaveAllToDb.Enabled = false;
             this.btnSaveAllToDb.Location = new System.Drawing.Point(17, 190);
             this.btnSaveAllToDb.Name = "btnSaveAllToDb";
             this.btnSaveAllToDb.Size = new System.Drawing.Size(151, 23);
@@ -384,6 +385,7 @@
             // btnSaveCurrToDb
             // 
             this.btnSaveCurrToDb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveCurrToDb.Enabled = false;
             this.btnSaveCurrToDb.Location = new System.Drawing.Point(522, 190);
             this.btnSaveCurrToDb.Name = "btnSaveCurrToDb";
             this.btnSaveCurrToDb.Size = new System.Drawing.Size(175, 23);
@@ -407,6 +409,7 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.Enabled = false;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(95, 63);
             this.comboBox1.Name = "comboBox1";
@@ -438,6 +441,7 @@
             // btnReview
             // 
             this.btnReview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReview.Enabled = false;
             this.btnReview.Location = new System.Drawing.Point(467, 19);
             this.btnReview.Name = "btnReview";
             this.btnReview.Size = new System.Drawing.Size(75, 23);

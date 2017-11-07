@@ -89,6 +89,12 @@
     <Compile Include="DailyTimeRecordsForm.Designer.cs">
       <DependentUpon>DailyTimeRecordsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeRecords.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmployeeRecords.Designer.cs">
+      <DependentUpon>EmployeeRecords.cs</DependentUpon>
+    </Compile>
     <Compile Include="ErrorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,6 +114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DailyTimeRecordsForm.resx">
       <DependentUpon>DailyTimeRecordsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmployeeRecords.resx">
+      <DependentUpon>EmployeeRecords.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ErrorForm.resx">
       <DependentUpon>ErrorForm.cs</DependentUpon>

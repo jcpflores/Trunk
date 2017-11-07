@@ -141,6 +141,7 @@
             this.btnEmployee.TabIndex = 1;
             this.btnEmployee.Text = "Employee Records";
             this.btnEmployee.UseVisualStyleBackColor = true;
+            this.btnEmployee.Click += new System.EventHandler(this.btnEmployee_Click);
             // 
             // statusStrip1
             // 
