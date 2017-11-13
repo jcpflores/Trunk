@@ -123,6 +123,7 @@
             this.btnMaintenance.TabIndex = 3;
             this.btnMaintenance.Text = "Maintenance";
             this.btnMaintenance.UseVisualStyleBackColor = true;
+            this.btnMaintenance.Click += new System.EventHandler(this.btnMaintenance_Click);
             // 
             // btnClient
             // 
@@ -132,6 +133,7 @@
             this.btnClient.TabIndex = 2;
             this.btnClient.Text = "Client Records";
             this.btnClient.UseVisualStyleBackColor = true;
+            this.btnClient.Click += new System.EventHandler(this.btnClient_Click);
             // 
             // btnEmployee
             // 

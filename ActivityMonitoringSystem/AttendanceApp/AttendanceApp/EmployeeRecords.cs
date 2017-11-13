@@ -16,6 +16,17 @@ namespace AttendanceApp
 {
     public partial class EmployeeRecords : Form, DtrInterfaces.IView
     {
+        ICollection<DtrCommon.Employee> _employeeList = new List<DtrCommon.Employee>();
+
+
+        public EmployeeRecords()
+        {
+            InitializeComponent();
+            GetEmployeeListEvent?.Invoke(null);
+            EnableTextbox(false);
+        }
+
+        #region IView
 
         public event GetFilesFromLocalEventHandler GetFilesFromLocalEvent;
         public event ParseFilesEventHandler ParseFilesEvent;
@@ -28,67 +39,9 @@ namespace AttendanceApp
         public event GetFilesFromRemoteEventHandler GetFilesFromRemoteEvent;
         public event SaveEmployeeRecordsEventHandler SaveEmployeeRecordsEvent;
         public event GetEmployeeListEventHandler GetEmployeeListEvent;
-        public event GetExistEmployeeRecordEventHandler GetExistEmployeeRecordEvent;
-
-        ICollection<DtrCommon.Employee> _employeeList = new List<DtrCommon.Employee>();
-        bool _existEmployeeRecord;
-
-        public EmployeeRecords()
-        {
-            InitializeComponent();
-            GetEmployeeListEvent?.Invoke(null);
-        }
-
-
-
-        public void InitInfoDetails()
-        {
-            this.txtEmployeeNo.Text =
-            this.txtClient.Text =
-            this.txtContract.Text =
-            this.txtName.Text =
-            this.txtProject.Text =
-            this.txtResourceId.Text =
-            this.txtSkillLevel.Text =
-            this.lblMaternity.Text =
-            this.lblPaternity.Text =
-            this.lblSL.Text =
-            this.lblVL.Text = string.Empty;
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            GetExistEmployeeRecordEvent?.Invoke(txtEmployeeNo.Text);
-
-            if (_existEmployeeRecord == true)
-            {
-              
-            }
-            else
-            {
-                DtrCommon.Employee _employeeRecord = new DtrCommon.Employee();
-                _employeeRecord = new DtrCommon.Employee()
-                {
-                    EmpNo = txtEmployeeNo.Text,
-                    Initial = txtResourceId.Text,
-                    Name = txtName.Text,
-                    ProcessRole = cmbProcessRole.Text,
-                    TecnicalRole = cmbTechnicalRole.Text,
-                    Technology = cmbTechnology.Text,
-                    SkillLevel = txtSkillLevel.Text,
-                    Client = txtClient.Text,
-                    Contract = txtContract.Text,
-                    Project = txtProject.Text,
-                    WorkLocation = cmbWorkLocation.Text,
-                    Email = txtEmail.Text,
-                    Gender = true
-                };
-
-                SaveEmployeeRecordsEvent?.Invoke(_employeeRecord);
-            }
-
-            GetEmployeeListEvent?.Invoke(null);
-        }
+        public event SaveHolidayEventHandler SaveHolidayEvent;
+        public event GetClientListEventHandler GetClientListEvent;
+        public event SaveClientEventHandler SaveClientEvent;
 
         public void ShowEmployeeList(ICollection<DtrCommon.Employee> employee)
         {
@@ -131,10 +84,62 @@ namespace AttendanceApp
         public void ShowHolidayList(ICollection<DtrCommon.Holiday> holidayList)
         { }
 
-        public void ExistEmployeeRecord(bool employeeExist)
-        {
-            _existEmployeeRecord = employeeExist;
+        public void ShowClientList(ICollection<DtrCommon.Client> client)
+        {          
+            cmbClient.DataSource = client.Select(x => x.ClientName).ToList();                
         }
+
+        #endregion
+
+
+
+        public void InitInfoDetails()
+        {
+            this.txtEmployeeNo.Text =
+            this.cmbClient.Text =
+            this.txtContract.Text =
+            this.txtName.Text =
+            this.txtProject.Text =
+            this.txtResourceId.Text =
+            this.txtSkillLevel.Text =
+            this.cmbProcessRole.Text =
+            this.cmbTechnicalRole.Text =
+            this.cmbTechnology.Text =
+            this.cmbWorkLocation.Text =
+            this.txtMaternity.Text =
+            this.txtPaternity.Text =
+            this.txtSL.Text =
+            this.txtVL.Text = string.Empty;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+
+            DtrCommon.Employee _employeeRecord = new DtrCommon.Employee();
+
+            _employeeRecord = new DtrCommon.Employee()
+            {
+                EmpNo = txtEmployeeNo.Text,
+                Initial = txtResourceId.Text,
+                Name = txtName.Text,
+                ProcessRole = cmbProcessRole.Text,
+                TecnicalRole = cmbTechnicalRole.Text,
+                Technology = cmbTechnology.Text,
+                SkillLevel = txtSkillLevel.Text,
+                Client = cmbClient.Text,
+                Contract = txtContract.Text,
+                Project = txtProject.Text,
+                WorkLocation = cmbWorkLocation.Text,
+                Email = txtEmail.Text,
+                Gender = rbMale.Checked
+            };
+
+            SaveEmployeeRecordsEvent?.Invoke(_employeeRecord);
+
+            GetEmployeeListEvent?.Invoke(null);
+            EnableTextbox(false);
+        }
+
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
@@ -152,7 +157,6 @@ namespace AttendanceApp
         }
 
 
-
         private void dgvEmployeeList_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             tabControl1.SelectedIndex = 1;
@@ -168,12 +172,61 @@ namespace AttendanceApp
             cmbTechnicalRole.Text = _empList.TecnicalRole;
             cmbTechnology.Text = _empList.Technology;
             txtSkillLevel.Text = _empList.SkillLevel;
-            txtClient.Text = _empList.Client;
+            cmbClient.Text = _empList.Client;
             txtContract.Text = _empList.Contract;
             txtProject.Text = _empList.Project;
             cmbWorkLocation.Text = _empList.WorkLocation;
             txtEmail.Text = _empList.Email;
-            //cmbGender.Text = 
+            if (_empList.Gender)
+            { rbMale.Checked = _empList.Gender; }
+            else
+            { rbFemale.Checked = true; }
+        }
+
+
+
+        public void EnableTextbox(bool val)
+        {
+            txtEmployeeNo.Enabled =
+            txtName.Enabled =
+            txtResourceId.Enabled =
+            cmbProcessRole.Enabled =
+            cmbTechnicalRole.Enabled =
+            cmbTechnology.Enabled =
+            txtSkillLevel.Enabled =
+            cmbClient.Enabled =
+            txtContract.Enabled =
+            txtProject.Enabled =
+            cmbWorkLocation.Enabled =
+            txtEmail.Enabled =
+            rbMale.Enabled =
+            rbFemale.Enabled = val;
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            EnableTextbox(true);
+            InitInfoDetails();
+        }
+
+        private void btnSearch_TextChanged(object sender, EventArgs e)
+        {
+            dgvEmployeeList.DataSource = _employeeList.Where(x => x.Name.Contains(txtSearchbox.Text))
+              .Select(x => new
+              {
+                  x.EmpNo,
+                  x.Initial,
+                  x.Name,
+                  x.Email,
+                  x.Technology,
+                  x.ProcessRole,
+                  x.TecnicalRole
+              }).ToList();
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            EnableTextbox(true);
         }
     }
 }

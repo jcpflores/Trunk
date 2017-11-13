@@ -28,8 +28,7 @@ namespace AttendanceApp
             InitializeComponent();
 
             this.comboBox1.SelectedValueChanged += ComboBox1_SelectedValueChanged;
-
-           
+            //GetHolidayListEvent?.Invoke();
         }
 
 
@@ -44,8 +43,9 @@ namespace AttendanceApp
         public event GetHolidayListEventHandler GetHolidayListEvent;
         public event SaveEmployeeRecordsEventHandler SaveEmployeeRecordsEvent;
         public event GetEmployeeListEventHandler GetEmployeeListEvent;
-        public event GetExistEmployeeRecordEventHandler GetExistEmployeeRecordEvent;
-
+        public event SaveHolidayEventHandler SaveHolidayEvent;
+        public event GetClientListEventHandler GetClientListEvent;
+        public event SaveClientEventHandler SaveClientEvent;
 
         public void ShowDtrInfo(DtrInfo info)
         {
@@ -54,7 +54,7 @@ namespace AttendanceApp
             if (info == null)
                 return;
 
-              GetHolidayListEvent?.Invoke();
+            //  GetHolidayListEvent?.Invoke();
 
             ShowHeaders();
             this.lblId.Text = info.ResourceId;
@@ -84,7 +84,7 @@ namespace AttendanceApp
             _editbutton.ReadOnly = true;
             dataGridView1.Columns.Add(_editbutton);
 
-        
+            //GetHolidayListEvent?.Invoke();
 
             SetWeekendsColumnProperty(Color.White, Color.Blue);
 
@@ -174,7 +174,7 @@ namespace AttendanceApp
 
         private bool IsHolidayDate(string date)
         {
-           
+      
             var holidayExist = _holidayList.Where(x => x.HolidayDate == DateTime.Parse(date)).ToList();
 
             if (holidayExist.Count() > 0)
@@ -197,13 +197,8 @@ namespace AttendanceApp
             this.lblTimeIn.Visible = true;
             this.lblMonthYear.Visible = true;
             this.lblContract.Visible = true;
-            this.lblProject.Visible = true;
-          
+            this.lblProject.Visible = true;          
         }
-
-
-
-
 
         public void ShowFiles(ICollection<string> discoveredFiles)
         {
@@ -239,8 +234,9 @@ namespace AttendanceApp
         }
 
         public void ShowMessage(string message)
-        {
-        }
+        {        }
+
+      
 
         private void btnSetSource_Click(object sender, EventArgs e)
         {
@@ -300,16 +296,15 @@ namespace AttendanceApp
         }
 
         public void ShowHolidayList(ICollection<DtrCommon.Holiday> holiday)
-        {
-           
+        {           
             _holidayList = holiday;
         }
 
         public void ShowEmployeeList(ICollection<DtrCommon.Employee> employee)
         { }
 
-        public void ExistEmployeeRecord(bool empRecord)
+        public void ShowClientList(ICollection<DtrCommon.Client> client)
         { }
 
-        }
+    }
 }

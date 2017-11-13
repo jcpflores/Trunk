@@ -33,7 +33,11 @@ namespace DtrDelegates
 
     public delegate void GetEmployeeListEventHandler(DtrCommon.Employee employeeRecord);
 
-    public delegate void GetExistEmployeeRecordEventHandler(string employeeNo);
+    public delegate void SaveHolidayEventHandler(DtrCommon.Holiday holiday);
 
+    public delegate void GetClientListEventHandler(DtrCommon.Client clientList);
 
+    public delegate void SaveClientEventHandler(DtrCommon.Client clientRecord);
+
+    
 }

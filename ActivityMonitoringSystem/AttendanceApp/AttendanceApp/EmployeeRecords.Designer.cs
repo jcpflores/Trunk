@@ -35,24 +35,26 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.dgvEmployeeList = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.rbFemale = new System.Windows.Forms.RadioButton();
+            this.rbMale = new System.Windows.Forms.RadioButton();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.txtMaternity = new System.Windows.Forms.TextBox();
+            this.txtPaternity = new System.Windows.Forms.TextBox();
+            this.txtVL = new System.Windows.Forms.TextBox();
+            this.txtSL = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.cmbGender = new System.Windows.Forms.ComboBox();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.lblMaternity = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.label17 = new System.Windows.Forms.Label();
             this.btnEdit = new System.Windows.Forms.Button();
-            this.lblPaternity = new System.Windows.Forms.Label();
             this.txtEmployeeNo = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.lblVL = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.txtResourceId = new System.Windows.Forms.TextBox();
-            this.lblSL = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
@@ -69,9 +71,9 @@
             this.txtProject = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.txtClient = new System.Windows.Forms.TextBox();
             this.txtContract = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.cmbClient = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployeeList)).BeginInit();
@@ -88,7 +90,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(703, 476);
+            this.tabControl1.Size = new System.Drawing.Size(713, 509);
             this.tabControl1.TabIndex = 36;
             // 
             // tabPage1
@@ -100,7 +102,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(695, 450);
+            this.tabPage1.Size = new System.Drawing.Size(705, 483);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Employee List";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -111,15 +113,16 @@
             this.txtSearchbox.Name = "txtSearchbox";
             this.txtSearchbox.Size = new System.Drawing.Size(250, 20);
             this.txtSearchbox.TabIndex = 3;
+            this.txtSearchbox.TextChanged += new System.EventHandler(this.btnSearch_TextChanged);
             // 
             // label18
             // 
             this.label18.AutoSize = true;
             this.label18.Location = new System.Drawing.Point(42, 43);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(41, 13);
+            this.label18.Size = new System.Drawing.Size(35, 13);
             this.label18.TabIndex = 2;
-            this.label18.Text = "Search";
+            this.label18.Text = "Name";
             // 
             // btnSearch
             // 
@@ -140,30 +143,33 @@
             this.dgvEmployeeList.Location = new System.Drawing.Point(33, 69);
             this.dgvEmployeeList.Name = "dgvEmployeeList";
             this.dgvEmployeeList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvEmployeeList.Size = new System.Drawing.Size(383, 189);
+            this.dgvEmployeeList.Size = new System.Drawing.Size(393, 222);
             this.dgvEmployeeList.TabIndex = 0;
-            this.dgvEmployeeList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmployeeList_CellContentClick);
+            this.dgvEmployeeList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmployeeList_CellContentClick);
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.cmbClient);
+            this.tabPage2.Controls.Add(this.rbFemale);
+            this.tabPage2.Controls.Add(this.rbMale);
+            this.tabPage2.Controls.Add(this.btnCancel);
+            this.tabPage2.Controls.Add(this.txtMaternity);
+            this.tabPage2.Controls.Add(this.txtPaternity);
+            this.tabPage2.Controls.Add(this.txtVL);
+            this.tabPage2.Controls.Add(this.txtSL);
             this.tabPage2.Controls.Add(this.label16);
-            this.tabPage2.Controls.Add(this.cmbGender);
             this.tabPage2.Controls.Add(this.txtEmail);
             this.tabPage2.Controls.Add(this.label13);
             this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Controls.Add(this.lblMaternity);
             this.tabPage2.Controls.Add(this.btnSave);
             this.tabPage2.Controls.Add(this.label17);
             this.tabPage2.Controls.Add(this.btnEdit);
-            this.tabPage2.Controls.Add(this.lblPaternity);
             this.tabPage2.Controls.Add(this.txtEmployeeNo);
             this.tabPage2.Controls.Add(this.label15);
             this.tabPage2.Controls.Add(this.btnAdd);
-            this.tabPage2.Controls.Add(this.lblVL);
             this.tabPage2.Controls.Add(this.label2);
             this.tabPage2.Controls.Add(this.label14);
             this.tabPage2.Controls.Add(this.txtResourceId);
-            this.tabPage2.Controls.Add(this.lblSL);
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Controls.Add(this.label12);
             this.tabPage2.Controls.Add(this.txtName);
@@ -180,16 +186,77 @@
             this.tabPage2.Controls.Add(this.txtProject);
             this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Controls.Add(this.label10);
-            this.tabPage2.Controls.Add(this.txtClient);
             this.tabPage2.Controls.Add(this.txtContract);
             this.tabPage2.Controls.Add(this.label9);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(954, 450);
+            this.tabPage2.Size = new System.Drawing.Size(705, 483);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Employee Details";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // rbFemale
+            // 
+            this.rbFemale.AutoSize = true;
+            this.rbFemale.Location = new System.Drawing.Point(471, 58);
+            this.rbFemale.Name = "rbFemale";
+            this.rbFemale.Size = new System.Drawing.Size(59, 17);
+            this.rbFemale.TabIndex = 79;
+            this.rbFemale.TabStop = true;
+            this.rbFemale.Tag = "gender";
+            this.rbFemale.Text = "Female";
+            this.rbFemale.UseVisualStyleBackColor = true;
+            // 
+            // rbMale
+            // 
+            this.rbMale.AutoSize = true;
+            this.rbMale.Checked = true;
+            this.rbMale.Location = new System.Drawing.Point(403, 60);
+            this.rbMale.Name = "rbMale";
+            this.rbMale.Size = new System.Drawing.Size(48, 17);
+            this.rbMale.TabIndex = 78;
+            this.rbMale.TabStop = true;
+            this.rbMale.Tag = "gender";
+            this.rbMale.Text = "Male";
+            this.rbMale.UseVisualStyleBackColor = true;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(267, 438);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 38);
+            this.btnCancel.TabIndex = 77;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            // 
+            // txtMaternity
+            // 
+            this.txtMaternity.Location = new System.Drawing.Point(471, 185);
+            this.txtMaternity.Name = "txtMaternity";
+            this.txtMaternity.Size = new System.Drawing.Size(108, 20);
+            this.txtMaternity.TabIndex = 76;
+            // 
+            // txtPaternity
+            // 
+            this.txtPaternity.Location = new System.Drawing.Point(471, 152);
+            this.txtPaternity.Name = "txtPaternity";
+            this.txtPaternity.Size = new System.Drawing.Size(108, 20);
+            this.txtPaternity.TabIndex = 75;
+            // 
+            // txtVL
+            // 
+            this.txtVL.Location = new System.Drawing.Point(471, 126);
+            this.txtVL.Name = "txtVL";
+            this.txtVL.Size = new System.Drawing.Size(108, 20);
+            this.txtVL.TabIndex = 74;
+            // 
+            // txtSL
+            // 
+            this.txtSL.Location = new System.Drawing.Point(471, 101);
+            this.txtSL.Name = "txtSL";
+            this.txtSL.Size = new System.Drawing.Size(108, 20);
+            this.txtSL.TabIndex = 73;
             // 
             // label16
             // 
@@ -199,17 +266,6 @@
             this.label16.Size = new System.Drawing.Size(45, 13);
             this.label16.TabIndex = 71;
             this.label16.Text = "Gender:";
-            // 
-            // cmbGender
-            // 
-            this.cmbGender.FormattingEnabled = true;
-            this.cmbGender.Items.AddRange(new object[] {
-            "Male",
-            "Female"});
-            this.cmbGender.Location = new System.Drawing.Point(403, 59);
-            this.cmbGender.Name = "cmbGender";
-            this.cmbGender.Size = new System.Drawing.Size(199, 21);
-            this.cmbGender.TabIndex = 72;
             // 
             // txtEmail
             // 
@@ -236,20 +292,11 @@
             this.label1.TabIndex = 36;
             this.label1.Text = "Employee No.:";
             // 
-            // lblMaternity
-            // 
-            this.lblMaternity.AutoSize = true;
-            this.lblMaternity.Location = new System.Drawing.Point(452, 188);
-            this.lblMaternity.Name = "lblMaternity";
-            this.lblMaternity.Size = new System.Drawing.Size(13, 13);
-            this.lblMaternity.TabIndex = 65;
-            this.lblMaternity.Text = "0";
-            // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(565, 382);
+            this.btnSave.Location = new System.Drawing.Point(193, 438);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.Size = new System.Drawing.Size(75, 38);
             this.btnSave.TabIndex = 68;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -266,21 +313,13 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(484, 382);
+            this.btnEdit.Location = new System.Drawing.Point(119, 438);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(75, 23);
+            this.btnEdit.Size = new System.Drawing.Size(75, 38);
             this.btnEdit.TabIndex = 67;
             this.btnEdit.Text = "Edit";
             this.btnEdit.UseVisualStyleBackColor = true;
-            // 
-            // lblPaternity
-            // 
-            this.lblPaternity.AutoSize = true;
-            this.lblPaternity.Location = new System.Drawing.Point(452, 158);
-            this.lblPaternity.Name = "lblPaternity";
-            this.lblPaternity.Size = new System.Drawing.Size(13, 13);
-            this.lblPaternity.TabIndex = 63;
-            this.lblPaternity.Text = "0";
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // txtEmployeeNo
             // 
@@ -300,21 +339,13 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(403, 382);
+            this.btnAdd.Location = new System.Drawing.Point(45, 438);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.Size = new System.Drawing.Size(75, 38);
             this.btnAdd.TabIndex = 66;
-            this.btnAdd.Text = "Add";
+            this.btnAdd.Text = "Add Employee";
             this.btnAdd.UseVisualStyleBackColor = true;
-            // 
-            // lblVL
-            // 
-            this.lblVL.AutoSize = true;
-            this.lblVL.Location = new System.Drawing.Point(424, 129);
-            this.lblVL.Name = "lblVL";
-            this.lblVL.Size = new System.Drawing.Size(13, 13);
-            this.lblVL.TabIndex = 61;
-            this.lblVL.Text = "0";
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // label2
             // 
@@ -340,15 +371,6 @@
             this.txtResourceId.Name = "txtResourceId";
             this.txtResourceId.Size = new System.Drawing.Size(199, 20);
             this.txtResourceId.TabIndex = 39;
-            // 
-            // lblSL
-            // 
-            this.lblSL.AutoSize = true;
-            this.lblSL.Location = new System.Drawing.Point(424, 101);
-            this.lblSL.Name = "lblSL";
-            this.lblSL.Size = new System.Drawing.Size(13, 13);
-            this.lblSL.TabIndex = 59;
-            this.lblSL.Text = "0";
             // 
             // label3
             // 
@@ -406,6 +428,7 @@
             // 
             this.cmbProcessRole.FormattingEnabled = true;
             this.cmbProcessRole.Items.AddRange(new object[] {
+            "",
             "TM (Team Member)",
             "PC (Productivity Champion)",
             "TL (Team Lead)",
@@ -419,6 +442,7 @@
             // 
             this.cmbTechnicalRole.FormattingEnabled = true;
             this.cmbTechnicalRole.Items.AddRange(new object[] {
+            "",
             "Project Manager",
             "Solution Architect",
             "Functional Analyst",
@@ -436,6 +460,7 @@
             // 
             this.cmbTechnology.FormattingEnabled = true;
             this.cmbTechnology.Items.AddRange(new object[] {
+            "",
             ".Net",
             "AX",
             "BI",
@@ -525,13 +550,6 @@
             this.label10.TabIndex = 54;
             this.label10.Text = "Project:";
             // 
-            // txtClient
-            // 
-            this.txtClient.Location = new System.Drawing.Point(126, 268);
-            this.txtClient.Name = "txtClient";
-            this.txtClient.Size = new System.Drawing.Size(199, 20);
-            this.txtClient.TabIndex = 51;
-            // 
             // txtContract
             // 
             this.txtContract.Location = new System.Drawing.Point(125, 297);
@@ -548,11 +566,19 @@
             this.label9.TabIndex = 52;
             this.label9.Text = "Contract:";
             // 
+            // cmbClient
+            // 
+            this.cmbClient.FormattingEnabled = true;
+            this.cmbClient.Location = new System.Drawing.Point(125, 264);
+            this.cmbClient.Name = "cmbClient";
+            this.cmbClient.Size = new System.Drawing.Size(199, 21);
+            this.cmbClient.TabIndex = 80;
+            // 
             // EmployeeRecords
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(736, 477);
+            this.ClientSize = new System.Drawing.Size(746, 510);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "EmployeeRecords";
@@ -573,19 +599,15 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lblMaternity;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button btnEdit;
-        private System.Windows.Forms.Label lblPaternity;
         private System.Windows.Forms.TextBox txtEmployeeNo;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Label lblVL;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox txtResourceId;
-        private System.Windows.Forms.Label lblSL;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtName;
@@ -602,16 +624,22 @@
         private System.Windows.Forms.TextBox txtProject;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox txtClient;
         private System.Windows.Forms.TextBox txtContract;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.ComboBox cmbGender;
         private System.Windows.Forms.DataGridView dgvEmployeeList;
         private System.Windows.Forms.TextBox txtSearchbox;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.TextBox txtMaternity;
+        private System.Windows.Forms.TextBox txtPaternity;
+        private System.Windows.Forms.TextBox txtVL;
+        private System.Windows.Forms.TextBox txtSL;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.RadioButton rbFemale;
+        private System.Windows.Forms.RadioButton rbMale;
+        private System.Windows.Forms.ComboBox cmbClient;
     }
 }

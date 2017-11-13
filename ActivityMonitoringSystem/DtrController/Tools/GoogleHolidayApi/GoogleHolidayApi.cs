@@ -46,19 +46,25 @@ namespace DtrController.Tools.GoogleHolidayApi
                 ApplicationName = "Holiday Calendar",
             });
 
-            var events = service.Events.List("en.philippines#holiday@group.v.calendar.google.com").Execute();
-
-            foreach (var myEvent in events.Items)
+            try
             {
-                if (DateTime.Parse(myEvent.Start.Date).Year == DateTime.Now.Year)
+                var events = service.Events.List("en.philippines#holiday@group.v.calendar.google.com").Execute();
+
+                foreach (var myEvent in events.Items)
                 {
-                    _holidayList.Add(new Holiday
+                    if (DateTime.Parse(myEvent.Start.Date).Year == DateTime.Now.Year)
                     {
-                        HolidayDate = DateTime.Parse(myEvent.Start.Date),
-                        HolidayName = myEvent.Summary
-                    });
+                        _holidayList.Add(new Holiday
+                        {
+                            HolidayDate = DateTime.Parse(myEvent.Start.Date),
+                            HolidayName = myEvent.Summary
+                        });
+                    }
                 }
+
             }
+
+            catch { }
 
         }
 

@@ -26,7 +26,6 @@ namespace DtrController
             _dtrfile.GetExcelErrorFileEvent += _dtrfile_GetExcelErrorFileEvent;
             _dtrfile.GetExcelFilesProgressEvent += _dtrfile_GetExcelFilesProgressEvent;
             InitializeModel();
-
         }
 
         private void _dtrfile_GetExcelFilesProgressEvent(int progressCount, int filesToProcess)
@@ -36,14 +35,12 @@ namespace DtrController
 
         private void _dtrfile_GetExcelErrorFileEvent()
         {
-
             ICollection<string> errorFiles = new List<string>();
             foreach (ExcelErrorFile err in _dtrfile.ErrorFile)
             {
                 errorFiles.Add(err.Filename);
             }
             _view.ShowError(errorFiles);
-
         }
 
         private void _dtrfile_DoneParsingFilesEvent()
@@ -56,7 +53,6 @@ namespace DtrController
                     _context.SaveChanges();
                 }
             }
-
             QueryTempTableDtr();
         }
 
@@ -65,17 +61,28 @@ namespace DtrController
             _context = DtrModel.Model.GetAttendanceDbContext;
             ClearAllTempTables();
             DtrModel.Model.ChangesSavedEvent += Model_ChangesSavedEvent;
-
         }
 
         private void GetHolidays()
         {
-
             ICollection<DtrCommon.Holiday> holidayList = new List<DtrCommon.Holiday>();
-            holidayList = Tools.GoogleHolidayApi.GoogleHolidayApi.GetHolidays();    
+            holidayList = Tools.GoogleHolidayApi.GoogleHolidayApi.GetHolidays();
 
+            var _holidayDb = _context.Set<DtrModel.Entities.Holiday>().Where(t => t.Id != 0).ToList();
+
+            ICollection<DtrCommon.Holiday> _holidayList = new List<DtrCommon.Holiday>();
+
+            foreach (var myHoliday in _holidayDb)
+            {
+                _holidayList.Add(new DtrCommon.Holiday()
+                {
+                    HolidayDate = myHoliday.HolidayDate,
+                    HolidayName = myHoliday.HolidayName
+                });
+            }
+
+            holidayList = holidayList.Concat(_holidayList).ToList();
             _view.ShowHolidayList(holidayList);
-
         }
 
         private void ClearAllTempTables()
@@ -118,24 +125,91 @@ namespace DtrController
             _view.GetHolidayListEvent += _view_GetHolidayListEvent;
             _view.SaveEmployeeRecordsEvent += _view_SaveEmployeeRecordsEvent;
             _view.GetEmployeeListEvent += _view_GetEmployeeListEvent;
-            _view.GetExistEmployeeRecordEvent += _view_GetExistEmployeeRecordEvent;
-
+            _view.SaveHolidayEvent += _view_SaveHolidayEvent;
+            _view.SaveClientEvent += _view_SaveClientEvent;
+            _view.GetClientListEvent += _view_GetClientListEvent;
         }
 
-        private void _view_GetExistEmployeeRecordEvent(string empNo)
-        {            
-            bool employeeExists = _context.Set<DtrModel.Entities.Employee>().Count(t => t.EmpNo == empNo) > 0;
 
-            _view.ExistEmployeeRecord(employeeExists);
+        public void GetClientList()
+        {
+            ICollection<DtrCommon.Client> _clientList = new List<DtrCommon.Client>();
+
+            var _clientDb = _context.Set<DtrModel.Entities.Client>().Where(t => t.Id != 0).ToList();
+
+            foreach (var myClient in _clientDb)
+            {
+                _clientList.Add(new DtrCommon.Client()
+                {
+                   ClientName = myClient.ClientName,
+                   Contract = myClient.Contract,
+                   TimeIn = myClient.TimeIn,
+                   TimeOut = myClient.TimeOut,
+                   Flexi = myClient.Flexi
+                });
+            }
+
+            _view.ShowClientList(_clientList);
+        }
+
+
+        private void _view_GetClientListEvent(DtrCommon.Client clientList)
+        {
+            GetClientList();
+        }
+
+        private void _view_SaveClientEvent(DtrCommon.Client clientRecord)
+        {
+            _context.Set<DtrModel.Entities.Client>().Add(new DtrModel.Entities.Client
+            {
+                ClientName = clientRecord.ClientName,
+                Contract = clientRecord.Contract,
+                TimeIn = clientRecord.TimeIn,
+                TimeOut = clientRecord.TimeOut,
+                Flexi = clientRecord.Flexi
+            });
+
+            _context.SaveChanges();                      
+        //    _view.ShowClientList();
+        }
+
+        
+
+        private void _view_SaveHolidayEvent(DtrCommon.Holiday holiday)
+        {
+            _context.Set<DtrModel.Entities.Holiday>().Add(new DtrModel.Entities.Holiday
+            {
+                HolidayName = holiday.HolidayName,
+                HolidayDate = holiday.HolidayDate
+            });
+
+            _context.SaveChanges();
+
+            ICollection<DtrCommon.Holiday> _holidayList = new List<DtrCommon.Holiday>();
+
+            var _holidayDb = _context.Set<DtrModel.Entities.Holiday>().Where(t => t.Id != 0).ToList();
+
+            foreach (var myHoliday in _holidayDb)
+            {
+                _holidayList.Add(new DtrCommon.Holiday()
+                {
+                    HolidayDate = myHoliday.HolidayDate,
+                    HolidayName = myHoliday.HolidayName
+                });
+            }
+
+            GetHolidays();
+            //var myHol = Tools.GoogleHolidayApi.GoogleHolidayApi.GetHolidays();
+            //myHol = myHol.Concat(_holidayList).ToList();
+            //_view.ShowHolidayList(myHol);
         }
 
         private void _view_GetEmployeeListEvent(DtrCommon.Employee employeeRecord)
         {
+
             ICollection<DtrCommon.Employee> employeeList = new List<DtrCommon.Employee>();
 
-             var emp = _context.Set<DtrModel.Entities.Employee>().Where(t => t.Id != 0).ToList();
-            //var emp = _context.Set<DtrModel.Entities.Employee>()
-            //    .Select(x => new { x.EmpNo, x.Initial, x.Name });
+            var emp = _context.Set<DtrModel.Entities.Employee>().Where(t => t.Id != 0).ToList();
 
             foreach (var myEmployee in emp)
             {
@@ -143,8 +217,8 @@ namespace DtrController
                 {
                     EmpNo = myEmployee.EmpNo,
                     Initial = myEmployee.Initial,
-                    Name = myEmployee.Name,                    
-                    Email = myEmployee.Email,                   
+                    Name = myEmployee.Name,
+                    Email = myEmployee.Email,
                     SickLeave = myEmployee.SickLeave,
                     ProcessRole = myEmployee.ProcessRole,
                     TecnicalRole = myEmployee.TechnicalRole,
@@ -158,41 +232,83 @@ namespace DtrController
                     MaternityLeave = myEmployee.MaternityLeave,
                     PaternityLeave = myEmployee.PaternityLeave,
                     Gender = myEmployee.Gender
-                });
+            });
             }
 
             _view.ShowEmployeeList(employeeList);
         }
 
 
+
+        private void UpdateEmployeeRecord(DtrCommon.Employee emp)
+        {
+            //_context.Set<DtrModel.Entities.Employee>()
+            //    .Where(u => u.EmpNo == emp.EmpNo).First()
+            //    .Name = emp.Name;
+            //DtrCommon.Employee e;
+
+            var e = _context.Set<DtrModel.Entities.Employee>().Where(u => u.EmpNo == emp.EmpNo).FirstOrDefault<DtrModel.Entities.Employee>();
+
+            e.Name = emp.Name;
+            e.Initial = emp.Initial;
+            e.Name = emp.Name;
+            e.Email = emp.Email;
+            e.ProcessRole = emp.ProcessRole;
+            e.TechnicalRole = emp.TecnicalRole;
+            e.Technology = emp.Technology;
+            e.SkillLevel = emp.SkillLevel;
+            e.Client = emp.Client;
+            e.Contract = emp.Contract;
+            e.Project = emp.Project;
+            e.WorkLocation = emp.WorkLocation;
+            e.SickLeave = emp.SickLeave;
+            e.VacationLeave = emp.VacationLeave;
+            e.MaternityLeave = emp.MaternityLeave;
+            e.PaternityLeave = emp.PaternityLeave;
+            e.Gender = emp.Gender;
+
+            _context.Entry(e).State = System.Data.Entity.EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+
         private void _view_SaveEmployeeRecordsEvent(DtrCommon.Employee employeeRecord)
         {
-            ICollection<DtrModel.Entities.Employee> emp = new List<DtrModel.Entities.Employee>();
+            bool employeeExists = _context.Set<DtrModel.Entities.Employee>().Count(t => t.EmpNo == employeeRecord.EmpNo) > 0;
 
-            _context.Set<DtrModel.Entities.Employee>().Add(new DtrModel.Entities.Employee
+            if (employeeExists == true)
             {
-                EmpNo = employeeRecord.EmpNo,
-                Initial = employeeRecord.Initial,
-                Name = employeeRecord.Name,
-                Email = employeeRecord.Email,
-                ProcessRole = employeeRecord.ProcessRole,
-                TechnicalRole = employeeRecord.TecnicalRole,
-                Technology = employeeRecord.Technology,
-                SkillLevel = employeeRecord.SkillLevel,
-                Client = employeeRecord.Client,
-                Contract = employeeRecord.Contract,
-                Project = employeeRecord.Project,
-                WorkLocation = employeeRecord.WorkLocation,                
-                SickLeave = employeeRecord.SickLeave,
-                VacationLeave = employeeRecord.VacationLeave,
-                MaternityLeave = employeeRecord.MaternityLeave,
-                PaternityLeave = employeeRecord.PaternityLeave,
-                Gender = true
-            });
-            _context.SaveChanges();
+                UpdateEmployeeRecord(employeeRecord);
+            }
+            else
+            {
+                ICollection<DtrModel.Entities.Employee> emp = new List<DtrModel.Entities.Employee>();
 
-
+                _context.Set<DtrModel.Entities.Employee>().Add(new DtrModel.Entities.Employee
+                {
+                    EmpNo = employeeRecord.EmpNo,
+                    Initial = employeeRecord.Initial,
+                    Name = employeeRecord.Name,
+                    Email = employeeRecord.Email,
+                    ProcessRole = employeeRecord.ProcessRole,
+                    TechnicalRole = employeeRecord.TecnicalRole,
+                    Technology = employeeRecord.Technology,
+                    SkillLevel = employeeRecord.SkillLevel,
+                    Client = employeeRecord.Client,
+                    Contract = employeeRecord.Contract,
+                    Project = employeeRecord.Project,
+                    WorkLocation = employeeRecord.WorkLocation,
+                    SickLeave = employeeRecord.SickLeave,
+                    VacationLeave = employeeRecord.VacationLeave,
+                    MaternityLeave = employeeRecord.MaternityLeave,
+                    PaternityLeave = employeeRecord.PaternityLeave,
+                    Gender = employeeRecord.Gender
+                });
+                _context.SaveChanges();
+            }
         }
+
+
 
         private void _view_GetHolidayListEvent()
         {

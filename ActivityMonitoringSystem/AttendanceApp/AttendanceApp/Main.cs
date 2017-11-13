@@ -19,6 +19,8 @@ namespace AttendanceApp
         DailyTimeRecordsForm _dtrForm = new DailyTimeRecordsForm();
         Calendar _dtrCalendar = new Calendar();
         EmployeeRecords _dtrEmployee = new EmployeeRecords();
+        MaintenanceForm _dtrMaintenanceForm = new MaintenanceForm();
+        ClientForm _dtrClientForm = new ClientForm();
 
 
         public Main()
@@ -26,29 +28,22 @@ namespace AttendanceApp
             InitializeComponent();
             this.labelToday.Text = System.DateTime.Now.ToString("dddd, MMMM dd yyyy");
             _controller = new Controller();
-            _controller.SetView(this);
+            _controller.SetView(this);            
         }
 
         #region IView
         public event GetFilesFromLocalEventHandler GetFilesFromLocalEvent;
-
         public event GetFilesFromRemoteEventHandler GetFilesFromRemoteEvent;
-
         public event ParseFilesEventHandler ParseFilesEvent;
-
         public event GetDtrDetailsEventHandler GetDtrDetailsEvent;
-
         public event SaveDtrInfoEventHandler SaveDtrInfoEvent;
-
         public event EditDtrInOutEventHandler EditDtrInOutEvent;
-
         public event GetHolidayListEventHandler GetHolidayListEvent;
-
         public event SaveEmployeeRecordsEventHandler SaveEmployeeRecordsEvent;
-
         public event GetEmployeeListEventHandler GetEmployeeListEvent;
-
-        public event GetExistEmployeeRecordEventHandler GetExistEmployeeRecordEvent;
+        public event SaveHolidayEventHandler SaveHolidayEvent;
+        public event SaveClientEventHandler SaveClientEvent;
+        public event GetClientListEventHandler GetClientListEvent;
 
         public void ShowFiles(ICollection<string> discoveredFiles)
         {
@@ -83,6 +78,25 @@ namespace AttendanceApp
         {
             MessageBox.Show(message);
         }
+
+        public void ShowHolidayList(ICollection<DtrCommon.Holiday> holiday)
+        {
+            _dtrMaintenanceForm.ShowHolidayList(holiday);
+            _dtrForm.ShowHolidayList(holiday);
+        }
+
+        public void ShowEmployeeList(ICollection<DtrCommon.Employee> employee)
+        {
+            //GetEmployeeListEvent?.Invoke(employee);
+            _dtrEmployee.ShowEmployeeList(employee);
+        }
+
+        public void ShowClientList(ICollection<DtrCommon.Client> client)
+        {
+            _dtrClientForm.ShowClientList(client);
+            _dtrEmployee.ShowClientList(client);
+        }
+
         #endregion
 
         private void btnDtr_Click(object sender, EventArgs e)
@@ -107,11 +121,12 @@ namespace AttendanceApp
                 _dtrForm.StartProgressBarEvent += _dtrForm_StartProgressBarEvent;
                 _dtrForm.GetHolidayListEvent += _dtrForm_GetHolidayListEvent;
 
+                GetHolidayListEvent?.Invoke();
             }
         }
 
 
-
+      
         private void _dtrForm_GetHolidayListEvent()
         {
             GetHolidayListEvent?.Invoke();
@@ -153,23 +168,9 @@ namespace AttendanceApp
         {
             _dtrCalendar = new Calendar();
             _dtrCalendar.Show();
-        }
+        }  
 
-        public void ShowHolidayList(ICollection<DtrCommon.Holiday> holiday)
-        {
-            _dtrForm.ShowHolidayList(holiday);
-        }
-
-        public void ShowEmployeeList(ICollection<DtrCommon.Employee> employee)
-        {
-            //GetEmployeeListEvent?.Invoke(employee);
-            _dtrEmployee.ShowEmployeeList(employee);
-        }
-
-        public void ExistEmployeeRecord(bool empRecord)
-        {
-            _dtrEmployee.ExistEmployeeRecord(empRecord);
-        }
+    
 
         private void btnEmployee_Click(object sender, EventArgs e)
         {
@@ -185,13 +186,14 @@ namespace AttendanceApp
 
             _dtrEmployee.SaveEmployeeRecordsEvent += _dtrEmployee_SaveEmployeeRecordsEvent;
             _dtrEmployee.GetEmployeeListEvent += _dtrEmployee_GetEmployeeListEvent;
-            _dtrEmployee.GetExistEmployeeRecordEvent += _dtrEmployee_GetExistEmployeeRecordEvent;
+
+            GetClientListEvent?.Invoke(null);
             GetEmployeeListEvent?.Invoke(null);
         }
 
-        private void _dtrEmployee_GetExistEmployeeRecordEvent(string empNo)
+        private void _dtrEmployee_SaveHolidayEvent(Holiday holiday)
         {
-            GetExistEmployeeRecordEvent?.Invoke(empNo);
+            SaveHolidayEvent?.Invoke(holiday);
         }
 
         private void _dtrEmployee_GetEmployeeListEvent(Employee employeeRecord)
@@ -204,6 +206,52 @@ namespace AttendanceApp
             SaveEmployeeRecordsEvent?.Invoke(employeeRecord);
         }
 
+        private void btnMaintenance_Click(object sender, EventArgs e)
+        {
+            _dtrMaintenanceForm = new MaintenanceForm();
+            _dtrMaintenanceForm.MdiParent = this;
+            this.panelProcessArea.Controls.Clear();
+            _dtrMaintenanceForm.Size = this.panel1.Size;
+            this.panelProcessArea.Controls.Add(_dtrMaintenanceForm);
+            _dtrMaintenanceForm.Show();
+            _dtrMaintenanceForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
 
+            _dtrMaintenanceForm.SaveHolidayEvent += _dtrEmployee_SaveHolidayEvent;
+            
+            GetHolidayListEvent?.Invoke();
+        }
+
+        private void btnClient_Click(object sender, EventArgs e)
+        {
+            _dtrClientForm = new ClientForm();
+            _dtrClientForm.MdiParent = this;
+            this.panelProcessArea.Controls.Clear();
+            _dtrClientForm.Size = this.panel1.Size;
+            this.panelProcessArea.Controls.Add(_dtrClientForm);
+            _dtrClientForm.Show();
+            _dtrClientForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+                        
+            _dtrClientForm.SaveClientEvent += _dtrClientForm_SaveClientEvent;
+            _dtrClientForm.GetClientListEvent += _dtrClientForm_GetClientListEvent;
+
+            GetClientListEvent?.Invoke(null);
+        }
+
+        private void _dtrClientForm_GetClientListEvent(Client clientList)
+        {
+            GetClientListEvent?.Invoke(clientList);
+        }
+
+        private void _dtrClientForm_SaveClientEvent(Client clientRecord)
+        {
+            SaveClientEvent?.Invoke(clientRecord);
+        }
+
+            
+        
     }
 }

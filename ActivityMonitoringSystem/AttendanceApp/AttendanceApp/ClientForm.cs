@@ -7,23 +7,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DtrInterfaces;
 using DtrDelegates;
+using DtrInterfaces;
 using DtrCommon;
-
 
 namespace AttendanceApp
 {
-    public partial class ErrorForm : Form, DtrInterfaces.IView
+    public partial class ClientForm : Form, DtrInterfaces.IView
     {
-        public ErrorForm()
+        public ClientForm()
         {
             InitializeComponent();
+        
+        }
+
+        public void InitInfoDetails()
+        {
+            txtClientName.Text =
+            txtContract.Text = 
+            txtSearchbox.Text = string.Empty;
         }
 
         #region IView
-
-        public event GetFilesFromRemoteEventHandler GetFilesFromRemoteEvent;
         public event GetFilesFromLocalEventHandler GetFilesFromLocalEvent;
         public event ParseFilesEventHandler ParseFilesEvent;
         public event SaveDtrInfoEventHandler SaveDtrInfoEvent;
@@ -32,11 +37,12 @@ namespace AttendanceApp
         public event EditDtrInOutEventHandler EditDtrInOutEvent;
         public event StartProgressBarEventHandler StartProgressBarEvent;
         public event GetHolidayListEventHandler GetHolidayListEvent;
+        public event GetFilesFromRemoteEventHandler GetFilesFromRemoteEvent;
         public event SaveEmployeeRecordsEventHandler SaveEmployeeRecordsEvent;
         public event GetEmployeeListEventHandler GetEmployeeListEvent;
         public event SaveHolidayEventHandler SaveHolidayEvent;
-        public event GetClientListEventHandler GetClientListEvent;
         public event SaveClientEventHandler SaveClientEvent;
+        public event GetClientListEventHandler GetClientListEvent;
 
 
         public void ShowDtrInfo(DtrInfo info)
@@ -53,9 +59,7 @@ namespace AttendanceApp
         { }
 
         public void ShowError(ICollection<string> errorFiles)
-        {
-            listBoxError.DataSource = errorFiles;
-        }
+        { }
 
         public void ShowHolidayList(ICollection<DtrCommon.Holiday> holidayList)
         { }
@@ -64,9 +68,37 @@ namespace AttendanceApp
         { }
 
         public void ShowClientList(ICollection<DtrCommon.Client> client)
-        { }
+        {
+            dgvClientList.DataSource = client.Select(x => new
+            {
+                x.ClientName,
+                x.Contract,
+                x.TimeIn,
+                x.TimeOut,
+                x.Flexi
+            }).ToList();
+        }
 
         #endregion
+
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            DtrCommon.Client _clientRecord = new DtrCommon.Client();
+
+            _clientRecord = new DtrCommon.Client()
+            {
+                ClientName = txtClientName.Text,
+                Contract = txtContract.Text,
+                TimeIn = dtpTimeIn.Value.ToString("hh:mm tt"),
+                TimeOut = dtpTimeOut.Value.ToString("hh:mm tt"),
+                Flexi = chkFlexi.Checked
+            };
+            SaveClientEvent?.Invoke(_clientRecord);
+            GetClientListEvent?.Invoke(null);
+        }
+
+    
 
     }
 }
