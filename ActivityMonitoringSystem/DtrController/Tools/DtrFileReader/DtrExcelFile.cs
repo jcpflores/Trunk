@@ -96,7 +96,7 @@ namespace DtrController.Tools.DtrFileReader
                     tempInOut = new DtrCommon.DtrInOut();
 
                     // Date In/Out and Time In/Out
-
+                    
                     DateTime TimeIn = DateTime.FromOADate(xlsRange.Cells[i, 3].Value == null ? 0 : double.Parse(xlsRange.Cells[i, 3].Value.ToString()));
                     DateTime TimeOut = DateTime.FromOADate(xlsRange.Cells[i, 5].Value == null ? 0 : double.Parse(xlsRange.Cells[i, 5].Value.ToString()));
                     
@@ -111,13 +111,17 @@ namespace DtrController.Tools.DtrFileReader
                     tempInOut.WorkLocation = xlsRange.Cells[i, 10].Value == null ? "" : xlsRange.Cells[i, 10].Value.ToString();
                     tempInOut.Client = xlsRange.Cells[i, 16].Value == null ? "" : xlsRange.Cells[i, 16].Value.ToString();
 
+                    DateTime TimeInSchedule = DateTime.FromOADate(xlsRange.Cells[i, 11].Value == null ? 0 : double.Parse(xlsRange.Cells[i, 11].Value.ToString()));
+                  
+                   tempInOut.LatePerMinute =  ComputationLate(TimeInSchedule, TimeIn);
+                   
+
                     //Add to Collection
                     dtrModel.DtrInOut.Add(tempInOut);
 
                     count += 1;
                 }
-
-
+                
             }
 
             catch
@@ -139,6 +143,22 @@ namespace DtrController.Tools.DtrFileReader
             }
             return dtrModel;
 
+        }
+
+        private int ComputationLate(DateTime TimeInSchedule , DateTime TimeIn)
+        {            
+            TimeSpan Late;
+
+            if (TimeIn.ToString() != "12/30/1899 12:00:00 AM")
+            {
+                Late = TimeInSchedule - TimeIn;
+            }
+            else
+            {
+                Late = TimeIn - TimeIn; //default to 0 minutes
+            }
+
+            return Math.Abs(Convert.ToInt32(Late.TotalMinutes));
         }
 
         public ExcelErrorFile ErrorExcelFilename(string name)

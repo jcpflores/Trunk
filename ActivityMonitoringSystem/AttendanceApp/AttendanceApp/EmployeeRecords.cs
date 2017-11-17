@@ -42,6 +42,7 @@ namespace AttendanceApp
         public event SaveHolidayEventHandler SaveHolidayEvent;
         public event GetClientListEventHandler GetClientListEvent;
         public event SaveClientEventHandler SaveClientEvent;
+        public event GetExistingHolidayEventHandler GetExistingHolidayEvent;
 
         public void ShowEmployeeList(ICollection<DtrCommon.Employee> employee)
         {
@@ -62,6 +63,7 @@ namespace AttendanceApp
             dgvEmployeeList.Columns["Name"].Width = 250;
             dgvEmployeeList.Columns["ProcessRole"].Width = 120;
             dgvEmployeeList.Columns["Email"].Width = 200;
+
 
         }
 
@@ -85,10 +87,12 @@ namespace AttendanceApp
         { }
 
         public void ShowClientList(ICollection<DtrCommon.Client> client)
-        {          
-            cmbClient.DataSource = client.Select(x => x.ClientName).ToList();                
+        {
+            cmbClient.DataSource = client.Select(x => x.ClientName).ToList();
         }
 
+        public void GetExistingRecord(bool existRecord, string holidayDate)
+        { }
         #endregion
 
 
@@ -143,17 +147,34 @@ namespace AttendanceApp
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            dgvEmployeeList.DataSource = _employeeList.Where(x => x.Name.Contains(txtSearchbox.Text))
-                .Select(x => new
-                {
-                    x.EmpNo,
-                    x.Initial,
-                    x.Name,
-                    x.Email,
-                    x.Technology,
-                    x.ProcessRole,
-                    x.TecnicalRole
-                }).ToList();
+            try
+            {
+
+                var myEmployee = _employeeList.Where(x => x.Initial.Contains(txtSearchbox.Text)).First();
+
+                txtEmployeeNo.Text = myEmployee.EmpNo;
+                txtName.Text = myEmployee.Name;
+                txtResourceId.Text = myEmployee.Initial;
+                cmbProcessRole.Text = myEmployee.ProcessRole;
+                cmbTechnicalRole.Text = myEmployee.TecnicalRole;
+                cmbTechnology.Text = myEmployee.Technology;
+                txtSkillLevel.Text = myEmployee.SkillLevel;
+                cmbClient.Text = myEmployee.Client;
+                txtContract.Text = myEmployee.Contract;
+                txtProject.Text = myEmployee.Project;
+                cmbWorkLocation.Text = myEmployee.WorkLocation;
+                txtEmail.Text = myEmployee.Email;
+                if (myEmployee.Gender)
+                { rbMale.Checked = myEmployee.Gender; }
+                else
+                { rbFemale.Checked = true; }
+            }
+            
+            catch
+            {
+
+            }
+
         }
 
 

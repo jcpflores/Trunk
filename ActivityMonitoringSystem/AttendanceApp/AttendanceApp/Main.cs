@@ -19,8 +19,9 @@ namespace AttendanceApp
         DailyTimeRecordsForm _dtrForm = new DailyTimeRecordsForm();
         Calendar _dtrCalendar = new Calendar();
         EmployeeRecords _dtrEmployee = new EmployeeRecords();
-        MaintenanceForm _dtrMaintenanceForm = new MaintenanceForm();
+        HolidayForm _dtrHolidayForm = new HolidayForm();
         ClientForm _dtrClientForm = new ClientForm();
+        ReportsForm _dtrReportFOrm = new ReportsForm();
 
 
         public Main()
@@ -44,6 +45,7 @@ namespace AttendanceApp
         public event SaveHolidayEventHandler SaveHolidayEvent;
         public event SaveClientEventHandler SaveClientEvent;
         public event GetClientListEventHandler GetClientListEvent;
+        public event GetExistingHolidayEventHandler GetExistingHolidayEvent;
 
         public void ShowFiles(ICollection<string> discoveredFiles)
         {
@@ -81,7 +83,7 @@ namespace AttendanceApp
 
         public void ShowHolidayList(ICollection<DtrCommon.Holiday> holiday)
         {
-            _dtrMaintenanceForm.ShowHolidayList(holiday);
+            _dtrHolidayForm.ShowHolidayList(holiday);
             _dtrForm.ShowHolidayList(holiday);
         }
 
@@ -89,6 +91,7 @@ namespace AttendanceApp
         {
             //GetEmployeeListEvent?.Invoke(employee);
             _dtrEmployee.ShowEmployeeList(employee);
+            _dtrClientForm.ShowEmployeeList(employee);
         }
 
         public void ShowClientList(ICollection<DtrCommon.Client> client)
@@ -97,6 +100,10 @@ namespace AttendanceApp
             _dtrEmployee.ShowClientList(client);
         }
 
+        public void GetExistingRecord(bool existRecord, string holidayDate)
+        {
+            _dtrHolidayForm.GetExistingRecord(existRecord, holidayDate);
+        }
         #endregion
 
         private void btnDtr_Click(object sender, EventArgs e)
@@ -174,21 +181,7 @@ namespace AttendanceApp
 
         private void btnEmployee_Click(object sender, EventArgs e)
         {
-            _dtrEmployee = new EmployeeRecords();
-            _dtrEmployee.MdiParent = this;
-            this.panelProcessArea.Controls.Clear();
-            _dtrEmployee.Size = this.panel1.Size;
-            this.panelProcessArea.Controls.Add(_dtrEmployee);
-            _dtrEmployee.Show();
-            _dtrEmployee.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-
-            _dtrEmployee.SaveEmployeeRecordsEvent += _dtrEmployee_SaveEmployeeRecordsEvent;
-            _dtrEmployee.GetEmployeeListEvent += _dtrEmployee_GetEmployeeListEvent;
-
-            GetClientListEvent?.Invoke(null);
-            GetEmployeeListEvent?.Invoke(null);
+            
         }
 
         private void _dtrEmployee_SaveHolidayEvent(Holiday holiday)
@@ -208,38 +201,18 @@ namespace AttendanceApp
 
         private void btnMaintenance_Click(object sender, EventArgs e)
         {
-            _dtrMaintenanceForm = new MaintenanceForm();
-            _dtrMaintenanceForm.MdiParent = this;
-            this.panelProcessArea.Controls.Clear();
-            _dtrMaintenanceForm.Size = this.panel1.Size;
-            this.panelProcessArea.Controls.Add(_dtrMaintenanceForm);
-            _dtrMaintenanceForm.Show();
-            _dtrMaintenanceForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-
-            _dtrMaintenanceForm.SaveHolidayEvent += _dtrEmployee_SaveHolidayEvent;
-            
-            GetHolidayListEvent?.Invoke();
+            contextMenuStrip1.Show(btnMaintenance, 0, btnMaintenance.Height);
+                    
+      
         }
 
-        private void btnClient_Click(object sender, EventArgs e)
+        private void _dtrMaintenanceForm_GetExistingHolidayEvent(bool existRecord, string holidayDate)
         {
-            _dtrClientForm = new ClientForm();
-            _dtrClientForm.MdiParent = this;
-            this.panelProcessArea.Controls.Clear();
-            _dtrClientForm.Size = this.panel1.Size;
-            this.panelProcessArea.Controls.Add(_dtrClientForm);
-            _dtrClientForm.Show();
-            _dtrClientForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-                        
-            _dtrClientForm.SaveClientEvent += _dtrClientForm_SaveClientEvent;
-            _dtrClientForm.GetClientListEvent += _dtrClientForm_GetClientListEvent;
-
-            GetClientListEvent?.Invoke(null);
+            GetExistingHolidayEvent?.Invoke(false, holidayDate);
+         
         }
+
+      
 
         private void _dtrClientForm_GetClientListEvent(Client clientList)
         {
@@ -251,7 +224,75 @@ namespace AttendanceApp
             SaveClientEvent?.Invoke(clientRecord);
         }
 
-            
-        
+        private void btnReports_Click(object sender, EventArgs e)
+        {
+            _dtrReportFOrm = new ReportsForm();
+            _dtrReportFOrm.MdiParent = this;
+            this.panelProcessArea.Controls.Clear();
+            _dtrReportFOrm.Size = this.panel1.Size;
+            this.panelProcessArea.Controls.Add(_dtrReportFOrm);
+            _dtrReportFOrm.Show();
+            _dtrReportFOrm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+        }
+
+      
+
+        private void employeeRecordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _dtrEmployee = new EmployeeRecords();
+            _dtrEmployee.MdiParent = this;
+            this.panelProcessArea.Controls.Clear();
+            _dtrEmployee.Size = this.panel1.Size;
+            this.panelProcessArea.Controls.Add(_dtrEmployee);
+            _dtrEmployee.Show();
+            _dtrEmployee.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+
+            _dtrEmployee.SaveEmployeeRecordsEvent += _dtrEmployee_SaveEmployeeRecordsEvent;
+            _dtrEmployee.GetEmployeeListEvent += _dtrEmployee_GetEmployeeListEvent;
+
+            GetClientListEvent?.Invoke(null);
+            GetEmployeeListEvent?.Invoke(null);
+        }
+
+        private void holidayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _dtrHolidayForm = new HolidayForm();
+            _dtrHolidayForm.MdiParent = this;
+            this.panelProcessArea.Controls.Clear();
+            _dtrHolidayForm.Size = this.panel1.Size;
+            this.panelProcessArea.Controls.Add(_dtrHolidayForm);
+            _dtrHolidayForm.Show();
+            _dtrHolidayForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+
+            _dtrHolidayForm.SaveHolidayEvent += _dtrEmployee_SaveHolidayEvent;
+            _dtrHolidayForm.GetExistingHolidayEvent += _dtrMaintenanceForm_GetExistingHolidayEvent;
+
+            GetHolidayListEvent?.Invoke();
+        }
+
+        private void clientRecordsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _dtrClientForm = new ClientForm();
+            _dtrClientForm.MdiParent = this;
+            this.panelProcessArea.Controls.Clear();
+            _dtrClientForm.Size = this.panel1.Size;
+            this.panelProcessArea.Controls.Add(_dtrClientForm);
+            _dtrClientForm.Show();
+            _dtrClientForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+
+            _dtrClientForm.SaveClientEvent += _dtrClientForm_SaveClientEvent;
+            _dtrClientForm.GetClientListEvent += _dtrClientForm_GetClientListEvent;
+
+            GetClientListEvent?.Invoke(null);
+            GetEmployeeListEvent?.Invoke(null);
+        }
     }
 }

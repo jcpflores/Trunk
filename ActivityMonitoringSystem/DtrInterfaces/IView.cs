@@ -30,6 +30,8 @@ namespace DtrInterfaces
 
         event SaveClientEventHandler SaveClientEvent;
 
+        event GetExistingHolidayEventHandler GetExistingHolidayEvent;
+
         void ShowFiles(ICollection<string> discoveredFiles);
 
         void ShowProcessedResources(ICollection<ProcessedResource> processed);
@@ -46,5 +48,7 @@ namespace DtrInterfaces
         void ShowEmployeeList(ICollection<DtrCommon.Employee> employeeList);
 
         void ShowClientList(ICollection<DtrCommon.Client> clientList);
+
+        void GetExistingRecord(bool existRecord, string record);
     }
 }

@@ -20,6 +20,7 @@ namespace DtrCommon
         public int BillableWorkHours { get; set; }
         [MaxLength(255)]
         public string Notes { get; set; }
+        public int LatePerMinute { get; set; }
 
         [ForeignKey("DtrInfo")]
         public virtual int DtrInfoRefId { get; set; }

@@ -76,6 +76,7 @@ namespace DtrController
             {
                 _holidayList.Add(new DtrCommon.Holiday()
                 {
+                    Id = myHoliday.Id.ToString(),
                     HolidayDate = myHoliday.HolidayDate,
                     HolidayName = myHoliday.HolidayName
                 });
@@ -83,6 +84,7 @@ namespace DtrController
 
             holidayList = holidayList.Concat(_holidayList).ToList();
             _view.ShowHolidayList(holidayList);
+     
         }
 
         private void ClearAllTempTables()
@@ -113,6 +115,26 @@ namespace DtrController
             _view.ShowProcessedResources(resources);
         }
 
+        private void GetReports()
+        {
+            var _DailyTimeRecordDb = _context.Set<DtrModel.Entities.DailyTimeRecord>().Where(t => t.Id != 0).ToList();
+            var _TimeInOutDb = _context.Set<DtrModel.Entities.TimeInOut>().Where(t => t.Id != 0).ToList();
+
+            var q = from d in _DailyTimeRecordDb
+                    join t in _TimeInOutDb on d.Id equals t.DailyTimeRecordRefId into dt
+                    from t in dt.DefaultIfEmpty()
+                    where d.ResourceId == "JohnCabugao"
+                    select dt.ToList();
+
+            foreach (var s in _DailyTimeRecordDb)
+            {
+               // s.ResourceId
+            }
+
+        }
+
+
+
         #region IController
         public void SetView(IView view)
         {
@@ -128,8 +150,19 @@ namespace DtrController
             _view.SaveHolidayEvent += _view_SaveHolidayEvent;
             _view.SaveClientEvent += _view_SaveClientEvent;
             _view.GetClientListEvent += _view_GetClientListEvent;
+            _view.GetExistingHolidayEvent += _view_GetExistingHolidayEvent;
+            
         }
 
+        private void _view_GetExistingHolidayEvent(bool existRecord, string holidayDate)
+        {
+            DateTime _holiday = DateTime.Parse(holidayDate);
+
+            bool holidayExists = _context.Set<DtrModel.Entities.Holiday>().Count(t => t.HolidayDate == _holiday) > 0;
+
+
+            _view.GetExistingRecord(holidayExists, null);
+        }
 
         public void GetClientList()
         {
@@ -141,11 +174,11 @@ namespace DtrController
             {
                 _clientList.Add(new DtrCommon.Client()
                 {
-                   ClientName = myClient.ClientName,
-                   Contract = myClient.Contract,
-                   TimeIn = myClient.TimeIn,
-                   TimeOut = myClient.TimeOut,
-                   Flexi = myClient.Flexi
+                    ClientName = myClient.ClientName,
+                    Contract = myClient.Contract,
+                    TimeIn = myClient.TimeIn,
+                    TimeOut = myClient.TimeOut,
+                    Flexi = myClient.Flexi
                 });
             }
 
@@ -169,11 +202,11 @@ namespace DtrController
                 Flexi = clientRecord.Flexi
             });
 
-            _context.SaveChanges();                      
-        //    _view.ShowClientList();
+            _context.SaveChanges();
+            //    _view.ShowClientList();
         }
 
-        
+
 
         private void _view_SaveHolidayEvent(DtrCommon.Holiday holiday)
         {
@@ -232,7 +265,7 @@ namespace DtrController
                     MaternityLeave = myEmployee.MaternityLeave,
                     PaternityLeave = myEmployee.PaternityLeave,
                     Gender = myEmployee.Gender
-            });
+                });
             }
 
             _view.ShowEmployeeList(employeeList);
@@ -382,6 +415,7 @@ namespace DtrController
                 this.QueryTempTableDtr();
             }
         }
+
         private void _view_GetDtrDetailsEvent(string resourceId)
         {
             string[] filter = resourceId.Replace(" ", "").Split(new char[] { '-' });

@@ -22,6 +22,8 @@ namespace DtrModel.Entities
         [MaxLength(255)]
         public string Notes { get; set; }
 
+        public int LatePerMinute { get; set; }
+
         [ForeignKey("DailyTimeRecord")]
         public int DailyTimeRecordRefId { get; set; }
 

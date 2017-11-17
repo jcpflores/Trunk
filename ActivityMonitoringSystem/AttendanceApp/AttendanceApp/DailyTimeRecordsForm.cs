@@ -27,8 +27,7 @@ namespace AttendanceApp
         {
             InitializeComponent();
 
-            this.comboBox1.SelectedValueChanged += ComboBox1_SelectedValueChanged;
-            //GetHolidayListEvent?.Invoke();
+            this.comboBox1.SelectedValueChanged += ComboBox1_SelectedValueChanged;            
         }
 
 
@@ -46,6 +45,7 @@ namespace AttendanceApp
         public event SaveHolidayEventHandler SaveHolidayEvent;
         public event GetClientListEventHandler GetClientListEvent;
         public event SaveClientEventHandler SaveClientEvent;
+        public event GetExistingHolidayEventHandler GetExistingHolidayEvent;
 
         public void ShowDtrInfo(DtrInfo info)
         {
@@ -53,9 +53,7 @@ namespace AttendanceApp
 
             if (info == null)
                 return;
-
-            //  GetHolidayListEvent?.Invoke();
-
+                       
             ShowHeaders();
             this.lblId.Text = info.ResourceId;
             this.lblProcRole.Text = info.ProcessRole;
@@ -75,17 +73,16 @@ namespace AttendanceApp
             this.dataGridView1.Columns[0].Visible = false;
             this.dataGridView1.Columns["DtrInfoRefId"].Visible = false;
             this.dataGridView1.Columns["DtrInfo"].Visible = false;
+            this.dataGridView1.Columns["LatePerMinute"].Visible = false;
 
             _editbutton = new DataGridViewImageColumn();
-            _editbutton.Image = AttendanceApp.Properties.Resources.saveicon;
+         //   _editbutton.Image = AttendanceApp.Properties.Resources.saveicon;
             _editbutton.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             _editbutton.Width = 50;
             _editbutton.Name = "Save";
             _editbutton.ReadOnly = true;
             dataGridView1.Columns.Add(_editbutton);
-
-            //GetHolidayListEvent?.Invoke();
-
+            
             SetWeekendsColumnProperty(Color.White, Color.Blue);
 
             this.dataGridView1.CellValueChanged += DataGridView1_CellValueChanged;
@@ -173,8 +170,7 @@ namespace AttendanceApp
         }
 
         private bool IsHolidayDate(string date)
-        {
-      
+        {      
             var holidayExist = _holidayList.Where(x => x.HolidayDate == DateTime.Parse(date)).ToList();
 
             if (holidayExist.Count() > 0)
@@ -182,7 +178,6 @@ namespace AttendanceApp
                 return true;
             }
             return false;
-
         }
 
         private void ShowHeaders()
@@ -214,8 +209,7 @@ namespace AttendanceApp
             if (errorFiles.Count > 0)
             {
                 this.lblError.Visible = true;
-            }
-            
+            }            
             this.lblError.Text = "Error: " + errorFiles.Count.ToString();
         }
 
@@ -234,9 +228,11 @@ namespace AttendanceApp
         }
 
         public void ShowMessage(string message)
-        {        }
+        {}
 
-      
+        public void GetExistingRecord(bool existRecord, string holidayDate)
+        { }
+
 
         private void btnSetSource_Click(object sender, EventArgs e)
         {

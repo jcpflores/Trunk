@@ -8,6 +8,7 @@ namespace DtrCommon
 {
     public class Holiday
     {
+        public string Id { get; set; }
         public DateTime HolidayDate { get; set; }
         public string HolidayName { get; set; }
     }

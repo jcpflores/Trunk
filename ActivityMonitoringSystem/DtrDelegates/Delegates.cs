@@ -39,5 +39,7 @@ namespace DtrDelegates
 
     public delegate void SaveClientEventHandler(DtrCommon.Client clientRecord);
 
+    public delegate void GetExistingHolidayEventHandler(bool existRecord , string holidayDate);
+
     
 }

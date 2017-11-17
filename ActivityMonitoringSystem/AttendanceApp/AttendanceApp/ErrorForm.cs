@@ -37,6 +37,7 @@ namespace AttendanceApp
         public event SaveHolidayEventHandler SaveHolidayEvent;
         public event GetClientListEventHandler GetClientListEvent;
         public event SaveClientEventHandler SaveClientEvent;
+        public event GetExistingHolidayEventHandler GetExistingHolidayEvent;
 
 
         public void ShowDtrInfo(DtrInfo info)
@@ -65,6 +66,10 @@ namespace AttendanceApp
 
         public void ShowClientList(ICollection<DtrCommon.Client> client)
         { }
+
+        public void GetExistingRecord(bool existRecord, string holidayDate)
+        { }        
+        
 
         #endregion
 

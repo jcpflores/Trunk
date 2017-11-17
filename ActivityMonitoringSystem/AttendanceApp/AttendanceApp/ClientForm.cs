@@ -43,8 +43,11 @@ namespace AttendanceApp
         public event SaveHolidayEventHandler SaveHolidayEvent;
         public event SaveClientEventHandler SaveClientEvent;
         public event GetClientListEventHandler GetClientListEvent;
+        public event GetExistingHolidayEventHandler GetExistingHolidayEvent;
 
-
+        ICollection<DtrCommon.Employee> _employeeList = new List<DtrCommon.Employee>();
+        ICollection<DtrCommon.Client> _clientList = new List<DtrCommon.Client>();
+ 
         public void ShowDtrInfo(DtrInfo info)
         { }
         public void ShowFiles(ICollection<string> discoveredFiles)
@@ -65,7 +68,9 @@ namespace AttendanceApp
         { }
 
         public void ShowEmployeeList(ICollection<DtrCommon.Employee> employee)
-        { }
+        {
+            _employeeList = employee;
+        }
 
         public void ShowClientList(ICollection<DtrCommon.Client> client)
         {
@@ -77,7 +82,12 @@ namespace AttendanceApp
                 x.TimeOut,
                 x.Flexi
             }).ToList();
+
+            _clientList = client;
         }
+
+        public void GetExistingRecord(bool existRecord, string holidayDate)
+        { }
 
         #endregion
 
@@ -98,7 +108,34 @@ namespace AttendanceApp
             GetClientListEvent?.Invoke(null);
         }
 
-    
+        private void dgvClientList_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            tabControl1.SelectedIndex = 1;
 
+            var _clientName = dgvClientList[0, e.RowIndex].Value.ToString();
+
+            //dgvClientList.DataSource = _clientList.Where(c => c.ClientName == _clientName).First();
+
+            dgvEmployee.DataSource =  _employeeList.Where(x => x.Client == _clientName).ToList();
+
+            DataGridViewRow row = this.dgvClientList.Rows[e.RowIndex];
+           
+            txtClientName.Text = dgvClientList[0, e.RowIndex].Value.ToString();
+            txtContract.Text = dgvClientList[1, e.RowIndex].Value.ToString();
+            dtpTimeIn.Value = Convert.ToDateTime(dgvClientList[2, e.RowIndex].Value.ToString());
+            dtpTimeOut.Value = Convert.ToDateTime(dgvClientList[3, e.RowIndex].Value.ToString());
+            chkFlexi.Checked = Convert.ToBoolean(dgvClientList[4, e.RowIndex].Value);
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            var myClient = _clientList.Where(x => x.ClientName.Contains(txtSearchbox.Text)).First();
+
+            txtClientName.Text = myClient.ClientName;
+            txtContract.Text = myClient.Contract;
+            dtpTimeIn.Value = Convert.ToDateTime(myClient.TimeIn);
+            dtpTimeOut.Value = Convert.ToDateTime(myClient.TimeOut);
+            chkFlexi.Checked = Convert.ToBoolean(myClient.Flexi);
+        }
     }
 }

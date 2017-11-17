@@ -56,6 +56,7 @@ namespace DtrController.Tools.GoogleHolidayApi
                     {
                         _holidayList.Add(new Holiday
                         {
+                            Id = myEvent.Id,
                             HolidayDate = DateTime.Parse(myEvent.Start.Date),
                             HolidayName = myEvent.Summary
                         });
