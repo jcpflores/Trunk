@@ -147,10 +147,11 @@ namespace AttendanceApp
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            InitInfoDetails();
             try
             {
-
-                var myEmployee = _employeeList.Where(x => x.Initial.Contains(txtSearchbox.Text)).First();
+                
+                var myEmployee = _employeeList.Where(x => x.Initial.ToLower() == (txtSearchbox.Text.ToLower())).Single();
 
                 txtEmployeeNo.Text = myEmployee.EmpNo;
                 txtName.Text = myEmployee.Name;
@@ -230,20 +231,20 @@ namespace AttendanceApp
             InitInfoDetails();
         }
 
-        private void btnSearch_TextChanged(object sender, EventArgs e)
-        {
-            dgvEmployeeList.DataSource = _employeeList.Where(x => x.Name.Contains(txtSearchbox.Text))
-              .Select(x => new
-              {
-                  x.EmpNo,
-                  x.Initial,
-                  x.Name,
-                  x.Email,
-                  x.Technology,
-                  x.ProcessRole,
-                  x.TecnicalRole
-              }).ToList();
-        }
+        //private void btnsearch_textchanged(object sender, eventargs e)
+        //{
+        //    dgvemployeelist.datasource = _employeelist.where(x => x.name.contains(txtsearchbox.text))
+        //      .select(x => new
+        //      {
+        //          x.empno,
+        //          x.initial,
+        //          x.name,
+        //          x.email,
+        //          x.technology,
+        //          x.processrole,
+        //          x.tecnicalrole
+        //      }).tolist();
+        //}
 
         private void btnEdit_Click(object sender, EventArgs e)
         {

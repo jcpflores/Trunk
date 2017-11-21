@@ -65,7 +65,8 @@ namespace AttendanceApp
         public void ShowHolidayList(ICollection<DtrCommon.Holiday> holidayList)
         {
             //var data = holidayList.Select(s => s.HolidayName).Distinct();
-            dgvHolidayList.DataSource = holidayList.OrderBy(x => x.HolidayDate).ToList();
+            dgvHolidayList.DataSource = null;
+           dgvHolidayList.DataSource = holidayList.OrderBy(x => x.HolidayDate).ToList();
 
             dgvHolidayList.Columns["Id"].Visible = false;
             dgvHolidayList.Columns["HolidayName"].Width = 250;

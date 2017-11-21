@@ -129,13 +129,28 @@ namespace AttendanceApp
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            var myClient = _clientList.Where(x => x.ClientName.Contains(txtSearchbox.Text)).First();
+            try
+            {
+                //var myEmployee = _employeeList.Where(x => x.Initial.ToLower() == (txtSearchbox.Text.ToLower())).Single();
+                    
+                var myClient = _clientList.Where(x => x.ClientName.ToLower() == (txtSearchbox.Text.ToLower())).Single();
 
-            txtClientName.Text = myClient.ClientName;
-            txtContract.Text = myClient.Contract;
-            dtpTimeIn.Value = Convert.ToDateTime(myClient.TimeIn);
-            dtpTimeOut.Value = Convert.ToDateTime(myClient.TimeOut);
-            chkFlexi.Checked = Convert.ToBoolean(myClient.Flexi);
+                txtClientName.Text = myClient.ClientName;
+                txtContract.Text = myClient.Contract;
+                dtpTimeIn.Value = Convert.ToDateTime(myClient.TimeIn);
+                dtpTimeOut.Value = Convert.ToDateTime(myClient.TimeOut);
+                chkFlexi.Checked = Convert.ToBoolean(myClient.Flexi);
+
+                dgvEmployee.DataSource = _employeeList.Where(x => x.Client == txtSearchbox.Text).Select(x => new
+                {
+                    x.EmpNo,
+                    x.Initial                  
+                }).ToList();
+
+            }
+
+            catch { }
+          
         }
     }
 }

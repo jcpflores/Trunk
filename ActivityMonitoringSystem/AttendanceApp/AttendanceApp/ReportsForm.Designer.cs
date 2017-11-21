@@ -37,6 +37,7 @@
             this.cmbYear = new System.Windows.Forms.ComboBox();
             this.btnExport = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label19 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReports)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -146,16 +147,27 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.btnSearch);
             this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Location = new System.Drawing.Point(12, 47);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(612, 247);
             this.panel1.TabIndex = 13;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(12, 9);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(70, 23);
+            this.label19.TabIndex = 82;
+            this.label19.Text = "Reports";
             // 
             // ReportsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(731, 375);
+            this.Controls.Add(this.label19);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ReportsForm";
@@ -164,6 +176,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -178,5 +191,6 @@
         private System.Windows.Forms.ComboBox cmbYear;
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label19;
     }
 }

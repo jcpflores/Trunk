@@ -22,6 +22,7 @@ namespace AttendanceApp
         HolidayForm _dtrHolidayForm = new HolidayForm();
         ClientForm _dtrClientForm = new ClientForm();
         ReportsForm _dtrReportFOrm = new ReportsForm();
+        LogsForm _dtrLogForm = new LogsForm();
 
 
         public Main()
@@ -29,7 +30,7 @@ namespace AttendanceApp
             InitializeComponent();
             this.labelToday.Text = System.DateTime.Now.ToString("dddd, MMMM dd yyyy");
             _controller = new Controller();
-            _controller.SetView(this);            
+            _controller.SetView(this);
         }
 
         #region IView
@@ -133,7 +134,7 @@ namespace AttendanceApp
         }
 
 
-      
+
         private void _dtrForm_GetHolidayListEvent()
         {
             GetHolidayListEvent?.Invoke();
@@ -175,13 +176,13 @@ namespace AttendanceApp
         {
             _dtrCalendar = new Calendar();
             _dtrCalendar.Show();
-        }  
+        }
 
-    
+
 
         private void btnEmployee_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void _dtrEmployee_SaveHolidayEvent(Holiday holiday)
@@ -202,17 +203,17 @@ namespace AttendanceApp
         private void btnMaintenance_Click(object sender, EventArgs e)
         {
             contextMenuStrip1.Show(btnMaintenance, 0, btnMaintenance.Height);
-                    
-      
+
+
         }
 
         private void _dtrMaintenanceForm_GetExistingHolidayEvent(bool existRecord, string holidayDate)
         {
             GetExistingHolidayEvent?.Invoke(false, holidayDate);
-         
+
         }
 
-      
+
 
         private void _dtrClientForm_GetClientListEvent(Client clientList)
         {
@@ -237,7 +238,7 @@ namespace AttendanceApp
             | System.Windows.Forms.AnchorStyles.Right)));
         }
 
-      
+
 
         private void employeeRecordToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -293,6 +294,20 @@ namespace AttendanceApp
 
             GetClientListEvent?.Invoke(null);
             GetEmployeeListEvent?.Invoke(null);
+        }
+
+
+        private void logsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _dtrLogForm = new LogsForm();
+            _dtrLogForm.MdiParent = this;
+            this.panelProcessArea.Controls.Clear();
+            _dtrLogForm.Size = this.panel1.Size;
+            this.panelProcessArea.Controls.Add(_dtrLogForm);
+            _dtrLogForm.Show();
+            _dtrLogForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
         }
     }
 }

@@ -112,7 +112,7 @@
             // 
             // btnReports
             // 
-            this.btnReports.Location = new System.Drawing.Point(4, 64);
+            this.btnReports.Location = new System.Drawing.Point(4, 35);
             this.btnReports.Name = "btnReports";
             this.btnReports.Size = new System.Drawing.Size(146, 23);
             this.btnReports.TabIndex = 4;
@@ -123,7 +123,7 @@
             // btnMaintenance
             // 
             this.btnMaintenance.ContextMenuStrip = this.contextMenuStrip1;
-            this.btnMaintenance.Location = new System.Drawing.Point(3, 35);
+            this.btnMaintenance.Location = new System.Drawing.Point(3, 64);
             this.btnMaintenance.Name = "btnMaintenance";
             this.btnMaintenance.Size = new System.Drawing.Size(146, 23);
             this.btnMaintenance.TabIndex = 3;
@@ -140,7 +140,7 @@
             this.holidayToolStripMenuItem,
             this.logsToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(167, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(167, 114);
             // 
             // employeeRecordToolStripMenuItem
             // 
@@ -168,6 +168,7 @@
             this.logsToolStripMenuItem.Name = "logsToolStripMenuItem";
             this.logsToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.logsToolStripMenuItem.Text = "Logs";
+            this.logsToolStripMenuItem.Click += new System.EventHandler(this.logsToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
