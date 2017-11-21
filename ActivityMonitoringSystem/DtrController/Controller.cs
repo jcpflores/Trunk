@@ -65,7 +65,9 @@ namespace DtrController
 
         private void GetHolidays()
         {
-            ICollection<DtrCommon.Holiday> holidayList = new List<DtrCommon.Holiday>();
+            
+            ICollection<DtrCommon.Holiday> holidayList = new List<DtrCommon.Holiday>();            
+
             holidayList = Tools.GoogleHolidayApi.GoogleHolidayApi.GetHolidays();
 
             var _holidayDb = _context.Set<DtrModel.Entities.Holiday>().Where(t => t.Id != 0).ToList();
