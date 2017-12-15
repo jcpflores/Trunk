@@ -30,7 +30,7 @@
         {
             this.dgvReports = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtPartnerName = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
             this.cmbCategory = new System.Windows.Forms.ComboBox();
             this.cmbMonth = new System.Windows.Forms.ComboBox();
@@ -51,7 +51,7 @@
             this.dgvReports.Location = new System.Drawing.Point(19, 107);
             this.dgvReports.Name = "dgvReports";
             this.dgvReports.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvReports.Size = new System.Drawing.Size(327, 119);
+            this.dgvReports.Size = new System.Drawing.Size(569, 119);
             this.dgvReports.TabIndex = 5;
             // 
             // label1
@@ -63,12 +63,12 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Search";
             // 
-            // textBox1
+            // txtPartnerName
             // 
-            this.textBox1.Location = new System.Drawing.Point(63, 65);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(169, 20);
-            this.textBox1.TabIndex = 7;
+            this.txtPartnerName.Location = new System.Drawing.Point(63, 65);
+            this.txtPartnerName.Name = "txtPartnerName";
+            this.txtPartnerName.Size = new System.Drawing.Size(169, 20);
+            this.txtPartnerName.TabIndex = 7;
             // 
             // btnSearch
             // 
@@ -78,6 +78,7 @@
             this.btnSearch.TabIndex = 8;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // cmbCategory
             // 
@@ -146,7 +147,7 @@
             this.panel1.Controls.Add(this.cmbMonth);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.btnSearch);
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.txtPartnerName);
             this.panel1.Location = new System.Drawing.Point(12, 47);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(612, 247);
@@ -184,7 +185,7 @@
 
         private System.Windows.Forms.DataGridView dgvReports;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtPartnerName;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.ComboBox cmbCategory;
         private System.Windows.Forms.ComboBox cmbMonth;

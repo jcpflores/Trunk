@@ -43,7 +43,7 @@ namespace AttendanceApp
         public event GetClientListEventHandler GetClientListEvent;
         public event SaveClientEventHandler SaveClientEvent;
         public event GetExistingHolidayEventHandler GetExistingHolidayEvent;
-
+        public event GetReportsEventHandler GetReportsEvent;
         public void ShowEmployeeList(ICollection<DtrCommon.Employee> employee)
         {
             //var emp = _context.Set<DtrModel.Entities.Employee>()
@@ -76,6 +76,9 @@ namespace AttendanceApp
         { }
 
         public void ShowProcessedResources(ICollection<ProcessedResource> processed)
+        { }
+
+        public void ShowReportList(ICollection<DtrCommon.Reports> reports)
         { }
         public void ShowMessage(string message)
         { }

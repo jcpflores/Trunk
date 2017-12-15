@@ -44,6 +44,7 @@ namespace AttendanceApp
         public event SaveClientEventHandler SaveClientEvent;
         public event GetClientListEventHandler GetClientListEvent;
         public event GetExistingHolidayEventHandler GetExistingHolidayEvent;
+        public event GetReportsEventHandler GetReportsEvent;
 
         ICollection<DtrCommon.Employee> _employeeList = new List<DtrCommon.Employee>();
         ICollection<DtrCommon.Client> _clientList = new List<DtrCommon.Client>();
@@ -60,7 +61,8 @@ namespace AttendanceApp
         { }
         public void ShowMessage(string message)
         { }
-
+        public void ShowReportList(ICollection<DtrCommon.Reports> reports)
+        { }
         public void ShowError(ICollection<string> errorFiles)
         { }
 
@@ -149,8 +151,9 @@ namespace AttendanceApp
 
             }
 
-            catch { }
-          
+            catch { }          
         }
+
+
     }
 }

@@ -40,6 +40,7 @@ namespace AttendanceApp
         public event GetClientListEventHandler GetClientListEvent;
         public event SaveClientEventHandler SaveClientEvent;
         public event GetExistingHolidayEventHandler GetExistingHolidayEvent;
+        public event GetReportsEventHandler GetReportsEvent;
 
         bool _existingRecord;        
 
@@ -50,7 +51,8 @@ namespace AttendanceApp
 
         public void ShowProgress(int count, int totalCount)
         { }
-
+        public void ShowReportList(ICollection<DtrCommon.Reports> reports)
+        { }
         public void ShowProcessedResources(ICollection<ProcessedResource> processed)
         { }
         public void ShowMessage(string message)

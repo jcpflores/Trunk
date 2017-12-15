@@ -46,7 +46,7 @@ namespace AttendanceApp
         public event GetClientListEventHandler GetClientListEvent;
         public event SaveClientEventHandler SaveClientEvent;
         public event GetExistingHolidayEventHandler GetExistingHolidayEvent;
-
+        public event GetReportsEventHandler GetReportsEvent;
         public void ShowDtrInfo(DtrInfo info)
         {
             InitInfoView();
@@ -226,7 +226,8 @@ namespace AttendanceApp
         public void ShowProgress(int count, int totalCount)
         {
         }
-
+        public void ShowReportList(ICollection<DtrCommon.Reports> reports)
+        { }
         public void ShowProcessedResources(ICollection<ProcessedResource> processed)
         {
             this.comboBox1.Items.Clear();
@@ -239,7 +240,7 @@ namespace AttendanceApp
 
         public void ShowMessage(string message)
         { }
-
+   
         public void GetExistingRecord(bool existRecord, string holidayDate)
         { }
 

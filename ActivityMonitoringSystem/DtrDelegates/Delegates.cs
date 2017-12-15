@@ -41,5 +41,7 @@ namespace DtrDelegates
 
     public delegate void GetExistingHolidayEventHandler(bool existRecord , string holidayDate);
 
+    public delegate void GetReportsEventHandler(string category, string perPartnerName, string month, string year);
+
     
 }

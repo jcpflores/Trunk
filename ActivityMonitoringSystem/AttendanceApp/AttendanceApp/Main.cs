@@ -47,6 +47,7 @@ namespace AttendanceApp
         public event SaveClientEventHandler SaveClientEvent;
         public event GetClientListEventHandler GetClientListEvent;
         public event GetExistingHolidayEventHandler GetExistingHolidayEvent;
+        public event GetReportsEventHandler GetReportsEvent;
 
         public void ShowFiles(ICollection<string> discoveredFiles)
         {
@@ -70,6 +71,11 @@ namespace AttendanceApp
         {
             _dtrForm.ShowProcessedResources(processed);
             this.toolStripProgressBar1.Visible = false;
+        }
+
+        public void ShowReportList(ICollection<DtrCommon.Reports> reports)
+        {
+            _dtrReportFOrm.ShowReportList(reports);
         }
 
         public void ShowDtrInfo(DtrInfo info)
@@ -203,8 +209,6 @@ namespace AttendanceApp
         private void btnMaintenance_Click(object sender, EventArgs e)
         {
             contextMenuStrip1.Show(btnMaintenance, 0, btnMaintenance.Height);
-
-
         }
 
         private void _dtrMaintenanceForm_GetExistingHolidayEvent(bool existRecord, string holidayDate)
@@ -236,9 +240,16 @@ namespace AttendanceApp
             _dtrReportFOrm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
+
+            _dtrReportFOrm.GetReportsEvent += _dtrReportFOrm_GetReportsEvent;
+
+           // GetReportsEvent?.Invoke(null, null, null, null);
         }
 
-
+        private void _dtrReportFOrm_GetReportsEvent(string category , string perPartnerName, string month, string year )
+        {
+            GetReportsEvent?.Invoke(category, perPartnerName, month, year);
+        }
 
         private void employeeRecordToolStripMenuItem_Click(object sender, EventArgs e)
         {

@@ -38,7 +38,7 @@ namespace AttendanceApp
         public event GetClientListEventHandler GetClientListEvent;
         public event SaveClientEventHandler SaveClientEvent;
         public event GetExistingHolidayEventHandler GetExistingHolidayEvent;
-
+        public event GetReportsEventHandler GetReportsEvent;
 
         public void ShowDtrInfo(DtrInfo info)
         { }
@@ -52,7 +52,8 @@ namespace AttendanceApp
         { }
         public void ShowMessage(string message)
         { }
-
+        public void ShowReportList(ICollection<DtrCommon.Reports> reports)
+        { }
         public void ShowError(ICollection<string> errorFiles)
         {
             listBoxError.DataSource = errorFiles;
