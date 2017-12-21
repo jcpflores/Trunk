@@ -18,11 +18,12 @@ namespace DtrModel.Entities
         public string WorkLocation { get; set; }
         public string Client { get; set; }
         public string TimeOffReason { get; set; }
-        public int BillableWorkHours { get; set; }
+        public string BillableWorkHours { get; set; }
+        public string TimeInSchedule { get; set; }
         [MaxLength(255)]
         public string Notes { get; set; }
-
         public int LatePerMinute { get; set; }
+        
 
         [ForeignKey("DailyTimeRecord")]
         public int DailyTimeRecordRefId { get; set; }

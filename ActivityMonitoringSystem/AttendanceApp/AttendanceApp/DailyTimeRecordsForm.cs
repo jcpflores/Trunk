@@ -17,6 +17,7 @@ namespace AttendanceApp
         ICollection<string> _discoveredFiles;
         ICollection<string> _errorList;
         ICollection<DtrCommon.Holiday> _holidayList = new List<DtrCommon.Holiday>();
+        ICollection<ProcessedResource> _processedResource;
         DataGridViewImageColumn _editbutton;
         BindingSource _bs;
         Color EDITED_COLOR = Color.Pink;
@@ -62,7 +63,7 @@ namespace AttendanceApp
             this.lblSkill.Text = info.SkillLevel;
             this.lblClient.Text = info.ClientName;
             this.lblLocation.Text = info.WorkLocationDefault;
-            this.lblTimeIn.Text = info.TimeInScheduleDefault.ToString("HH:mm tt");
+            this.lblTimeIn.Text = DateTime.Parse(info.TimeInScheduleDefault).ToString("HH:mm tt");// info.TimeInScheduleDefault.ToString("HH:mm tt");
             this.lblMonthYear.Text = info.MonthYear;
             this.lblContract.Text = info.ContractRef;
             this.lblProject.Text = info.Project;
@@ -73,7 +74,8 @@ namespace AttendanceApp
             this.dataGridView1.Columns[0].Visible = false;
             this.dataGridView1.Columns["DtrInfoRefId"].Visible = false;
             this.dataGridView1.Columns["DtrInfo"].Visible = false;
-            this.dataGridView1.Columns["LatePerMinute"].Visible = false;
+        //    this.dataGridView1.Columns["LatePerMinute"].Visible = false;
+            
 
             _editbutton = new DataGridViewImageColumn();
             _editbutton.Image = AttendanceApp.Properties.Resources.saveicon;
@@ -112,14 +114,23 @@ namespace AttendanceApp
             this.dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = EDITED_COLOR;
             this.dataGridView1.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Black;
 
-            string TimeInSchedule = Convert.ToDateTime(this.dataGridView1[1, e.RowIndex].Value).ToString("MM/dd/yyyy ") + lblTimeIn.Text;            
-            this.dataGridView1.Rows[e.RowIndex].Cells[9].Value = LatePerMinuteComputation(Convert.ToDateTime(TimeInSchedule), Convert.ToDateTime(this.dataGridView1[1, e.RowIndex].Value));
+            string TimeInSchedule = Convert.ToDateTime(this.dataGridView1[1, e.RowIndex].Value).ToString("MM/dd/yyyy ") + this.dataGridView1[8, e.RowIndex].Value.ToString();
+            this.dataGridView1.Rows[e.RowIndex].Cells[10].Value = LatePerMinuteComputation(Convert.ToDateTime(TimeInSchedule), Convert.ToDateTime(this.dataGridView1[1, e.RowIndex].Value));
         }
 
         private int LatePerMinuteComputation(DateTime TimeInSchedule, DateTime TimeIn)
         {
-            TimeSpan Late;
-            Late = TimeInSchedule - TimeIn;
+        
+            TimeSpan Late = new TimeSpan(0, 0, 0, 0, 0);
+                        
+                int result = DateTime.Compare(TimeInSchedule, TimeIn);
+
+                if (result < 0)
+                {
+                    Late = TimeInSchedule.Subtract(TimeIn);                   
+                }
+            
+
             return Math.Abs(Convert.ToInt32(Late.TotalMinutes));
         }
 
@@ -230,6 +241,7 @@ namespace AttendanceApp
         { }
         public void ShowProcessedResources(ICollection<ProcessedResource> processed)
         {
+            _processedResource = processed;
             this.comboBox1.Items.Clear();
             this.comboBox1.Text = string.Empty;
             foreach (ProcessedResource resource in processed)
@@ -268,7 +280,7 @@ namespace AttendanceApp
             StartProgressBarEvent?.Invoke(false);
 
             if (_discoveredFiles.Count > 0)
-            { comboBox1.Enabled = true; }
+            { comboBox1.Enabled = true; btnSaveAllToDb.Enabled = true; }
         }
 
         private void btnSaveCurrToDb_Click(object sender, EventArgs e)
@@ -283,7 +295,11 @@ namespace AttendanceApp
         {
             if (MessageBox.Show("Are you sure you want save to all DTR to the database?", "ATTENTION", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                SaveDtrInfoEvent?.Invoke(null);
+                foreach (var Resource in _processedResource)
+                {
+                    SaveDtrInfoEvent?.Invoke(Resource.ResourceId);
+                }
+               
             }
         }
 

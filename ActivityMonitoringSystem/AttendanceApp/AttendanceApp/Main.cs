@@ -115,8 +115,8 @@ namespace AttendanceApp
 
         private void btnDtr_Click(object sender, EventArgs e)
         {
-            if (!_dtrForm.Visible)
-            {
+          //  if (!_dtrForm.Visible)
+          //  {
                 _dtrForm = new DailyTimeRecordsForm();
                 _dtrForm.MdiParent = this;
                 this.panelProcessArea.Controls.Clear();
@@ -136,7 +136,7 @@ namespace AttendanceApp
                 _dtrForm.GetHolidayListEvent += _dtrForm_GetHolidayListEvent;
 
                 GetHolidayListEvent?.Invoke();
-            }
+           // }
         }
 
 

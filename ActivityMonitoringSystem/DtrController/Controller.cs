@@ -65,7 +65,6 @@ namespace DtrController
 
         private void GetHolidays()
         {
-
             ICollection<DtrCommon.Holiday> holidayList = new List<DtrCommon.Holiday>();
 
             holidayList = Tools.GoogleHolidayApi.GoogleHolidayApi.GetHolidays();
@@ -132,7 +131,6 @@ namespace DtrController
 
                     var timeInOut = _context.Set<DtrModel.Entities.TimeInOut>().Where(t => t.DailyTimeRecordRefId == dtr.Id).ToList();
 
-
                     var aggregate = timeInOut
                        .GroupBy(o => o.DailyTimeRecordRefId)
                        .Select(x => new
@@ -141,13 +139,16 @@ namespace DtrController
                            VacationLeave = (from y in timeInOut where y.TimeOffReason == "Vacation Leave" select y).Count(),
                            EmergencyLeave = (from y in timeInOut where y.TimeOffReason == "Emergency Leave" select y).Count(),
                            SickLeave = (from y in timeInOut where y.TimeOffReason == "Sick Leave" select y).Count(),
-                           ParentalLeave = (from y in timeInOut where y.TimeOffReason == "Maternity/Paternity Leave" select y).Count()
-
+                           ParentalLeave = (from y in timeInOut where y.TimeOffReason == "Maternity/Paternity Leave" select y).Count(),
+                           TardinessFrequency = (from y in timeInOut where y.LatePerMinute > 0 select y).Count()
                        }).Single();
-                              
 
-                    TimeSpan spWorkMin = TimeSpan.FromMinutes(aggregate.LatePerMinute);
-                    string LatePerHours = spWorkMin.ToString(@"hh\.mm");
+
+                    //TimeSpan spWorkMin = TimeSpan.FromMinutes(aggregate.LatePerMinute);
+                    //string LatePerHours = spWorkMin.ToString(@"hh\.mm\ss");
+                    var spWorkMin = TimeSpan.FromMinutes(aggregate.LatePerMinute);
+                    var LatePerHours = string.Format("{0}.{1}", (int)spWorkMin.TotalHours, spWorkMin.Minutes);
+
 
                     report.Add(new DtrCommon.Reports()
                     {
@@ -155,8 +156,8 @@ namespace DtrController
                         MonthYear = dtr.MonthYear,
                         LatePerMinute = aggregate.LatePerMinute,
                         LatePerHour = double.Parse(LatePerHours),
-                        TardinessFrequency = 0,
-                        TotalLeave = 0,
+                        TardinessFrequency = aggregate.TardinessFrequency,
+                        TotalLeave = aggregate.SickLeave + aggregate.VacationLeave + aggregate.EmergencyLeave,
                         SickLeave = aggregate.SickLeave,
                         VacationLeave = aggregate.VacationLeave,
                         EmergencyLeave = aggregate.EmergencyLeave,
@@ -173,10 +174,8 @@ namespace DtrController
 
             else if (category == "Per Year")
             {
-
-
                 var dtrYear = _context.Set<DtrModel.Entities.DailyTimeRecord>().Where(t => t.ResourceId == perPartnerName &&
-                                     t.MonthYear.Substring(t.MonthYear.Length - 4) == Year).ToList();
+                     t.MonthYear.Substring(t.MonthYear.Length - 4) == Year).ToList();
 
                 foreach (var dtr in dtrYear)
                 {
@@ -190,15 +189,13 @@ namespace DtrController
                           VacationLeave = (from y in timeInOut where y.TimeOffReason == "Vacation Leave" select y).Count(),
                           EmergencyLeave = (from y in timeInOut where y.TimeOffReason == "Emergency Leave" select y).Count(),
                           SickLeave = (from y in timeInOut where y.TimeOffReason == "Sick Leave" select y).Count(),
-                          ParentalLeave = (from y in timeInOut where y.TimeOffReason == "Maternity/Paternity Leave" select y).Count()
+                          ParentalLeave = (from y in timeInOut where y.TimeOffReason == "Maternity/Paternity Leave" select y).Count(),
+                          TardinessFrequency = (from y in timeInOut where y.LatePerMinute > 0 select y).Count()
                       }).Single();
+                                       
 
-
-                
-
-
-                    TimeSpan spWorkMin = TimeSpan.FromMinutes(aggregate.LatePerMinute);
-                    string LatePerHours = spWorkMin.ToString(@"hh\.mm");
+                    var spWorkMin = TimeSpan.FromMinutes(aggregate.LatePerMinute);
+                    var LatePerHours = string.Format("{0}.{1}", (int)spWorkMin.TotalHours, spWorkMin.Minutes);
 
                     report.Add(new DtrCommon.Reports()
                     {
@@ -206,17 +203,15 @@ namespace DtrController
                         MonthYear = dtr.MonthYear.Substring(dtr.MonthYear.Length - 4),
                         LatePerMinute = aggregate.LatePerMinute,
                         LatePerHour = double.Parse(LatePerHours),
-                        TardinessFrequency = 0,
-                        TotalLeave = 0,
+                        TardinessFrequency = aggregate.TardinessFrequency,
+                        TotalLeave = aggregate.SickLeave + aggregate.VacationLeave + aggregate.EmergencyLeave,
                         SickLeave = aggregate.SickLeave,
                         VacationLeave = aggregate.VacationLeave,
                         EmergencyLeave = aggregate.EmergencyLeave,
                         Halfday = 0,
                         ParentalLeave = aggregate.ParentalLeave
                     });
-
                 }
-
                 _view.ShowReportList(report);
             }
 
@@ -237,7 +232,6 @@ namespace DtrController
                 {
                     var timeInOut = _context.Set<DtrModel.Entities.TimeInOut>().Where(t => t.DailyTimeRecordRefId == dtr.Id).ToList();
 
-
                     var aggregate = timeInOut
                        .GroupBy(o => o.DailyTimeRecordRefId)
                        .Select(x => new
@@ -246,12 +240,12 @@ namespace DtrController
                            VacationLeave = (from y in timeInOut where y.TimeOffReason == "Vacation Leave" select y).Count(),
                            EmergencyLeave = (from y in timeInOut where y.TimeOffReason == "Emergency Leave" select y).Count(),
                            SickLeave = (from y in timeInOut where y.TimeOffReason == "Sick Leave" select y).Count(),
-                           ParentalLeave = (from y in timeInOut where y.TimeOffReason == "Maternity/Paternity Leave" select y).Count()
-
+                           ParentalLeave = (from y in timeInOut where y.TimeOffReason == "Maternity/Paternity Leave" select y).Count(),
+                           TardinessFrequency = (from y in timeInOut where y.LatePerMinute > 0 select y).Count()
                        }).Single();
 
-                    TimeSpan spWorkMin = TimeSpan.FromMinutes(aggregate.LatePerMinute);
-                    string LatePerHours = spWorkMin.ToString(@"hh\.mm");
+                    var spWorkMin = TimeSpan.FromMinutes(aggregate.LatePerMinute);
+                    var LatePerHours = string.Format("{0}.{1}", (int)spWorkMin.TotalHours, spWorkMin.Minutes);
 
                     report.Add(new DtrCommon.Reports()
                     {
@@ -259,15 +253,14 @@ namespace DtrController
                         MonthYear = dtr.MonthYear,
                         LatePerMinute = aggregate.LatePerMinute,
                         LatePerHour = double.Parse(LatePerHours),
-                        TardinessFrequency = 0,
-                        TotalLeave = 0,
+                        TardinessFrequency = aggregate.TardinessFrequency,
+                        TotalLeave = aggregate.SickLeave + aggregate.VacationLeave + aggregate.EmergencyLeave,
                         SickLeave = aggregate.SickLeave,
                         VacationLeave = aggregate.VacationLeave,
                         EmergencyLeave = aggregate.EmergencyLeave,
                         Halfday = 0,
                         ParentalLeave = aggregate.ParentalLeave
                     });
-
 
                 }
                 _view.ShowReportList(report);
@@ -283,44 +276,42 @@ namespace DtrController
                 {
 
                     var timeInOut = _context.Set<DtrModel.Entities.TimeInOut>().Where(t => t.DailyTimeRecordRefId == dtr.Id).ToList();
+                    
+                    var aggregate = timeInOut
+                       .GroupBy(o => o.DailyTimeRecordRefId)
+                       .Select(x => new
+                       {
+                           LatePerMinute = x.Sum(y => y.LatePerMinute),
+                           VacationLeave = (from y in timeInOut where y.TimeOffReason == "Vacation Leave" select y).Count(),
+                           EmergencyLeave = (from y in timeInOut where y.TimeOffReason == "Emergency Leave" select y).Count(),
+                           SickLeave = (from y in timeInOut where y.TimeOffReason == "Sick Leave" select y).Count(),
+                           ParentalLeave = (from y in timeInOut where y.TimeOffReason == "Maternity/Paternity Leave" select y).Count(),
+                           TardinessFrequency = (from y in timeInOut where y.LatePerMinute > 0 select y).Count()
 
-               
-                        var aggregate = timeInOut
-                           .GroupBy(o => o.DailyTimeRecordRefId)
-                           .Select(x => new
-                           {
-                               LatePerMinute = x.Sum(y => y.LatePerMinute),
-                               VacationLeave = (from y in timeInOut where y.TimeOffReason == "Vacation Leave" select y).Count(),
-                               EmergencyLeave = (from y in timeInOut where y.TimeOffReason == "Emergency Leave" select y).Count(),
-                               SickLeave = (from y in timeInOut where y.TimeOffReason == "Sick Leave" select y).Count(),
-                               ParentalLeave = (from y in timeInOut where y.TimeOffReason == "Maternity/Paternity Leave" select y).Count()
+                       }).Single();
 
-                           }).Single();
+                    var spWorkMin = TimeSpan.FromMinutes(aggregate.LatePerMinute);
+                    var LatePerHours = string.Format("{0}.{1}", (int)spWorkMin.TotalHours, spWorkMin.Minutes);
 
-                        TimeSpan spWorkMin = TimeSpan.FromMinutes(aggregate.LatePerMinute);
-                        string LatePerHours = spWorkMin.ToString(@"hh\.mm");
+                    report.Add(new DtrCommon.Reports()
+                    {
+                        PartnerName = dtr.ResourceId,
+                        MonthYear = dtr.MonthYear.Substring(dtr.MonthYear.Length - 4),
+                        LatePerMinute = aggregate.LatePerMinute,
+                        LatePerHour = double.Parse(LatePerHours),
+                        TardinessFrequency = aggregate.TardinessFrequency,
+                        TotalLeave = aggregate.SickLeave + aggregate.VacationLeave + aggregate.EmergencyLeave,
+                        SickLeave = aggregate.SickLeave,
+                        VacationLeave = aggregate.VacationLeave,
+                        EmergencyLeave = aggregate.EmergencyLeave,
+                        Halfday = 0,
+                        ParentalLeave = aggregate.ParentalLeave
+                    });
 
-                        report.Add(new DtrCommon.Reports()
-                        {
-                            PartnerName = dtr.ResourceId,
-                            MonthYear = dtr.MonthYear.Substring(dtr.MonthYear.Length - 4),
-                            LatePerMinute = aggregate.LatePerMinute,
-                            LatePerHour = double.Parse(LatePerHours),
-                            TardinessFrequency = 0,
-                            TotalLeave = 0,
-                            SickLeave = aggregate.SickLeave,
-                            VacationLeave = aggregate.VacationLeave,
-                            EmergencyLeave = aggregate.EmergencyLeave,
-                            Halfday = 0,
-                            ParentalLeave = aggregate.ParentalLeave
-                        });
-
-            
                 }
                 _view.ShowReportList(report);
 
             }
-
 
         }
 
@@ -361,7 +352,6 @@ namespace DtrController
             DateTime _holiday = DateTime.Parse(holidayDate);
 
             bool holidayExists = _context.Set<DtrModel.Entities.Holiday>().Count(t => t.HolidayDate == _holiday) > 0;
-
 
             _view.GetExistingRecord(holidayExists, null);
         }
@@ -570,8 +560,10 @@ namespace DtrController
 
         private void _view_SaveDtrInfoEvent(string resourceId)
         {
+
             if (resourceId.Equals("ALL"))
             { }
+
             else
             {
                 DtrInfo dtrinfo = _context.Set<DtrInfo>()
@@ -590,7 +582,8 @@ namespace DtrController
                         Client = inOut.Client,
                         TimeOffReason = inOut.TimeOffReason,
                         BillableWorkHours = inOut.BillableWorkHours,
-                        Notes = inOut.Notes
+                        Notes = inOut.Notes,
+                        LatePerMinute = inOut.LatePerMinute
                     });
                 }
 

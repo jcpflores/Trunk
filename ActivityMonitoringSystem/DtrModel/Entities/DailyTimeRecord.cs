@@ -20,7 +20,7 @@ namespace DtrModel.Entities
         public string ContractRef { get; set; }
         public string Project { get; set; }
         public string WorkLocationDefault { get; set; }
-        public DateTime TimeInScheduleDefault { get; set; }
+        public string TimeInScheduleDefault { get; set; }
         public string TechnicalRole { get; set; }
         public string Technology { get; set; }
         public string SkillLevel { get; set; }

@@ -17,7 +17,7 @@ namespace AttendanceApp
     {
         public ReportsForm()
         {
-            InitializeComponent();         
+            InitializeComponent();
         }
 
         #region IView
@@ -37,7 +37,7 @@ namespace AttendanceApp
         public event GetClientListEventHandler GetClientListEvent;
         public event GetExistingHolidayEventHandler GetExistingHolidayEvent;
         public event GetReportsEventHandler GetReportsEvent;
-           
+
         public void ShowDtrInfo(DtrInfo info)
         { }
         public void ShowFiles(ICollection<string> discoveredFiles)
@@ -58,10 +58,10 @@ namespace AttendanceApp
         { }
 
         public void ShowEmployeeList(ICollection<DtrCommon.Employee> employee)
-        {        }
+        { }
 
         public void ShowClientList(ICollection<DtrCommon.Client> client)
-        {   
+        {
         }
 
         public void GetExistingRecord(bool existRecord, string holidayDate)
@@ -71,12 +71,12 @@ namespace AttendanceApp
         {
             dgvReports.DataSource = null;
 
-            dgvReports.DataSource = reports
-                .GroupBy(o => o.PartnerName)            
+            var result = reports
+                .GroupBy(o => o.PartnerName)
                 .Select(x => new
                 {
                     PartnerName = x.First().PartnerName,
-                    MonthYear = x.First().MonthYear,                    
+                    MonthYear = x.First().MonthYear,
                     LatePerMinute = x.Sum(y => y.LatePerMinute),
                     LatePerHour = x.Sum(y => y.LatePerHour),
                     TardinessFrequency = x.Sum(y => y.TardinessFrequency),
@@ -87,15 +87,38 @@ namespace AttendanceApp
                     Halfday = x.Sum(y => y.Halfday),
                     MaternityPaternity = x.Sum(y => y.ParentalLeave),
                 }).ToList();
-            //dgvReports.DataSource = reports;
 
+            if (result.Count > 0)
+            {
+                dgvReports.DataSource = result;
+            }
+            else
+            {
+                MessageBox.Show("No records found!","Reports",MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+           
         }
 
         #endregion
+
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            GetReportsEvent?.Invoke(cmbCategory.Text ,txtPartnerName.Text,cmbMonth.Text,cmbYear.Text);
+            GetReportsEvent?.Invoke(cmbCategory.Text, txtPartnerName.Text, cmbMonth.Text, cmbYear.Text);
         }
 
+        private void cmbCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            if (cmbCategory.Text == "Per Month")
+            {
+                cmbMonth.Enabled = true;
+                cmbYear.Enabled = true;
+            }
+            else if (cmbCategory.Text == "Per Year")
+            {
+                cmbMonth.Enabled = false;
+                cmbYear.Enabled = true;
+            }
+        }
     }
 }

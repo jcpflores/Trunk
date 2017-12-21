@@ -21,7 +21,7 @@ namespace DtrController.Tools.DtrFileReader
         public event DoneParsingFilesEventHandler DoneParsingFilesEvent;
         public event GetExcelFilesProgressEventHandler GetExcelFilesProgressEvent;
         public event GetExcelErrorFileEventHandler GetExcelErrorFileEvent;
-        
+
 
         public void ReadDtrFileFromFolder(ICollection<string> filesToProcess)
         {
@@ -49,11 +49,29 @@ namespace DtrController.Tools.DtrFileReader
             get { return _dtrList; }
         }
 
-        
+
+        private string Flexi(string timeInDefault)
+        {
+            if (timeInDefault == "Flexi")
+            {
+                return "Flexi";
+            }
+
+            else if (timeInDefault == "")
+            {
+                return "";
+            }
+
+            else
+            {
+                return DateTime.FromOADate(double.Parse(timeInDefault)).ToString();
+            }
+        }
+
 
         public DtrCommon.DtrInfo ReadExcelFileEmployeeDetail(string FolderPath)
         {
-           
+
             Excel.Application xlsApp = new Excel.Application();
             Excel.Workbook xlsWorkBk = xlsApp.Workbooks.Open(FolderPath);
             //xlsWorkBk.Date1904 = true;
@@ -65,20 +83,23 @@ namespace DtrController.Tools.DtrFileReader
 
             try
             {
-                
+
+
                 dtrModel = new DtrCommon.DtrInfo()
                 {
-                    ResourceId = xlsRange.Cells[5, 3].Value.ToString(),
-                    ProcessRole = xlsRange.Cells[6, 3].Value.ToString(),
-                    TechnicalRole = xlsRange.Cells[7, 3].Value.ToString(),
-                    Technology = xlsRange.Cells[8, 3].Value.ToString(),
-                    SkillLevel = xlsRange.Cells[5, 6].Value.ToString(),
-                    ClientName = xlsRange.Cells[6, 6].Value.ToString(),
-                    ContractRef = xlsRange.Cells[7, 6].Value.ToString(),
-                    Project = xlsRange.Cells[8, 6].Value.ToString(),
-                    WorkLocationDefault = xlsRange.Cells[5, 9].Value.ToString(),
-                    MonthYear = ((string)xlsRange.Cells[12, 2].Value.ToString("y")).Replace(" ",""),
-                    TimeInScheduleDefault = DateTime.FromOADate(xlsRange.Cells[6, 9].Value == null ? 0 : double.Parse(xlsRange.Cells[6, 9].Value.ToString())),
+                    ResourceId = xlsRange.Cells[5, 3].Value == null ? "" : xlsRange.Cells[5, 3].Value.ToString(),
+                    ProcessRole = xlsRange.Cells[6, 3].Value == null ? "" : xlsRange.Cells[6, 3].Value.ToString(),
+                    TechnicalRole = xlsRange.Cells[7, 3].Value == null ? "" : xlsRange.Cells[7, 3].Value.ToString(),
+                    Technology = xlsRange.Cells[8, 3].Value == null ? "" : xlsRange.Cells[8, 3].Value.ToString(),
+                    SkillLevel = xlsRange.Cells[5, 6].Value == null ? "" : xlsRange.Cells[5, 6].Value.ToString(),
+                    ClientName = xlsRange.Cells[6, 6].Value == null ? "" : xlsRange.Cells[6, 6].Value.ToString(),
+                    ContractRef = xlsRange.Cells[7, 6].Value == null ? "" : xlsRange.Cells[7, 6].Value.ToString(),
+                    Project = xlsRange.Cells[8, 6].Value == null ? "" : xlsRange.Cells[8, 6].Value.ToString(),
+                    WorkLocationDefault = xlsRange.Cells[5, 9].Value == null ? "" : xlsRange.Cells[5, 9].Value.ToString(),
+                    MonthYear = ((string)xlsRange.Cells[12, 2].Value.ToString("y")).Replace(" ", ""),
+                    // TimeInScheduleDefault = DateTime.FromOADate(xlsRange.Cells[6, 9].Value == null ? 0 : double.Parse(xlsRange.Cells[6, 9].Value.ToString())),
+                    TimeInScheduleDefault = Flexi(xlsRange.Cells[6, 9].Value == null ? "" : xlsRange.Cells[6, 9].Value.ToString()),
+
 
                     DtrInOut = new List<DtrCommon.DtrInOut> { }
 
@@ -96,32 +117,47 @@ namespace DtrController.Tools.DtrFileReader
                     tempInOut = new DtrCommon.DtrInOut();
 
                     // Date In/Out and Time In/Out
-                    
+
                     DateTime TimeIn = DateTime.FromOADate(xlsRange.Cells[i, 3].Value == null ? 0 : double.Parse(xlsRange.Cells[i, 3].Value.ToString()));
                     DateTime TimeOut = DateTime.FromOADate(xlsRange.Cells[i, 5].Value == null ? 0 : double.Parse(xlsRange.Cells[i, 5].Value.ToString()));
-                    
+
                     tempInOut.DateTimeIn = xlsRange.Cells[i, 2].Value.ToString("d") + " " + String.Format("{0:T}", TimeIn);
                     tempInOut.DateTimeOut = xlsRange.Cells[i, 4].Value.ToString("d") + " " + String.Format("{0:T}", TimeOut);
 
-                    tempInOut.WorkHours = xlsRange.Cells[i, 6].Value == null ? 0 : String.Format("{0:0.00}", xlsRange.Cells[i, 6].Value);
+                    tempInOut.WorkHours = xlsRange.Cells[i, 6].Value == null ? "" : String.Format("{0:0.00}", xlsRange.Cells[i, 6].Value);
 
                     tempInOut.TimeOffReason = xlsRange.Cells[i, 7].Value == null ? "" : xlsRange.Cells[i, 7].Value.ToString();
-                    tempInOut.BillableWorkHours = xlsRange.Cells[i, 8].Value == null ? 0 : xlsRange.Cells[i, 8].Value.ToString();
+
+                    tempInOut.BillableWorkHours = xlsRange.Cells[i, 8].Value == null ? "" : String.Format("{0:0.00}", xlsRange.Cells[i, 8].Value);
+
                     tempInOut.Notes = xlsRange.Cells[i, 9].Value == null ? "" : xlsRange.Cells[i, 9].Value.ToString();
                     tempInOut.WorkLocation = xlsRange.Cells[i, 10].Value == null ? "" : xlsRange.Cells[i, 10].Value.ToString();
                     tempInOut.Client = xlsRange.Cells[i, 16].Value == null ? "" : xlsRange.Cells[i, 16].Value.ToString();
 
-                    DateTime TimeInSchedule = DateTime.FromOADate(xlsRange.Cells[i, 11].Value == null ? 0 : double.Parse(xlsRange.Cells[i, 11].Value.ToString()));
-                  
-                   tempInOut.LatePerMinute =  ComputationLate(TimeInSchedule, TimeIn);
-                   
+                    //  DateTime TimeInSchedule = DateTime.FromOADate(xlsRange.Cells[i, 11].Value == null ? 0 : double.Parse(xlsRange.Cells[i, 11].Value.ToString()));
+
+                    tempInOut.TimeInSchedule = Flexi(xlsRange.Cells[i, 11].Value == null ? "" : xlsRange.Cells[i, 11].Value.ToString());
+
+                    if (tempInOut.TimeInSchedule == "Flexi")
+                    {
+                        tempInOut.LatePerMinute = 0;
+
+                    }
+
+                    else
+                    {
+                        tempInOut.LatePerMinute = ComputationLate(DateTime.Parse(tempInOut.TimeInSchedule), TimeIn);
+                        tempInOut.TimeInSchedule = DateTime.Parse(tempInOut.TimeInSchedule).ToString("HH:mm tt");
+                    }
+
+
 
                     //Add to Collection
                     dtrModel.DtrInOut.Add(tempInOut);
 
                     count += 1;
                 }
-                
+
             }
 
             catch
@@ -133,31 +169,35 @@ namespace DtrController.Tools.DtrFileReader
 
             finally
             {
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(xlsWorkSht);
                 xlsWorkBk.Close(false);
+                xlsApp.Application.Quit();
                 xlsApp.Quit();
-                xlsWorkBk = null;
                 xlsApp = null;
+                xlsWorkBk = null;
+                xlsRange = null;
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(xlsWorkSht);
             }
             return dtrModel;
 
         }
 
-        private int ComputationLate(DateTime TimeInSchedule , DateTime TimeIn)
-        {            
-            TimeSpan Late;
+        private int ComputationLate(DateTime TimeInSchedule, DateTime TimeIn)
+        {
+            //default to 0 minutes late
+            TimeSpan Late = new TimeSpan(0,0,0,0,0);
 
             if (TimeIn.ToString() != "12/30/1899 12:00:00 AM")
-            {
-                Late = TimeInSchedule - TimeIn;
-            }
-            else
-            {
-                Late = TimeIn - TimeIn; //default to 0 minutes
-            }
+            {               
+                int result = DateTime.Compare(TimeInSchedule, TimeIn);
 
+                if (result < 0)
+                {
+                    Late = TimeInSchedule.Subtract(TimeIn);                    
+                }               
+            }
+           
             return Math.Abs(Convert.ToInt32(Late.TotalMinutes));
         }
 
@@ -172,7 +212,7 @@ namespace DtrController.Tools.DtrFileReader
             return excelErrorList;
         }
 
-      
+
 
 
 
