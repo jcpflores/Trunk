@@ -135,6 +135,7 @@
             this.btnExport.TabIndex = 12;
             this.btnExport.Text = "Export";
             this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // panel1
             // 

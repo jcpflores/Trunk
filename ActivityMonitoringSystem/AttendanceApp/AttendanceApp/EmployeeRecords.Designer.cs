@@ -29,10 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmployeeRecords));
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.dgvEmployeeList = new System.Windows.Forms.DataGridView();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtSearchbox = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.btnSearch = new System.Windows.Forms.Button();
@@ -75,58 +71,7 @@
             this.txtContract = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvEmployeeList)).BeginInit();
             this.SuspendLayout();
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(669, 23);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(567, 513);
-            this.tabControl1.TabIndex = 36;
-            this.tabControl1.Visible = false;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.dgvEmployeeList);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(559, 487);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Employee List";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // dgvEmployeeList
-            // 
-            this.dgvEmployeeList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvEmployeeList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvEmployeeList.Location = new System.Drawing.Point(33, 69);
-            this.dgvEmployeeList.Name = "dgvEmployeeList";
-            this.dgvEmployeeList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvEmployeeList.Size = new System.Drawing.Size(247, 226);
-            this.dgvEmployeeList.TabIndex = 0;
-            this.dgvEmployeeList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmployeeList_CellContentClick);
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(559, 487);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Employee Details";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // txtSearchbox
             // 
@@ -240,7 +185,7 @@
             this.txtEmail.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtEmail.Location = new System.Drawing.Point(404, 117);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(199, 26);
+            this.txtEmail.Size = new System.Drawing.Size(285, 26);
             this.txtEmail.TabIndex = 70;
             // 
             // label13
@@ -582,7 +527,6 @@
             this.Controls.Add(this.label18);
             this.Controls.Add(this.cmbClient);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.rbFemale);
             this.Controls.Add(this.btnAdd);
@@ -622,19 +566,12 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "EmployeeRecords";
             this.Text = "Employee Record";
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvEmployeeList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label17;
@@ -666,7 +603,6 @@
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.DataGridView dgvEmployeeList;
         private System.Windows.Forms.TextBox txtSearchbox;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Button btnSearch;

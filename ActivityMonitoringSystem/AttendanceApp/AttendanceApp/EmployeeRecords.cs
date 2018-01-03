@@ -49,20 +49,20 @@ namespace AttendanceApp
             //var emp = _context.Set<DtrModel.Entities.Employee>()
             //    .Select(x => new { x.EmpNo, x.Initial, x.Name });
             _employeeList = employee;
-            dgvEmployeeList.DataSource = employee.Select(x => new
-            {
-                x.EmpNo,
-                x.Initial,
-                x.Name,
-                x.Email,
-                x.Technology,
-                x.ProcessRole,
-                x.TecnicalRole
-            }).ToList();
+            //dgvEmployeeList.DataSource = employee.Select(x => new
+            //{
+            //    x.EmpNo,
+            //    x.Initial,
+            //    x.Name,
+            //    x.Email,
+            //    x.Technology,
+            //    x.ProcessRole,
+            //    x.TecnicalRole
+            //}).ToList();
 
-            dgvEmployeeList.Columns["Name"].Width = 250;
-            dgvEmployeeList.Columns["ProcessRole"].Width = 120;
-            dgvEmployeeList.Columns["Email"].Width = 200;
+            //dgvEmployeeList.Columns["Name"].Width = 250;
+            //dgvEmployeeList.Columns["ProcessRole"].Width = 120;
+            //dgvEmployeeList.Columns["Email"].Width = 200;
 
 
         }
@@ -116,7 +116,8 @@ namespace AttendanceApp
             this.txtMaternity.Text =
             this.txtPaternity.Text =
             this.txtSL.Text =
-            this.txtVL.Text = string.Empty;
+            this.txtVL.Text =
+            this.txtEmail.Text = string.Empty;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -182,31 +183,31 @@ namespace AttendanceApp
         }
 
 
-        private void dgvEmployeeList_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            tabControl1.SelectedIndex = 1;
+    //    private void dgvEmployeeList_CellContentClick(object sender, DataGridViewCellEventArgs e)
+     //   {
+            
 
-            var _empNo = dgvEmployeeList[0, e.RowIndex].Value.ToString();
+            ////var _empNo = dgvEmployeeList[0, e.RowIndex].Value.ToString();
 
-            var _empList = _employeeList.Where(x => x.EmpNo == _empNo).First();
+            //var _empList = _employeeList.Where(x => x.EmpNo == _empNo).First();
 
-            txtEmployeeNo.Text = _empList.EmpNo;
-            txtName.Text = _empList.Name;
-            txtResourceId.Text = _empList.Initial;
-            cmbProcessRole.Text = _empList.ProcessRole;
-            cmbTechnicalRole.Text = _empList.TecnicalRole;
-            cmbTechnology.Text = _empList.Technology;
-            txtSkillLevel.Text = _empList.SkillLevel;
-            cmbClient.Text = _empList.Client;
-            txtContract.Text = _empList.Contract;
-            txtProject.Text = _empList.Project;
-            cmbWorkLocation.Text = _empList.WorkLocation;
-            txtEmail.Text = _empList.Email;
-            if (_empList.Gender)
-            { rbMale.Checked = _empList.Gender; }
-            else
-            { rbFemale.Checked = true; }
-        }
+            //txtEmployeeNo.Text = _empList.EmpNo;
+            //txtName.Text = _empList.Name;
+            //txtResourceId.Text = _empList.Initial;
+            //cmbProcessRole.Text = _empList.ProcessRole;
+            //cmbTechnicalRole.Text = _empList.TecnicalRole;
+            //cmbTechnology.Text = _empList.Technology;
+            //txtSkillLevel.Text = _empList.SkillLevel;
+            //cmbClient.Text = _empList.Client;
+            //txtContract.Text = _empList.Contract;
+            //txtProject.Text = _empList.Project;
+            //cmbWorkLocation.Text = _empList.WorkLocation;
+            //txtEmail.Text = _empList.Email;
+            //if (_empList.Gender)
+            //{ rbMale.Checked = _empList.Gender; }
+            //else
+            //{ rbFemale.Checked = true; }
+       // }
 
 
 

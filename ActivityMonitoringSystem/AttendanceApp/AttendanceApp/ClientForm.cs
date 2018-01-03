@@ -76,16 +76,16 @@ namespace AttendanceApp
 
         public void ShowClientList(ICollection<DtrCommon.Client> client)
         {
-            dgvClientList.DataSource = client.Select(x => new
-            {
-                x.ClientName,
-                x.Contract,
-                x.TimeIn,
-                x.TimeOut,
-                x.Flexi
-            }).ToList();
+            //dgvClientList.DataSource = client.Select(x => new
+            //{
+            //    x.ClientName,
+            //    x.Contract,
+            //    x.TimeIn,
+            //    x.TimeOut,
+            //    x.Flexi
+            //}).ToList();
 
-            _clientList = client;
+          _clientList = client;
         }
 
         public void GetExistingRecord(bool existRecord, string holidayDate)
@@ -110,31 +110,31 @@ namespace AttendanceApp
             GetClientListEvent?.Invoke(null);
         }
 
-        private void dgvClientList_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            tabControl1.SelectedIndex = 1;
+        //private void dgvClientList_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    //tabControl1.SelectedIndex = 1;
 
-            var _clientName = dgvClientList[0, e.RowIndex].Value.ToString();
+        //   // var _clientName = dgvClientList[0, e.RowIndex].Value.ToString();
 
-            //dgvClientList.DataSource = _clientList.Where(c => c.ClientName == _clientName).First();
+        //    //dgvClientList.DataSource = _clientList.Where(c => c.ClientName == _clientName).First();
 
-            dgvEmployee.DataSource =  _employeeList.Where(x => x.Client == _clientName).ToList();
+        //    dgvEmployee.DataSource =  _employeeList.Where(x => x.Client == _clientName).ToList();
 
-            DataGridViewRow row = this.dgvClientList.Rows[e.RowIndex];
+        //    DataGridViewRow row = this.dgvClientList.Rows[e.RowIndex];
            
-            txtClientName.Text = dgvClientList[0, e.RowIndex].Value.ToString();
-            txtContract.Text = dgvClientList[1, e.RowIndex].Value.ToString();
-            dtpTimeIn.Value = Convert.ToDateTime(dgvClientList[2, e.RowIndex].Value.ToString());
-            dtpTimeOut.Value = Convert.ToDateTime(dgvClientList[3, e.RowIndex].Value.ToString());
-            chkFlexi.Checked = Convert.ToBoolean(dgvClientList[4, e.RowIndex].Value);
-        }
+        //    txtClientName.Text = dgvClientList[0, e.RowIndex].Value.ToString();
+        //    txtContract.Text = dgvClientList[1, e.RowIndex].Value.ToString();
+        //    dtpTimeIn.Value = Convert.ToDateTime(dgvClientList[2, e.RowIndex].Value.ToString());
+        //    dtpTimeOut.Value = Convert.ToDateTime(dgvClientList[3, e.RowIndex].Value.ToString());
+        //    chkFlexi.Checked = Convert.ToBoolean(dgvClientList[4, e.RowIndex].Value);
+        //}
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
             try
             {
                 //var myEmployee = _employeeList.Where(x => x.Initial.ToLower() == (txtSearchbox.Text.ToLower())).Single();
-                    
+
                 var myClient = _clientList.Where(x => x.ClientName.ToLower() == (txtSearchbox.Text.ToLower())).Single();
 
                 txtClientName.Text = myClient.ClientName;
@@ -149,7 +149,7 @@ namespace AttendanceApp
                     x.Initial                  
                 }).ToList();
 
-            }
+        }
 
             catch { }          
         }

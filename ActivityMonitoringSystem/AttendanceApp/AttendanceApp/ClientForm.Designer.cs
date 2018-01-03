@@ -29,10 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientForm));
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.dgvClientList = new System.Windows.Forms.DataGridView();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dgvEmployee = new System.Windows.Forms.DataGridView();
             this.txtSearchbox = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
@@ -52,60 +48,9 @@
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvClientList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployee)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(590, 152);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(873, 480);
-            this.tabControl1.TabIndex = 0;
-            this.tabControl1.Visible = false;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.dgvClientList);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(865, 454);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Client List";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // dgvClientList
-            // 
-            this.dgvClientList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvClientList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvClientList.Location = new System.Drawing.Point(24, 86);
-            this.dgvClientList.Name = "dgvClientList";
-            this.dgvClientList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvClientList.Size = new System.Drawing.Size(537, 166);
-            this.dgvClientList.TabIndex = 4;
-            this.dgvClientList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvClientList_CellContentClick);
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(865, 454);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Client Details";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // dgvEmployee
             // 
@@ -304,7 +249,6 @@
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.txtSearchbox);
             this.Controls.Add(this.btnAdd);
-            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
@@ -316,9 +260,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ClientForm";
             this.Text = "Client Form";
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvClientList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployee)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -328,14 +269,9 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TextBox txtSearchbox;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.DataGridView dgvClientList;
         private System.Windows.Forms.TextBox txtClientName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;

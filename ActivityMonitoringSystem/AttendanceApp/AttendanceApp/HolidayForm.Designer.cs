@@ -29,11 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HolidayForm));
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dgvHolidayList = new System.Windows.Forms.DataGridView();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
@@ -43,63 +38,8 @@
             this.txtHolidayName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHolidayList)).BeginInit();
             this.SuspendLayout();
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(415, 334);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(864, 474);
-            this.tabControl1.TabIndex = 0;
-            this.tabControl1.Visible = false;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.btnCancel);
-            this.tabPage1.Controls.Add(this.panel1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(856, 448);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Holiday";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.BackColor = System.Drawing.Color.Transparent;
-            this.btnCancel.Location = new System.Drawing.Point(39, 31);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(82, 44);
-            this.btnCancel.TabIndex = 72;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Visible = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.Location = new System.Drawing.Point(134, 65);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(521, 383);
-            this.panel1.TabIndex = 73;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(856, 448);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Logs";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // dgvHolidayList
             // 
@@ -200,7 +140,6 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.dgvHolidayList);
             this.Controls.Add(this.btnAdd);
-            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.dtpHoliday);
             this.Controls.Add(this.btnEdit);
@@ -210,8 +149,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "HolidayForm";
             this.Text = "Maintenance Form";
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvHolidayList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -219,10 +156,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.DateTimePicker dtpHoliday;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtHolidayName;
@@ -231,8 +164,6 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label6;
     }
 }

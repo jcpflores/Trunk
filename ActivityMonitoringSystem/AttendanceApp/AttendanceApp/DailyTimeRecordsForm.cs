@@ -74,7 +74,7 @@ namespace AttendanceApp
             this.dataGridView1.Columns[0].Visible = false;
             this.dataGridView1.Columns["DtrInfoRefId"].Visible = false;
             this.dataGridView1.Columns["DtrInfo"].Visible = false;
-        //    this.dataGridView1.Columns["LatePerMinute"].Visible = false;
+            this.dataGridView1.Columns["LatePerMinute"].Visible = false;
             
 
             _editbutton = new DataGridViewImageColumn();
