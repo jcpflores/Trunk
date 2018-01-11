@@ -24,6 +24,8 @@ namespace DtrModel.Entities
         
         public string Initial { get; set; }     
 
+        public string ResourceId { get; set; }
+
 
         public string Email { get; set; }
 

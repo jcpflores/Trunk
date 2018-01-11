@@ -75,7 +75,8 @@ namespace AttendanceApp
             this.dataGridView1.Columns["DtrInfoRefId"].Visible = false;
             this.dataGridView1.Columns["DtrInfo"].Visible = false;
             this.dataGridView1.Columns["LatePerMinute"].Visible = false;
-            
+            this.dataGridView1.Columns["Halfday"].Visible = false;
+
 
             _editbutton = new DataGridViewImageColumn();
             _editbutton.Image = AttendanceApp.Properties.Resources.saveicon;
@@ -116,23 +117,25 @@ namespace AttendanceApp
 
             string TimeInSchedule = Convert.ToDateTime(this.dataGridView1[1, e.RowIndex].Value).ToString("MM/dd/yyyy ") + this.dataGridView1[8, e.RowIndex].Value.ToString();
             this.dataGridView1.Rows[e.RowIndex].Cells[10].Value = LatePerMinuteComputation(Convert.ToDateTime(TimeInSchedule), Convert.ToDateTime(this.dataGridView1[1, e.RowIndex].Value));
+            //this.dataGridView1.Rows[e.RowIndex].Cells[11].Value = HalfdayComputation(this.dataGridView1[3, e.RowIndex].Value.ToString(), Convert.ToDateTime(this.dataGridView1[1, e.RowIndex].Value));
         }
 
         private int LatePerMinuteComputation(DateTime TimeInSchedule, DateTime TimeIn)
         {
-        
             TimeSpan Late = new TimeSpan(0, 0, 0, 0, 0);
-                        
-                int result = DateTime.Compare(TimeInSchedule, TimeIn);
 
-                if (result < 0)
-                {
-                    Late = TimeInSchedule.Subtract(TimeIn);                   
-                }
-            
+            int result = DateTime.Compare(TimeInSchedule, TimeIn);
 
+            if (result < 0)
+            {
+                Late = TimeInSchedule.Subtract(TimeIn);
+            }
             return Math.Abs(Convert.ToInt32(Late.TotalMinutes));
         }
+
+    
+
+
 
         private void InitInfoView()
         {
@@ -252,7 +255,7 @@ namespace AttendanceApp
 
         public void ShowMessage(string message)
         { }
-   
+
         public void GetExistingRecord(bool existRecord, string holidayDate)
         { }
 
@@ -286,8 +289,8 @@ namespace AttendanceApp
         private void btnSaveCurrToDb_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Are you sure you want save to the current DTR to the database?", "ATTENTION", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                SaveDtrInfoEvent?.Invoke(this.lblId.Text);
+            {                
+                    SaveDtrInfoEvent?.Invoke(this.lblId.Text, this.lblMonthYear.Text);               
             }
         }
 
@@ -297,9 +300,8 @@ namespace AttendanceApp
             {
                 foreach (var Resource in _processedResource)
                 {
-                    SaveDtrInfoEvent?.Invoke(Resource.ResourceId);
+                    SaveDtrInfoEvent?.Invoke(Resource.ResourceId, Resource.MonthYear);
                 }
-               
             }
         }
 

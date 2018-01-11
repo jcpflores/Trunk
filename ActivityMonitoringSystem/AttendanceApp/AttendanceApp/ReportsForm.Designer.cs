@@ -51,7 +51,7 @@
             this.dgvReports.Location = new System.Drawing.Point(19, 107);
             this.dgvReports.Name = "dgvReports";
             this.dgvReports.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvReports.Size = new System.Drawing.Size(569, 119);
+            this.dgvReports.Size = new System.Drawing.Size(612, 119);
             this.dgvReports.TabIndex = 5;
             // 
             // label1
@@ -152,7 +152,7 @@
             this.panel1.Controls.Add(this.txtPartnerName);
             this.panel1.Location = new System.Drawing.Point(12, 47);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(612, 247);
+            this.panel1.Size = new System.Drawing.Size(658, 247);
             this.panel1.TabIndex = 13;
             // 
             // label19

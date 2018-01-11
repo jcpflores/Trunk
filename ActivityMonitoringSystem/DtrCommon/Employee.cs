@@ -20,6 +20,7 @@ namespace DtrCommon
 
         public string Initial { get; set; }
 
+        public string ResourceId { get; set; }
 
         public string EmpNo { get; set; }
 

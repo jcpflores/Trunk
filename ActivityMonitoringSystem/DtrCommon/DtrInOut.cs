@@ -22,6 +22,7 @@ namespace DtrCommon
         [MaxLength(255)]
         public string Notes { get; set; }
         public int LatePerMinute { get; set; }
+        public int Halfday { get; set;  }
 
 
         [ForeignKey("DtrInfo")]

@@ -103,11 +103,12 @@ namespace AttendanceApp
         public void InitInfoDetails()
         {
             this.txtEmployeeNo.Text =
+            this.txtResourceId.Text = 
+            this.txtInitial.Text =
             this.cmbClient.Text =
             this.txtContract.Text =
             this.txtName.Text =
-            this.txtProject.Text =
-            this.txtResourceId.Text =
+            this.txtProject.Text =          
             this.txtSkillLevel.Text =
             this.cmbProcessRole.Text =
             this.cmbTechnicalRole.Text =
@@ -128,7 +129,8 @@ namespace AttendanceApp
             _employeeRecord = new DtrCommon.Employee()
             {
                 EmpNo = txtEmployeeNo.Text,
-                Initial = txtResourceId.Text,
+                ResourceId = txtResourceId.Text,
+                Initial = txtInitial.Text,
                 Name = txtName.Text,
                 ProcessRole = cmbProcessRole.Text,
                 TecnicalRole = cmbTechnicalRole.Text,
@@ -154,12 +156,13 @@ namespace AttendanceApp
             InitInfoDetails();
             try
             {
-                
+
                 var myEmployee = _employeeList.Where(x => x.Initial.ToLower() == (txtSearchbox.Text.ToLower())).Single();
 
                 txtEmployeeNo.Text = myEmployee.EmpNo;
                 txtName.Text = myEmployee.Name;
-                txtResourceId.Text = myEmployee.Initial;
+                txtResourceId.Text = myEmployee.ResourceId;
+                txtInitial.Text = myEmployee.Initial;
                 cmbProcessRole.Text = myEmployee.ProcessRole;
                 cmbTechnicalRole.Text = myEmployee.TecnicalRole;
                 cmbTechnology.Text = myEmployee.Technology;
@@ -174,7 +177,7 @@ namespace AttendanceApp
                 else
                 { rbFemale.Checked = true; }
             }
-            
+
             catch
             {
 
@@ -183,31 +186,31 @@ namespace AttendanceApp
         }
 
 
-    //    private void dgvEmployeeList_CellContentClick(object sender, DataGridViewCellEventArgs e)
-     //   {
-            
+        //    private void dgvEmployeeList_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        //   {
 
-            ////var _empNo = dgvEmployeeList[0, e.RowIndex].Value.ToString();
 
-            //var _empList = _employeeList.Where(x => x.EmpNo == _empNo).First();
+        ////var _empNo = dgvEmployeeList[0, e.RowIndex].Value.ToString();
 
-            //txtEmployeeNo.Text = _empList.EmpNo;
-            //txtName.Text = _empList.Name;
-            //txtResourceId.Text = _empList.Initial;
-            //cmbProcessRole.Text = _empList.ProcessRole;
-            //cmbTechnicalRole.Text = _empList.TecnicalRole;
-            //cmbTechnology.Text = _empList.Technology;
-            //txtSkillLevel.Text = _empList.SkillLevel;
-            //cmbClient.Text = _empList.Client;
-            //txtContract.Text = _empList.Contract;
-            //txtProject.Text = _empList.Project;
-            //cmbWorkLocation.Text = _empList.WorkLocation;
-            //txtEmail.Text = _empList.Email;
-            //if (_empList.Gender)
-            //{ rbMale.Checked = _empList.Gender; }
-            //else
-            //{ rbFemale.Checked = true; }
-       // }
+        //var _empList = _employeeList.Where(x => x.EmpNo == _empNo).First();
+
+        //txtEmployeeNo.Text = _empList.EmpNo;
+        //txtName.Text = _empList.Name;
+        //txtResourceId.Text = _empList.Initial;
+        //cmbProcessRole.Text = _empList.ProcessRole;
+        //cmbTechnicalRole.Text = _empList.TecnicalRole;
+        //cmbTechnology.Text = _empList.Technology;
+        //txtSkillLevel.Text = _empList.SkillLevel;
+        //cmbClient.Text = _empList.Client;
+        //txtContract.Text = _empList.Contract;
+        //txtProject.Text = _empList.Project;
+        //cmbWorkLocation.Text = _empList.WorkLocation;
+        //txtEmail.Text = _empList.Email;
+        //if (_empList.Gender)
+        //{ rbMale.Checked = _empList.Gender; }
+        //else
+        //{ rbFemale.Checked = true; }
+        // }
 
 
 
@@ -216,6 +219,7 @@ namespace AttendanceApp
             txtEmployeeNo.Enabled =
             txtName.Enabled =
             txtResourceId.Enabled =
+            txtInitial.Enabled = 
             cmbProcessRole.Enabled =
             cmbTechnicalRole.Enabled =
             cmbTechnology.Enabled =

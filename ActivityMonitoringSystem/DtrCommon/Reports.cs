@@ -9,6 +9,7 @@ namespace DtrCommon
     public class Reports
     {
         public string PartnerName { get; set; }
+        public string Initial { get; set; }
         public string MonthYear { get; set; }
         public double LatePerMinute { get; set; }
         public double LatePerHour { get; set; }

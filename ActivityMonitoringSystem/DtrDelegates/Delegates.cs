@@ -11,7 +11,7 @@ namespace DtrDelegates
 
     public delegate void GetDtrDetailsEventHandler(string resourceId);
 
-    public delegate void SaveDtrInfoEventHandler(string resourceId);
+    public delegate void SaveDtrInfoEventHandler(string resourceId, string monthYear);
 
     public delegate void EditDtrInOutEventHandler(DtrInOut inOut);
 
