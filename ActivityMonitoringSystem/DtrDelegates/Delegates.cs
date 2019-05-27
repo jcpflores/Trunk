@@ -11,7 +11,7 @@ namespace DtrDelegates
 
     public delegate void GetDtrDetailsEventHandler(string resourceId);
 
-    public delegate void SaveDtrInfoEventHandler(string resourceId);
+    public delegate void SaveDtrInfoEventHandler(string resourceId, string monthYear);
 
     public delegate void EditDtrInOutEventHandler(DtrInOut inOut);
 
@@ -25,5 +25,23 @@ namespace DtrDelegates
 
     public delegate void GetErrorFileListEventHandler(ICollection<string> errorFileList);
 
+    public delegate void StartProgressBarEventHandler(bool startProgressBar);
 
+    public delegate void GetHolidayListEventHandler();
+
+    public delegate void SaveEmployeeRecordsEventHandler(DtrCommon.Employee employeeRecord);
+
+    public delegate void GetEmployeeListEventHandler(DtrCommon.Employee employeeRecord);
+
+    public delegate void SaveHolidayEventHandler(DtrCommon.Holiday holiday);
+
+    public delegate void GetClientListEventHandler(DtrCommon.Client clientList);
+
+    public delegate void SaveClientEventHandler(DtrCommon.Client clientRecord);
+
+    public delegate void GetExistingHolidayEventHandler(bool existRecord , string holidayDate);
+
+    public delegate void GetReportsEventHandler(string category, string perPartnerName, string month, string year);
+
+    
 }

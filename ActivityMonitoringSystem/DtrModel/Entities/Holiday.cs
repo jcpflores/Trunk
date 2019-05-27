@@ -12,12 +12,13 @@ namespace DtrModel.Entities
 {
     public class Holiday : IEntity
     {
+        [Autoincrement]
         public int Id { get; set; }
 
         public DateTime HolidayDate { get; set; }
 
         [MaxLength(255)]
-        public string Description { get; set; }
+        public string HolidayName { get; set; }
         public bool Active { get; set; }
     }
 }

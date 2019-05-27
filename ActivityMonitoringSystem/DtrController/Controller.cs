@@ -9,7 +9,7 @@ using DtrDelegates;
 using DtrController.Tools.DtrFileReader;
 using DtrCommon;
 using DtrModel.Entities;
-
+using System.Globalization;
 
 namespace DtrController
 {
@@ -18,6 +18,7 @@ namespace DtrController
         IView _view = null;
         DtrModel.AttendanceDbContext _context = null;
         Tools.DtrFileReader.DtrExcelFile _dtrfile = new DtrController.Tools.DtrFileReader.DtrExcelFile();
+
 
         public Controller()
         {
@@ -34,14 +35,12 @@ namespace DtrController
 
         private void _dtrfile_GetExcelErrorFileEvent()
         {
-
             ICollection<string> errorFiles = new List<string>();
             foreach (ExcelErrorFile err in _dtrfile.ErrorFile)
             {
                 errorFiles.Add(err.Filename);
             }
             _view.ShowError(errorFiles);
-
         }
 
         private void _dtrfile_DoneParsingFilesEvent()
@@ -54,7 +53,6 @@ namespace DtrController
                     _context.SaveChanges();
                 }
             }
-
             QueryTempTableDtr();
         }
 
@@ -63,6 +61,31 @@ namespace DtrController
             _context = DtrModel.Model.GetAttendanceDbContext;
             ClearAllTempTables();
             DtrModel.Model.ChangesSavedEvent += Model_ChangesSavedEvent;
+        }
+
+        private void GetHolidays()
+        {
+            ICollection<DtrCommon.Holiday> holidayList = new List<DtrCommon.Holiday>();
+
+            holidayList = Tools.GoogleHolidayApi.GoogleHolidayApi.GetHolidays();
+
+            var _holidayDb = _context.Set<DtrModel.Entities.Holiday>().Where(t => t.Id != 0).ToList();
+
+            ICollection<DtrCommon.Holiday> _holidayList = new List<DtrCommon.Holiday>();
+
+            foreach (var myHoliday in _holidayDb)
+            {
+                _holidayList.Add(new DtrCommon.Holiday()
+                {
+                    Id = myHoliday.Id.ToString(),
+                    HolidayDate = myHoliday.HolidayDate,
+                    HolidayName = myHoliday.HolidayName
+                });
+            }
+
+            holidayList = holidayList.Concat(_holidayList).ToList();
+            _view.ShowHolidayList(holidayList);
+
         }
 
         private void ClearAllTempTables()
@@ -93,6 +116,217 @@ namespace DtrController
             _view.ShowProcessedResources(resources);
         }
 
+        private void GetReportsPerPartner(string category, string perPartnerName, string Month, string Year)
+        {
+            ICollection<DtrCommon.Reports> report = new List<DtrCommon.Reports>();
+
+            var _DailyTimeRecordDb = _context.Set<DtrModel.Entities.DailyTimeRecord>().Where(t => t.Id != 0).ToList();
+            var _TimeInOutDb = _context.Set<DtrModel.Entities.TimeInOut>().Where(t => t.Id != 0).ToList();
+            var _initialName = "";
+
+            if (category == "Per Month")
+            {
+                try
+                {
+                    var dtr = _DailyTimeRecordDb.Where(t => t.ResourceId == perPartnerName && t.MonthYear == Month + "," + Year).Single();
+
+                    _initialName = _context.Set<DtrModel.Entities.Employee>().Where(t => t.ResourceId == dtr.ResourceId).Select(t => t.Initial).Single();
+
+                    var timeInOut = _context.Set<DtrModel.Entities.TimeInOut>().Where(t => t.DailyTimeRecordRefId == dtr.Id).ToList();
+
+                    var aggregate = timeInOut
+                       .GroupBy(o => o.DailyTimeRecordRefId)
+                       .Select(x => new
+                       {
+                           LatePerMinute = x.Sum(y => y.LatePerMinute),
+                           VacationLeave = (from y in timeInOut where y.TimeOffReason == "Vacation Leave" select y).Count(),
+                           EmergencyLeave = (from y in timeInOut where y.TimeOffReason == "Emergency Leave" select y).Count(),
+                           SickLeave = (from y in timeInOut where y.TimeOffReason == "Sick Leave" select y).Count(),
+                           ParentalLeave = (from y in timeInOut where y.TimeOffReason == "Maternity/Paternity Leave" select y).Count(),
+                           TardinessFrequency = (from y in timeInOut where y.LatePerMinute > 0 select y).Count(),
+                           Halfday = (from y in timeInOut where y.Halfday == 1 select y).Count()
+                       }).Single();
+
+                    var spWorkMin = TimeSpan.FromMinutes(aggregate.LatePerMinute);
+                    var LatePerHours = string.Format("{0}.{1}", (int)spWorkMin.TotalHours, spWorkMin.Minutes);
+
+
+                    report.Add(new DtrCommon.Reports()
+                    {
+                        PartnerName = perPartnerName,
+                        Initial = _initialName,
+                        MonthYear = dtr.MonthYear,
+                        LatePerMinute = aggregate.LatePerMinute,
+                        LatePerHour = double.Parse(LatePerHours),
+                        TardinessFrequency = aggregate.TardinessFrequency,
+                        TotalLeave = aggregate.SickLeave + aggregate.VacationLeave + aggregate.EmergencyLeave,
+                        SickLeave = aggregate.SickLeave,
+                        VacationLeave = aggregate.VacationLeave,
+                        EmergencyLeave = aggregate.EmergencyLeave,
+                        Halfday = aggregate.Halfday,
+                        ParentalLeave = aggregate.ParentalLeave
+                    });
+
+                    _view.ShowReportList(report);
+
+                }
+
+                catch { }
+            }
+
+            else if (category == "Per Year")
+            {
+                var dtrYear = _context.Set<DtrModel.Entities.DailyTimeRecord>().Where(t => t.ResourceId == perPartnerName &&
+                     t.MonthYear.Substring(t.MonthYear.Length - 4) == Year).ToList();
+
+                foreach (var dtr in dtrYear)
+                {
+                    _initialName = _context.Set<DtrModel.Entities.Employee>().Where(t => t.ResourceId == dtr.ResourceId).Select(t => t.Initial).Single();
+                    var timeInOut = _context.Set<DtrModel.Entities.TimeInOut>().Where(t => t.DailyTimeRecordRefId == dtr.Id).ToList();
+
+                    var aggregate = timeInOut
+                       .GroupBy(o => o.DailyTimeRecordRefId)
+                      .Select(x => new
+                      {
+                          LatePerMinute = x.Sum(y => y.LatePerMinute),
+                          VacationLeave = (from y in timeInOut where y.TimeOffReason == "Vacation Leave" select y).Count(),
+                          EmergencyLeave = (from y in timeInOut where y.TimeOffReason == "Emergency Leave" select y).Count(),
+                          SickLeave = (from y in timeInOut where y.TimeOffReason == "Sick Leave" select y).Count(),
+                          ParentalLeave = (from y in timeInOut where y.TimeOffReason == "Maternity/Paternity Leave" select y).Count(),
+                          TardinessFrequency = (from y in timeInOut where y.LatePerMinute > 0 select y).Count(),
+                          Halfday = (from y in timeInOut where y.Halfday == 1 select y).Count()
+                      }).Single();
+
+
+                    var spWorkMin = TimeSpan.FromMinutes(aggregate.LatePerMinute);
+                    var LatePerHours = string.Format("{0}.{1}", (int)spWorkMin.TotalHours, spWorkMin.Minutes);
+
+                    report.Add(new DtrCommon.Reports()
+                    {
+                        PartnerName = perPartnerName,
+                        Initial = _initialName,
+                        MonthYear = dtr.MonthYear.Substring(dtr.MonthYear.Length - 4),
+                        LatePerMinute = aggregate.LatePerMinute,
+                        LatePerHour = double.Parse(LatePerHours),
+                        TardinessFrequency = aggregate.TardinessFrequency,
+                        TotalLeave = aggregate.SickLeave + aggregate.VacationLeave + aggregate.EmergencyLeave,
+                        SickLeave = aggregate.SickLeave,
+                        VacationLeave = aggregate.VacationLeave,
+                        EmergencyLeave = aggregate.EmergencyLeave,
+                        Halfday = aggregate.Halfday,
+                        ParentalLeave = aggregate.ParentalLeave
+                    });
+                }
+                _view.ShowReportList(report);
+            }
+
+        }
+
+        private void GetReportsAllPartner(string category, string perPartnerName, string Month, string Year)
+        {
+            ICollection<DtrCommon.Reports> report = new List<DtrCommon.Reports>();
+
+            var _DailyTimeRecordDb = _context.Set<DtrModel.Entities.DailyTimeRecord>().Where(t => t.Id != 0).ToList();
+            var _TimeInOutDb = _context.Set<DtrModel.Entities.TimeInOut>().Where(t => t.Id != 0).ToList();
+            var _initialName = "";
+
+            if (category == "Per Month")
+            {
+                var dtrMonth = _DailyTimeRecordDb.Where(t => t.MonthYear == Month + "," + Year).ToList();
+
+                foreach (var dtr in dtrMonth)
+                {
+                    _initialName = _context.Set<DtrModel.Entities.Employee>().Where(t => t.ResourceId == dtr.ResourceId).Select(t => t.Initial).Single();
+
+                    var timeInOut = _context.Set<DtrModel.Entities.TimeInOut>().Where(t => t.DailyTimeRecordRefId == dtr.Id).ToList();
+
+                    var aggregate = timeInOut
+                       .GroupBy(o => o.DailyTimeRecordRefId)
+                       .Select(x => new
+                       {
+                           LatePerMinute = x.Sum(y => y.LatePerMinute),
+                           VacationLeave = (from y in timeInOut where y.TimeOffReason == "Vacation Leave" select y).Count(),
+                           EmergencyLeave = (from y in timeInOut where y.TimeOffReason == "Emergency Leave" select y).Count(),
+                           SickLeave = (from y in timeInOut where y.TimeOffReason == "Sick Leave" select y).Count(),
+                           ParentalLeave = (from y in timeInOut where y.TimeOffReason == "Maternity/Paternity Leave" select y).Count(),
+                           TardinessFrequency = (from y in timeInOut where y.LatePerMinute > 0 select y).Count(),
+                           Halfday = (from y in timeInOut where y.Halfday == 1 select y).Count()
+                       }).Single();
+
+                    var spWorkMin = TimeSpan.FromMinutes(aggregate.LatePerMinute);
+                    var LatePerHours = string.Format("{0}.{1}", (int)spWorkMin.TotalHours, spWorkMin.Minutes);
+
+                    report.Add(new DtrCommon.Reports()
+                    {
+                        PartnerName = dtr.ResourceId,
+                        Initial = _initialName,
+                        MonthYear = dtr.MonthYear,
+                        LatePerMinute = aggregate.LatePerMinute,
+                        LatePerHour = double.Parse(LatePerHours),
+                        TardinessFrequency = aggregate.TardinessFrequency,
+                        TotalLeave = aggregate.SickLeave + aggregate.VacationLeave + aggregate.EmergencyLeave,
+                        SickLeave = aggregate.SickLeave,
+                        VacationLeave = aggregate.VacationLeave,
+                        EmergencyLeave = aggregate.EmergencyLeave,
+                        Halfday = aggregate.Halfday,
+                        ParentalLeave = aggregate.ParentalLeave
+                    });
+
+                }
+                _view.ShowReportList(report);
+            }
+
+            else if (category == "Per Year")
+            {
+                
+                var dtrYear = _context.Set<DtrModel.Entities.DailyTimeRecord>().Where(t =>
+                             t.MonthYear.Substring(t.MonthYear.Length - 4) == Year).ToList();
+
+                foreach (var dtr in dtrYear)
+                {
+                     _initialName = _context.Set<DtrModel.Entities.Employee>().Where(t => t.ResourceId == dtr.ResourceId).Select(t => t.Initial).Single();
+
+                    var timeInOut = _context.Set<DtrModel.Entities.TimeInOut>().Where(t => t.DailyTimeRecordRefId == dtr.Id).ToList();
+
+                    var aggregate = timeInOut
+                       .GroupBy(o => o.DailyTimeRecordRefId)
+                       .Select(x => new
+                       {
+                           LatePerMinute = x.Sum(y => y.LatePerMinute),
+                           VacationLeave = (from y in timeInOut where y.TimeOffReason == "Vacation Leave" select y).Count(),
+                           EmergencyLeave = (from y in timeInOut where y.TimeOffReason == "Emergency Leave" select y).Count(),
+                           SickLeave = (from y in timeInOut where y.TimeOffReason == "Sick Leave" select y).Count(),
+                           ParentalLeave = (from y in timeInOut where y.TimeOffReason == "Maternity/Paternity Leave" select y).Count(),
+                           TardinessFrequency = (from y in timeInOut where y.LatePerMinute > 0 select y).Count(),
+                           Halfday = (from y in timeInOut where y.Halfday == 1 select y).Count()
+                       }).Single();
+
+                    var spWorkMin = TimeSpan.FromMinutes(aggregate.LatePerMinute);
+                    var LatePerHours = string.Format("{0}.{1}", (int)spWorkMin.TotalHours, spWorkMin.Minutes);
+
+                    report.Add(new DtrCommon.Reports()
+                    {
+                        PartnerName = dtr.ResourceId,
+                        Initial = _initialName,
+                        MonthYear = dtr.MonthYear.Substring(dtr.MonthYear.Length - 4),
+                        LatePerMinute = aggregate.LatePerMinute,
+                        LatePerHour = double.Parse(LatePerHours),
+                        TardinessFrequency = aggregate.TardinessFrequency,
+                        TotalLeave = aggregate.SickLeave + aggregate.VacationLeave + aggregate.EmergencyLeave,
+                        SickLeave = aggregate.SickLeave,
+                        VacationLeave = aggregate.VacationLeave,
+                        EmergencyLeave = aggregate.EmergencyLeave,
+                        Halfday = aggregate.Halfday,
+                        ParentalLeave = aggregate.ParentalLeave
+                    });
+
+                }
+                _view.ShowReportList(report);
+
+            }
+
+        }
+
         #region IController
         public void SetView(IView view)
         {
@@ -102,6 +336,222 @@ namespace DtrController
             _view.SaveDtrInfoEvent += _view_SaveDtrInfoEvent;
             _view.ParseFilesEvent += _view_ParseFilesEvent;
             _view.EditDtrInOutEvent += _view_EditDtrInOutEvent;
+            _view.GetHolidayListEvent += _view_GetHolidayListEvent;
+            _view.SaveEmployeeRecordsEvent += _view_SaveEmployeeRecordsEvent;
+            _view.GetEmployeeListEvent += _view_GetEmployeeListEvent;
+            _view.SaveHolidayEvent += _view_SaveHolidayEvent;
+            _view.SaveClientEvent += _view_SaveClientEvent;
+            _view.GetClientListEvent += _view_GetClientListEvent;
+            _view.GetExistingHolidayEvent += _view_GetExistingHolidayEvent;
+            _view.GetReportsEvent += _view_GetReportsEvent;
+
+        }
+
+        private void _view_GetReportsEvent(string category, string perPartnerName, string Month, string Year)
+        {
+            if (perPartnerName != "")
+            {
+                GetReportsPerPartner(category, perPartnerName, Month, Year);
+            }
+            else
+            {
+                GetReportsAllPartner(category, perPartnerName, Month, Year);
+            }
+        }
+
+        private void _view_GetExistingHolidayEvent(bool existRecord, string holidayDate)
+        {
+            DateTime _holiday = DateTime.Parse(holidayDate);
+
+            bool holidayExists = _context.Set<DtrModel.Entities.Holiday>().Count(t => t.HolidayDate == _holiday) > 0;
+
+            _view.GetExistingRecord(holidayExists, null);
+        }
+
+        public void GetClientList()
+        {
+            ICollection<DtrCommon.Client> _clientList = new List<DtrCommon.Client>();
+
+            var _clientDb = _context.Set<DtrModel.Entities.Client>().Where(t => t.Id != 0).ToList();
+
+            foreach (var myClient in _clientDb)
+            {
+                _clientList.Add(new DtrCommon.Client()
+                {
+                    ClientName = myClient.ClientName,
+                    Contract = myClient.Contract,
+                    TimeIn = myClient.TimeIn,
+                    TimeOut = myClient.TimeOut,
+                    Flexi = myClient.Flexi
+                });
+            }
+
+            _view.ShowClientList(_clientList);
+        }
+
+
+        private void _view_GetClientListEvent(DtrCommon.Client clientList)
+        {
+            GetClientList();
+        }
+
+        private void _view_SaveClientEvent(DtrCommon.Client clientRecord)
+        {
+            _context.Set<DtrModel.Entities.Client>().Add(new DtrModel.Entities.Client
+            {
+                ClientName = clientRecord.ClientName,
+                Contract = clientRecord.Contract,
+                TimeIn = clientRecord.TimeIn,
+                TimeOut = clientRecord.TimeOut,
+                Flexi = clientRecord.Flexi
+            });
+
+            _context.SaveChanges();
+        }
+
+
+
+        private void _view_SaveHolidayEvent(DtrCommon.Holiday holiday)
+        {
+            _context.Set<DtrModel.Entities.Holiday>().Add(new DtrModel.Entities.Holiday
+            {
+                HolidayName = holiday.HolidayName,
+                HolidayDate = holiday.HolidayDate
+            });
+
+            _context.SaveChanges();
+
+            ICollection<DtrCommon.Holiday> _holidayList = new List<DtrCommon.Holiday>();
+
+            var _holidayDb = _context.Set<DtrModel.Entities.Holiday>().Where(t => t.Id != 0).ToList();
+
+            foreach (var myHoliday in _holidayDb)
+            {
+                _holidayList.Add(new DtrCommon.Holiday()
+                {
+                    HolidayDate = myHoliday.HolidayDate,
+                    HolidayName = myHoliday.HolidayName
+                });
+            }
+
+            GetHolidays();
+            //var myHol = Tools.GoogleHolidayApi.GoogleHolidayApi.GetHolidays();
+            //myHol = myHol.Concat(_holidayList).ToList();
+            //_view.ShowHolidayList(myHol);
+        }
+
+        private void _view_GetEmployeeListEvent(DtrCommon.Employee employeeRecord)
+        {
+
+            ICollection<DtrCommon.Employee> employeeList = new List<DtrCommon.Employee>();
+
+            var emp = _context.Set<DtrModel.Entities.Employee>().Where(t => t.Id != 0).ToList();
+
+            foreach (var myEmployee in emp)
+            {
+                employeeList.Add(new DtrCommon.Employee()
+                {
+                    EmpNo = myEmployee.EmpNo,
+                    Initial = myEmployee.Initial,
+                    Name = myEmployee.Name,
+                    ResourceId = myEmployee.ResourceId,
+                    Email = myEmployee.Email,
+                    SickLeave = myEmployee.SickLeave,
+                    ProcessRole = myEmployee.ProcessRole,
+                    TecnicalRole = myEmployee.TechnicalRole,
+                    Technology = myEmployee.Technology,
+                    SkillLevel = myEmployee.SkillLevel,
+                    Client = myEmployee.Client,
+                    Contract = myEmployee.Contract,
+                    Project = myEmployee.Project,
+                    WorkLocation = myEmployee.WorkLocation,
+                    VacationLeave = myEmployee.VacationLeave,
+                    MaternityLeave = myEmployee.MaternityLeave,
+                    PaternityLeave = myEmployee.PaternityLeave,
+                    Gender = myEmployee.Gender
+                });
+            }
+
+            _view.ShowEmployeeList(employeeList);
+        }
+
+
+
+        private void UpdateEmployeeRecord(DtrCommon.Employee emp)
+        {
+            //_context.Set<DtrModel.Entities.Employee>()
+            //    .Where(u => u.EmpNo == emp.EmpNo).First()
+            //    .Name = emp.Name;
+            //DtrCommon.Employee e;
+
+            var e = _context.Set<DtrModel.Entities.Employee>().Where(u => u.EmpNo == emp.EmpNo).FirstOrDefault<DtrModel.Entities.Employee>();
+
+            e.Name = emp.Name;
+            e.Initial = emp.Initial;
+            e.ResourceId = emp.ResourceId;
+            e.Name = emp.Name;
+            e.Email = emp.Email;
+            e.ProcessRole = emp.ProcessRole;
+            e.TechnicalRole = emp.TecnicalRole;
+            e.Technology = emp.Technology;
+            e.SkillLevel = emp.SkillLevel;
+            e.Client = emp.Client;
+            e.Contract = emp.Contract;
+            e.Project = emp.Project;
+            e.WorkLocation = emp.WorkLocation;
+            e.SickLeave = emp.SickLeave;
+            e.VacationLeave = emp.VacationLeave;
+            e.MaternityLeave = emp.MaternityLeave;
+            e.PaternityLeave = emp.PaternityLeave;
+            e.Gender = emp.Gender;
+
+            _context.Entry(e).State = System.Data.Entity.EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+
+        private void _view_SaveEmployeeRecordsEvent(DtrCommon.Employee employeeRecord)
+        {
+            bool employeeExists = _context.Set<DtrModel.Entities.Employee>().Count(t => t.EmpNo == employeeRecord.EmpNo) > 0;
+
+            if (employeeExists == true)
+            {
+                UpdateEmployeeRecord(employeeRecord);
+            }
+            else
+            {
+                ICollection<DtrModel.Entities.Employee> emp = new List<DtrModel.Entities.Employee>();
+
+                _context.Set<DtrModel.Entities.Employee>().Add(new DtrModel.Entities.Employee
+                {
+                    EmpNo = employeeRecord.EmpNo,
+                    Initial = employeeRecord.Initial,
+                    ResourceId = employeeRecord.ResourceId,
+                    Name = employeeRecord.Name,
+                    Email = employeeRecord.Email,
+                    ProcessRole = employeeRecord.ProcessRole,
+                    TechnicalRole = employeeRecord.TecnicalRole,
+                    Technology = employeeRecord.Technology,
+                    SkillLevel = employeeRecord.SkillLevel,
+                    Client = employeeRecord.Client,
+                    Contract = employeeRecord.Contract,
+                    Project = employeeRecord.Project,
+                    WorkLocation = employeeRecord.WorkLocation,
+                    SickLeave = employeeRecord.SickLeave,
+                    VacationLeave = employeeRecord.VacationLeave,
+                    MaternityLeave = employeeRecord.MaternityLeave,
+                    PaternityLeave = employeeRecord.PaternityLeave,
+                    Gender = employeeRecord.Gender
+                });
+                _context.SaveChanges();
+            }
+        }
+
+
+
+        private void _view_GetHolidayListEvent()
+        {
+            GetHolidays();
         }
 
         private void _view_EditDtrInOutEvent(DtrInOut inOut)
@@ -122,14 +572,64 @@ namespace DtrController
         public void UpdateResource(DtrInfo info)
         { }
 
-        private void _view_SaveDtrInfoEvent(string resourceId)
+        private void _view_SaveDtrInfoEvent(string resourceId, string monthYear)
         {
-            if (resourceId.Equals("ALL"))
-            { }
+            bool dtrExists = _context.Set<DtrModel.Entities.DailyTimeRecord>().Count(t => t.ResourceId == resourceId && t.MonthYear == monthYear) > 0;
+
+            if (dtrExists == true)
+            {
+                var dtr = _context.Set<DtrModel.Entities.DailyTimeRecord>().Where(t => t.ResourceId == resourceId && t.MonthYear == monthYear).First();
+
+                List<DtrModel.Entities.TimeInOut> dtrinfo2List = _context.Set<DtrModel.Entities.TimeInOut>().Where(t => t.DailyTimeRecordRefId.Equals(dtr.Id)).ToList<DtrModel.Entities.TimeInOut>();
+
+
+                DtrInfo dtrinfo = _context.Set<DtrInfo>()
+                  .Where(t => t.ResourceId.Equals(resourceId)).FirstOrDefault<DtrInfo>();
+
+                ICollection<TimeInOut> timeInOutList = new List<TimeInOut>();
+
+                
+                var dtrTempDetail = _context.Set<DtrInOut>().Where(u => u.DtrInfoRefId.Equals(dtr.Id)).ToList();
+
+
+
+                foreach (var inOut in dtrTempDetail)
+                {
+                  //  var dtrdetail = _context.Set<TimeInOut>().Where(u => u.DailyTimeRecordRefId.Equals(dtr.Id) && Convert.ToDateTime(u.DateTimeIn).ToString() == Convert.ToDateTime(inOut.DateTimeIn).ToString() ).FirstOrDefault<TimeInOut>();
+                    var dtrInOut = _context.Set<TimeInOut>().Where(u => u.DailyTimeRecordRefId.Equals(dtr.Id)).ToList();
+                    var dtrdetail = dtrInOut.Where(a => DateTime.Parse(a.DateTimeIn).ToString("d") == DateTime.Parse(inOut.DateTimeIn).ToString("d")).FirstOrDefault<TimeInOut>();
+
+
+                    dtrdetail.DateTimeIn = inOut.DateTimeIn;
+                    dtrdetail.DateTimeOut = inOut.DateTimeOut;
+                    dtrdetail.WorkHours = inOut.WorkHours;
+                    dtrdetail.WorkLocation = inOut.WorkLocation;
+                    dtrdetail.Client = inOut.Client;
+                    dtrdetail.TimeOffReason = inOut.TimeOffReason;
+                    dtrdetail.BillableWorkHours = inOut.BillableWorkHours;
+                    dtrdetail.TimeInSchedule = inOut.TimeInSchedule;
+                    dtrdetail.Notes = inOut.Notes;
+                    dtrdetail.LatePerMinute = inOut.LatePerMinute;
+                    dtrdetail.Halfday = inOut.Halfday;
+                    _context.Entry(dtrdetail).State = System.Data.Entity.EntityState.Modified;
+
+                }
+
+           
+
+                _context.Set<DtrInfo>().Remove(dtrinfo);
+                _context.SaveChanges();
+
+                _view.ShowDtrInfo(null);
+                this.QueryTempTableDtr();
+
+            }
+
             else
             {
+
                 DtrInfo dtrinfo = _context.Set<DtrInfo>()
-                    .Where(t => t.ResourceId.Equals(resourceId)).FirstOrDefault<DtrInfo>();
+                        .Where(t => t.ResourceId.Equals(resourceId)).FirstOrDefault<DtrInfo>();
 
                 ICollection<TimeInOut> timeInOutList = new List<TimeInOut>();
 
@@ -144,7 +644,9 @@ namespace DtrController
                         Client = inOut.Client,
                         TimeOffReason = inOut.TimeOffReason,
                         BillableWorkHours = inOut.BillableWorkHours,
-                        Notes = inOut.Notes
+                        Notes = inOut.Notes,
+                        LatePerMinute = inOut.LatePerMinute,
+                        Halfday = inOut.Halfday
                     });
                 }
 
@@ -169,11 +671,16 @@ namespace DtrController
 
                 _view.ShowDtrInfo(null);
                 this.QueryTempTableDtr();
+
             }
+
         }
+
+   
+
         private void _view_GetDtrDetailsEvent(string resourceId)
         {
-            string[] filter = resourceId.Replace(" ","").Split(new char[] { '-' });
+            string[] filter = resourceId.Replace(" ", "").Split(new char[] { '-' });
             string resId = filter[0];
             string monthYear = filter[1];
 
@@ -188,7 +695,7 @@ namespace DtrController
             ICollection<string> xlsxFiles = new List<string>();
             foreach (string dtrFile in Directory.GetFiles(localPath))
             {
-                if(dtrFile.EndsWith("xlsx"))
+                if (dtrFile.EndsWith("xlsx"))
                 {
                     xlsxFiles.Add(dtrFile);
                 }
@@ -389,7 +896,7 @@ namespace DtrController
                 SaveDtrLog(dfr.ReadFile(dtrFile), filname, SaveTempDtrData(dfr.ReadFile(dtrFile)));
             }
 
-             
+
         }
         // *********reading Files to local path********** //
 
@@ -446,7 +953,7 @@ namespace DtrController
                     context.DailyTimeRecord.AddRange(data);
                     context.SaveChanges();
                 }
-                   
+
                 return true;
             }
             catch
@@ -462,7 +969,7 @@ namespace DtrController
 
                 string _resourceId = _EmpId(_dtrModel.ResourceId);
                 string _empName = _Empname(_dtrModel.ResourceId);
-               
+
 
                 context.DtrProcessLog.Add(
                   new DtrProcessLog

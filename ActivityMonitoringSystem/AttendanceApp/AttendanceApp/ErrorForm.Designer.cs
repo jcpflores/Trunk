@@ -1,6 +1,6 @@
 ﻿namespace AttendanceApp
 {
-    partial class Calendar
+    partial class ErrorForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,30 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
+            this.listBoxError = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
-            // monthCalendar1
+            // listBoxError
             // 
-            this.monthCalendar1.Location = new System.Drawing.Point(61, 36);
-            this.monthCalendar1.Name = "monthCalendar1";
-            this.monthCalendar1.TabIndex = 1;
+            this.listBoxError.FormattingEnabled = true;
+            this.listBoxError.Location = new System.Drawing.Point(18, 26);
+            this.listBoxError.Name = "listBoxError";
+            this.listBoxError.Size = new System.Drawing.Size(494, 199);
+            this.listBoxError.TabIndex = 0;
             // 
-            // Calendar
+            // ErrorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(348, 222);
-            this.Controls.Add(this.monthCalendar1);
-            this.Name = "Calendar";
+            this.ClientSize = new System.Drawing.Size(530, 245);
+            this.Controls.Add(this.listBoxError);
+            this.Name = "ErrorForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Calendar";
+            this.Text = "Error Form";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.MonthCalendar monthCalendar1;
+        private System.Windows.Forms.ListBox listBoxError;
     }
 }

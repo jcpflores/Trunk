@@ -12,19 +12,25 @@ namespace DtrModel.Entities
 {
    public class Client : IEntity
     {
+        [Autoincrement]
         public int Id { get; set; }
 
         [MaxLength(100)]
         public string ClientName { get; set; }
 
         public string Contract { get; set; }
+
+        public string TimeIn { get; set; }
+
+        public string TimeOut { get; set; }
+        public bool Flexi { get; set; }
         public bool Active { get; set; }
 
-        public virtual ICollection<ClientContract> ClientContract { get; set; }
 
 
-        [ForeignKey("Employee")]
-        public int EmployeeRefId { get; set; }
-        public virtual Employee Employee { get; set; }
+        //public virtual ICollection<ClientContract> ClientContract { get; set; }
+        //[ForeignKey("Employee")]
+        //public int EmployeeRefId { get; set; }
+        //public virtual Employee Employee { get; set; }
     }
 }

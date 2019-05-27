@@ -34,7 +34,7 @@ namespace DtrModel
         //Temp Tables
         public DbSet<DtrCommon.DtrInfo> TempDtr { get; set; }
         public DbSet<DtrCommon.DtrInOut> TempDtrInOut { get; set; }
-
+              
 
         public AttendanceDbContext(string nameOrConnectionString)
             : base(nameOrConnectionString)

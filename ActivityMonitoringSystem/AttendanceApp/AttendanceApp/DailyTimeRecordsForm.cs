@@ -16,9 +16,13 @@ namespace AttendanceApp
     {
         ICollection<string> _discoveredFiles;
         ICollection<string> _errorList;
+        ICollection<DtrCommon.Holiday> _holidayList = new List<DtrCommon.Holiday>();
+        ICollection<ProcessedResource> _processedResource;
         DataGridViewImageColumn _editbutton;
         BindingSource _bs;
         Color EDITED_COLOR = Color.Pink;
+        ErrorForm _errorForm = new ErrorForm();
+
 
         public DailyTimeRecordsForm()
         {
@@ -35,7 +39,15 @@ namespace AttendanceApp
         public event GetDtrDetailsEventHandler GetDtrDetailsEvent;
         public event GetErrorFileListEventHandler GetErrorFileListEvent;
         public event EditDtrInOutEventHandler EditDtrInOutEvent;
-
+        public event StartProgressBarEventHandler StartProgressBarEvent;
+        public event GetHolidayListEventHandler GetHolidayListEvent;
+        public event SaveEmployeeRecordsEventHandler SaveEmployeeRecordsEvent;
+        public event GetEmployeeListEventHandler GetEmployeeListEvent;
+        public event SaveHolidayEventHandler SaveHolidayEvent;
+        public event GetClientListEventHandler GetClientListEvent;
+        public event SaveClientEventHandler SaveClientEvent;
+        public event GetExistingHolidayEventHandler GetExistingHolidayEvent;
+        public event GetReportsEventHandler GetReportsEvent;
         public void ShowDtrInfo(DtrInfo info)
         {
             InitInfoView();
@@ -51,7 +63,7 @@ namespace AttendanceApp
             this.lblSkill.Text = info.SkillLevel;
             this.lblClient.Text = info.ClientName;
             this.lblLocation.Text = info.WorkLocationDefault;
-            this.lblTimeIn.Text = info.TimeInScheduleDefault.ToString("HH:mm tt");
+            this.lblTimeIn.Text = DateTime.Parse(info.TimeInScheduleDefault).ToString("HH:mm tt");// info.TimeInScheduleDefault.ToString("HH:mm tt");
             this.lblMonthYear.Text = info.MonthYear;
             this.lblContract.Text = info.ContractRef;
             this.lblProject.Text = info.Project;
@@ -62,6 +74,9 @@ namespace AttendanceApp
             this.dataGridView1.Columns[0].Visible = false;
             this.dataGridView1.Columns["DtrInfoRefId"].Visible = false;
             this.dataGridView1.Columns["DtrInfo"].Visible = false;
+            this.dataGridView1.Columns["LatePerMinute"].Visible = false;
+            this.dataGridView1.Columns["Halfday"].Visible = false;
+
 
             _editbutton = new DataGridViewImageColumn();
             _editbutton.Image = AttendanceApp.Properties.Resources.saveicon;
@@ -70,7 +85,7 @@ namespace AttendanceApp
             _editbutton.Name = "Save";
             _editbutton.ReadOnly = true;
             dataGridView1.Columns.Add(_editbutton);
-            
+
             SetWeekendsColumnProperty(Color.White, Color.Blue);
 
             this.dataGridView1.CellValueChanged += DataGridView1_CellValueChanged;
@@ -99,7 +114,28 @@ namespace AttendanceApp
         {
             this.dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = EDITED_COLOR;
             this.dataGridView1.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Black;
+
+            string TimeInSchedule = Convert.ToDateTime(this.dataGridView1[1, e.RowIndex].Value).ToString("MM/dd/yyyy ") + this.dataGridView1[8, e.RowIndex].Value.ToString();
+            this.dataGridView1.Rows[e.RowIndex].Cells[10].Value = LatePerMinuteComputation(Convert.ToDateTime(TimeInSchedule), Convert.ToDateTime(this.dataGridView1[1, e.RowIndex].Value));
+            //this.dataGridView1.Rows[e.RowIndex].Cells[11].Value = HalfdayComputation(this.dataGridView1[3, e.RowIndex].Value.ToString(), Convert.ToDateTime(this.dataGridView1[1, e.RowIndex].Value));
         }
+
+        private int LatePerMinuteComputation(DateTime TimeInSchedule, DateTime TimeIn)
+        {
+            TimeSpan Late = new TimeSpan(0, 0, 0, 0, 0);
+
+            int result = DateTime.Compare(TimeInSchedule, TimeIn);
+
+            if (result < 0)
+            {
+                Late = TimeInSchedule.Subtract(TimeIn);
+            }
+            return Math.Abs(Convert.ToInt32(Late.TotalMinutes));
+        }
+
+    
+
+
 
         private void InitInfoView()
         {
@@ -139,12 +175,29 @@ namespace AttendanceApp
                     this.dataGridView1.Rows[i].DefaultCellStyle.ForeColor = foreColor;
                     this.dataGridView1.Rows[i].DefaultCellStyle.BackColor = backColor;
                 }
+
+                if (IsHolidayDate(this.dataGridView1.Rows[i].Cells[1].Value.ToString()))
+                {
+                    this.dataGridView1.Rows[i].DefaultCellStyle.ForeColor = foreColor;
+                    this.dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.ForestGreen;
+                }
             }
         }
 
         private bool IsWeekendDate(string date)
         {
             if ((DateTime.Parse(date).DayOfWeek == DayOfWeek.Saturday) || (DateTime.Parse(date).DayOfWeek == DayOfWeek.Sunday))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsHolidayDate(string date)
+        {
+            var holidayExist = _holidayList.Where(x => x.HolidayDate == DateTime.Parse(date)).ToList();
+
+            if (holidayExist.Count() > 0)
             {
                 return true;
             }
@@ -164,7 +217,6 @@ namespace AttendanceApp
             this.lblMonthYear.Visible = true;
             this.lblContract.Visible = true;
             this.lblProject.Visible = true;
-            this.lblError.Visible = true;
         }
 
         public void ShowFiles(ICollection<string> discoveredFiles)
@@ -177,17 +229,22 @@ namespace AttendanceApp
         public void ShowError(ICollection<string> errorFiles)
         {
             _errorList = errorFiles;
-            this.lblError.Visible = true;
+
+            if (errorFiles.Count > 0)
+            {
+                this.lblError.Visible = true;
+            }
             this.lblError.Text = "Error: " + errorFiles.Count.ToString();
-            listBoxError.DataSource = errorFiles;
         }
 
         public void ShowProgress(int count, int totalCount)
         {
         }
-
+        public void ShowReportList(ICollection<DtrCommon.Reports> reports)
+        { }
         public void ShowProcessedResources(ICollection<ProcessedResource> processed)
         {
+            _processedResource = processed;
             this.comboBox1.Items.Clear();
             this.comboBox1.Text = string.Empty;
             foreach (ProcessedResource resource in processed)
@@ -197,8 +254,11 @@ namespace AttendanceApp
         }
 
         public void ShowMessage(string message)
-        {
-        }
+        { }
+
+        public void GetExistingRecord(bool existRecord, string holidayDate)
+        { }
+
 
         private void btnSetSource_Click(object sender, EventArgs e)
         {
@@ -210,21 +270,27 @@ namespace AttendanceApp
                     source = openFolder.SelectedPath;
                     this.textBox1.Text = source;
                     GetFilesFromLocalEvent?.Invoke(source);
+                    btnReview.Enabled = true;
                 }
             }
         }
 
         private void btnReview_Click(object sender, EventArgs e)
         {
+            StartProgressBarEvent?.Invoke(true);
             ParseFilesEvent?.Invoke(_discoveredFiles);
             GetErrorFileListEvent?.Invoke(_errorList);
+            StartProgressBarEvent?.Invoke(false);
+
+            if (_discoveredFiles.Count > 0)
+            { comboBox1.Enabled = true; btnSaveAllToDb.Enabled = true; }
         }
 
         private void btnSaveCurrToDb_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Are you sure you want save to the current DTR to the database?", "ATTENTION", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                SaveDtrInfoEvent?.Invoke(this.lblId.Text);
+            {                
+                    SaveDtrInfoEvent?.Invoke(this.lblId.Text, this.lblMonthYear.Text);               
             }
         }
 
@@ -232,28 +298,38 @@ namespace AttendanceApp
         {
             if (MessageBox.Show("Are you sure you want save to all DTR to the database?", "ATTENTION", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                SaveDtrInfoEvent?.Invoke(null);
+                foreach (var Resource in _processedResource)
+                {
+                    SaveDtrInfoEvent?.Invoke(Resource.ResourceId, Resource.MonthYear);
+                }
             }
         }
 
         private void ComboBox1_SelectedValueChanged(object sender, EventArgs e)
         {
             GetDtrDetailsEvent?.Invoke(this.comboBox1.SelectedItem.ToString());
+            btnSaveAllToDb.Enabled = true;
+            btnSaveCurrToDb.Enabled = true;
         }
 
-        private void lblError_MouseHover(object sender, EventArgs e)
+        private void lblError_Click(object sender, EventArgs e)
         {
-            this.listBoxError.Visible = true;
-            this.listBoxError.Width = 300;
-            this.listBoxError.Height = 300;
-            this.listBoxError.Location = new Point(350, 25);
+            _errorForm = new ErrorForm();
+            _errorForm.Show();
+            _errorForm.ShowError(_errorList);
+
         }
 
-        private void lblError_MouseLeave(object sender, EventArgs e)
+        public void ShowHolidayList(ICollection<DtrCommon.Holiday> holiday)
         {
-            this.listBoxError.Visible = false;
-            this.listBoxError.Location = new Point(350, 25);
-
+            _holidayList = holiday;
         }
+
+        public void ShowEmployeeList(ICollection<DtrCommon.Employee> employee)
+        { }
+
+        public void ShowClientList(ICollection<DtrCommon.Client> client)
+        { }
+
     }
 }

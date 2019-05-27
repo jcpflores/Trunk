@@ -28,21 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.btnDtr = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.labelToday = new System.Windows.Forms.Label();
             this.panelBar = new System.Windows.Forms.Panel();
             this.panelControls = new System.Windows.Forms.Panel();
+            this.btnReports = new System.Windows.Forms.Button();
+            this.btnMaintenance = new System.Windows.Forms.Button();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.employeeRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clientRecordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.holidayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.panelProcessArea = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.btnEmployee = new System.Windows.Forms.Button();
-            this.btnClient = new System.Windows.Forms.Button();
-            this.btnMaintenance = new System.Windows.Forms.Button();
-            this.btnReports = new System.Windows.Forms.Button();
             this.panelControls.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -98,13 +104,71 @@
             this.panelControls.BackColor = System.Drawing.Color.Maroon;
             this.panelControls.Controls.Add(this.btnReports);
             this.panelControls.Controls.Add(this.btnMaintenance);
-            this.panelControls.Controls.Add(this.btnClient);
-            this.panelControls.Controls.Add(this.btnEmployee);
             this.panelControls.Controls.Add(this.btnDtr);
             this.panelControls.Location = new System.Drawing.Point(12, 90);
             this.panelControls.Name = "panelControls";
             this.panelControls.Size = new System.Drawing.Size(153, 345);
             this.panelControls.TabIndex = 5;
+            // 
+            // btnReports
+            // 
+            this.btnReports.Location = new System.Drawing.Point(4, 35);
+            this.btnReports.Name = "btnReports";
+            this.btnReports.Size = new System.Drawing.Size(146, 23);
+            this.btnReports.TabIndex = 4;
+            this.btnReports.Text = "Reports";
+            this.btnReports.UseVisualStyleBackColor = true;
+            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
+            // 
+            // btnMaintenance
+            // 
+            this.btnMaintenance.ContextMenuStrip = this.contextMenuStrip1;
+            this.btnMaintenance.Location = new System.Drawing.Point(3, 64);
+            this.btnMaintenance.Name = "btnMaintenance";
+            this.btnMaintenance.Size = new System.Drawing.Size(146, 23);
+            this.btnMaintenance.TabIndex = 3;
+            this.btnMaintenance.Text = "Maintenance";
+            this.btnMaintenance.UseVisualStyleBackColor = true;
+            this.btnMaintenance.Click += new System.EventHandler(this.btnMaintenance_Click);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.BackColor = System.Drawing.Color.White;
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.employeeRecordToolStripMenuItem,
+            this.clientRecordsToolStripMenuItem,
+            this.holidayToolStripMenuItem,
+            this.logsToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(167, 114);
+            // 
+            // employeeRecordToolStripMenuItem
+            // 
+            this.employeeRecordToolStripMenuItem.Name = "employeeRecordToolStripMenuItem";
+            this.employeeRecordToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.employeeRecordToolStripMenuItem.Text = "Employee Record";
+            this.employeeRecordToolStripMenuItem.Click += new System.EventHandler(this.employeeRecordToolStripMenuItem_Click);
+            // 
+            // clientRecordsToolStripMenuItem
+            // 
+            this.clientRecordsToolStripMenuItem.Name = "clientRecordsToolStripMenuItem";
+            this.clientRecordsToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.clientRecordsToolStripMenuItem.Text = "Client Records";
+            this.clientRecordsToolStripMenuItem.Click += new System.EventHandler(this.clientRecordsToolStripMenuItem_Click);
+            // 
+            // holidayToolStripMenuItem
+            // 
+            this.holidayToolStripMenuItem.Name = "holidayToolStripMenuItem";
+            this.holidayToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.holidayToolStripMenuItem.Text = "Holiday";
+            this.holidayToolStripMenuItem.Click += new System.EventHandler(this.holidayToolStripMenuItem_Click);
+            // 
+            // logsToolStripMenuItem
+            // 
+            this.logsToolStripMenuItem.Name = "logsToolStripMenuItem";
+            this.logsToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.logsToolStripMenuItem.Text = "Logs";
+            this.logsToolStripMenuItem.Click += new System.EventHandler(this.logsToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -112,6 +176,7 @@
             this.toolStripProgressBar1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 441);
             this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.statusStrip1.Size = new System.Drawing.Size(809, 22);
             this.statusStrip1.TabIndex = 6;
             this.statusStrip1.Text = "statusStrip1";
@@ -119,7 +184,8 @@
             // toolStripProgressBar1
             // 
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(700, 16);
+            this.toolStripProgressBar1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(400, 16);
             this.toolStripProgressBar1.Visible = false;
             // 
             // panelProcessArea
@@ -148,48 +214,12 @@
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BackColor = System.Drawing.Color.White;
-            this.pictureBox1.Image = global::AttendanceApp.Properties.Resources._247Logo;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(15, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(782, 48);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
-            // 
-            // btnEmployee
-            // 
-            this.btnEmployee.Location = new System.Drawing.Point(3, 35);
-            this.btnEmployee.Name = "btnEmployee";
-            this.btnEmployee.Size = new System.Drawing.Size(146, 23);
-            this.btnEmployee.TabIndex = 1;
-            this.btnEmployee.Text = "Employee Records";
-            this.btnEmployee.UseVisualStyleBackColor = true;
-            // 
-            // btnClient
-            // 
-            this.btnClient.Location = new System.Drawing.Point(3, 64);
-            this.btnClient.Name = "btnClient";
-            this.btnClient.Size = new System.Drawing.Size(146, 23);
-            this.btnClient.TabIndex = 2;
-            this.btnClient.Text = "Client Records";
-            this.btnClient.UseVisualStyleBackColor = true;
-            // 
-            // btnMaintenance
-            // 
-            this.btnMaintenance.Location = new System.Drawing.Point(3, 93);
-            this.btnMaintenance.Name = "btnMaintenance";
-            this.btnMaintenance.Size = new System.Drawing.Size(146, 23);
-            this.btnMaintenance.TabIndex = 3;
-            this.btnMaintenance.Text = "Maintenance";
-            this.btnMaintenance.UseVisualStyleBackColor = true;
-            // 
-            // btnReports
-            // 
-            this.btnReports.Location = new System.Drawing.Point(3, 122);
-            this.btnReports.Name = "btnReports";
-            this.btnReports.Size = new System.Drawing.Size(146, 23);
-            this.btnReports.TabIndex = 4;
-            this.btnReports.Text = "Reports";
-            this.btnReports.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
@@ -210,6 +240,7 @@
             this.Name = "Main";
             this.Text = "Attendance Monitoring";
             this.panelControls.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -232,8 +263,11 @@
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private System.Windows.Forms.Button btnReports;
         private System.Windows.Forms.Button btnMaintenance;
-        private System.Windows.Forms.Button btnClient;
-        private System.Windows.Forms.Button btnEmployee;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem employeeRecordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clientRecordsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem holidayToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem logsToolStripMenuItem;
     }
 }
 

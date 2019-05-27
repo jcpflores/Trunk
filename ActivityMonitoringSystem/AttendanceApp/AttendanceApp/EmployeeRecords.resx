@@ -117,14 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="editicon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\editicon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnSearch.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAEJSURBVEhL7ZNNDgFBEEYnOAfhDMRGQuJWhHtY2IufI/lZYo0V4XsdtZvpSY2MhXjJy6Qn1VUz
+        1dXJn08Yyo08y8f7uZYD+RE1OZfPiDNJXCEs+UWOZF1WZEOO5VVaETe0xZK3eZFCR1qRPi880HM28uUx
+        JpK4VVg54CDZSFtiNCVxx7BywLSwkZ7HqEri7mHlwP6AA43RksSdwsoBc85GpiXGVBK3DCsHXCI2MiVM
+        SxpdeZPE9Xjhhfm2IkwLB0rPaQtfbskXshDcUCuSJcl5HmTeeWXCJWLOGUWmhQOl59YWklNkLwsXiUFS
+        klNkJ/PuTiEoQvKvFdnKUoqQlCKlFQASl5b8Z0mSFylZVMxMQ/WkAAAAAElFTkSuQmCC
+</value>
   </data>
-  <data name="247Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\247Logo.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="btnSave.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAC7SURBVEhL7dXNCQIxGIThNOBPY4KWsSjYguWqDeiedOYQ+Agz7pd43Ree25hIPFjWejvBAz6d
+        bpBq5PAqdUkdZ4sX0OIldZgtHl79vKSOssWDI9vioCkeGtnUeIRNjUfY1HiETY1H2NSYXjDBBrZwhjeo
+        LdnUmHh42wXUlmxqTPzmbTtQW7KpMfFZ2vagtmRTY+Kbt11BbcmmxsQflG/OZ+E35+EzqC3ZnqA+0OMO
+        tiP885/Aww+wlq2UL6bp9DGJDdIEAAAAAElFTkSuQmCC
+</value>
   </data>
-  <data name="saveicon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\saveicon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="btnEdit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAACFSURBVEhL7ZCxDYAwDARTshgIWCFDUTAIlCxFQwMdvFEsRZFpErtAyklX4OIecAqM8IDT+6TM
+        AC94B2eoygo5zqp8SR9s4AbjgR0WQWH6LWQ6csIWZsNxftt4ZIEdzCaNpyNFfMVVBmpc5L9xwjROmMYJ
+        0zhhGq+IeGPFo6biUVPxqKTzDx62h25f89Y5AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAACbSURBVEhL3ZWxDcNADAN/FC+UIht5VJdJlkj0gAk8lANoqfQBBxd6kqXHLXmG7/Br3MMWV8qP
+        89sayWXkFrZHchk5aY/kMlK0RnIZuVIeyWVkZh2x5LKqFgpVtFBICrpJC4WkoJu0UEgKuklLNVB9Xw5U
+        3/8FVgXdpIVCUtBNWigkBd2khUIVLZ+Qgld8hZb5y+yMzPJHeCvG+AHwpP9VQ4R8bwAAAABJRU5ErkJg
+        gg==
+</value>
   </data>
 </root>
